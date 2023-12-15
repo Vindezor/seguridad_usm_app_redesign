@@ -11,7 +11,7 @@ class GuidePage extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           // image: DecorationImage(
-          //   image: AssetImage("assets/background.jpeg"),
+          //   image: AssetImage("assets/background.png"),
           //   fit: BoxFit.cover
           // )
         ),

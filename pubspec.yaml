@@ -91,5 +91,4 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
   assets:
-    - assets/background.jpeg
-    - assets/usm-logo.png
+    - assets/

@@ -14,9 +14,9 @@ class RegisterPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/background.jpeg"),
-              fit: BoxFit.cover
-            )
+              image: AssetImage("assets/background.png"),
+              fit: BoxFit.contain,
+              alignment: Alignment.bottomCenter            )
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
