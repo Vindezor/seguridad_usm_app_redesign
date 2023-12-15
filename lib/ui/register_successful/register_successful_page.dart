@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class RegisterSuccessfulPage extends StatelessWidget {
+  const RegisterSuccessfulPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,50 +28,37 @@ class LoginPage extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(left: 50, right: 50, top: 40),
                 child: Text(
-                  "Iniciar sesión",
+                  "Se ha enviado un correo con su clave temporal al correo electrónico asociado en terna",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 50, right: 50, top: 40),
-                child: TextField(
-                  textInputAction: TextInputAction.next,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                    ),
-                    labelText: 'Cédula',
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 50, right: 50, top: 40),
-                child: TextField(
-                  textInputAction: TextInputAction.done,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                    ),
-                    labelText: 'Contraseña',
-                  ),
-                ),
-              ),
+              // const Padding(
+              //   padding: EdgeInsets.only(left: 50, right: 50, top: 40),
+              //   child: TextField(
+              //     obscureText: true,
+              //     decoration: InputDecoration(
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.all(Radius.circular(25)),
+              //       ),
+              //       labelText: 'Contraseña',
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(left: 90, right: 90, top: 40),
                 child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFe9f2f7),
+                    elevation: 1,
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/home');
+                    Navigator.of(context).pushReplacementNamed('/login');
                   },
                   child: const Text(
-                    "Iniciar sesión",
+                    "Iniciar Sesión",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,

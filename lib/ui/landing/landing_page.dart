@@ -37,8 +37,8 @@ class LandingPage extends StatelessWidget {
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
                 ),
-                onPressed: () => {
-                  Navigator.pushNamed(context, '/login')
+                onPressed: () {
+                  Navigator.pushNamed(context, '/login');
                 },
                 child: const Text(
                   "Iniciar sesión",
@@ -55,7 +55,9 @@ class LandingPage extends StatelessWidget {
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
                 ),
-                onPressed: () => {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/register');
+                },
                 child: const Text(
                   "Registrarse",
                   style: TextStyle(
