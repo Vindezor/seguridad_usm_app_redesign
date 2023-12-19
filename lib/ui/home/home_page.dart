@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:test_design/routes/routes.dart';
 import 'package:test_design/ui/home/widgets/button_home.dart';
 
@@ -73,7 +74,38 @@ class HomePage extends StatelessWidget {
           ]
         ),
         child: FloatingActionButton.large(
-          onPressed: () => {},
+          onPressed: () => {
+            showDialog(
+              context: context,
+              builder: (context) => Dialog(
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        "QR para inciar ruta",
+                        style: TextStyle(
+                          color: Color(0xFF3874c0),
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      QrImageView(
+                        data: "uioi-12312-5dasd-12c4d",
+                        size: 200,
+                        dataModuleStyle: const QrDataModuleStyle(dataModuleShape: QrDataModuleShape.square, color: Color(0xFF3874c0)),
+                        eyeStyle: const QrEyeStyle(eyeShape: QrEyeShape.square, color: Color(0xFF3874c0)),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          },
           backgroundColor: const Color(0xFFddeaf4),
           child: const Icon(
             Icons.qr_code_scanner,
@@ -89,11 +121,24 @@ class HomePage extends StatelessWidget {
           IconButton(onPressed: () {}, icon: const Icon(Icons.logout), iconSize: 30,)
         ],
         title: const Text(
-          "Estudiante",
+          "Menú Principal",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 26,
+            // shadows: [
+            //   BoxShadow(
+            //     color: Colors.black,
+            //     blurRadius: 2,
+            //     spreadRadius: 5,
+            //     blurStyle: BlurStyle.outer
+            //   )
+            // ]
           ),
+        ),
+        flexibleSpace: Image.asset(
+          "assets/parte-top.png",
+          fit: BoxFit.fitWidth,
+          alignment: Alignment.topCenter,
         ),
       ),
       bottomNavigationBar: const BottomAppBar(

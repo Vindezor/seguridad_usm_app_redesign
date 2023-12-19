@@ -23,6 +23,6 @@ Map<String, Widget Function(BuildContext context)> appRoutes() {
     Routes.history: (_) => const HistoryPage(),
     Routes.settings: (_) => const SettingsPage(),
     Routes.guide: (_) => const GuidePage(),
-    Routes.registerQrScanner: (_) => const RegisterQrScanner(),
+    Routes.registerQrScanner: (_) => RegisterQrScanner(),
   };
 }

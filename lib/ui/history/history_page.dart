@@ -59,6 +59,11 @@ class HistoryPage extends StatelessWidget {
             fontSize: 26,
           ),
         ),
+        flexibleSpace: Image.asset(
+          "assets/parte-top.png",
+          fit: BoxFit.fitWidth,
+          alignment: Alignment.topCenter,
+        ),
       ),
       // bottomNavigationBar: const BottomAppBar(
       //   shape: CircularNotchedRectangle(),
