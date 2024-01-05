@@ -100,6 +100,12 @@ class HomePage extends StatelessWidget {
                         dataModuleStyle: const QrDataModuleStyle(dataModuleShape: QrDataModuleShape.square, color: Color(0xFF3874c0)),
                         eyeStyle: const QrEyeStyle(eyeShape: QrEyeShape.square, color: Color(0xFF3874c0)),
                       ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/map');
+                        },
+                        child: const Text("data")
+                      )
                     ],
                   ),
                 ),

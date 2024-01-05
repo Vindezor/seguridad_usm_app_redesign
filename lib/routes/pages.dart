@@ -4,6 +4,7 @@ import 'package:test_design/ui/history/history_page.dart';
 import 'package:test_design/ui/home/home_page.dart';
 import 'package:test_design/ui/landing/landing_page.dart';
 import 'package:test_design/ui/login/login_page.dart';
+import 'package:test_design/ui/map/map_page.dart';
 import 'package:test_design/ui/profile/profile_page.dart';
 import 'package:test_design/ui/register/register_page.dart';
 import 'package:test_design/ui/register/widgets/register_qr_scanner.dart';
@@ -23,6 +24,7 @@ Map<String, Widget Function(BuildContext context)> appRoutes() {
     Routes.history: (_) => const HistoryPage(),
     Routes.settings: (_) => const SettingsPage(),
     Routes.guide: (_) => const GuidePage(),
-    Routes.registerQrScanner: (_) => RegisterQrScanner(),
+    Routes.registerQrScanner: (_) => const RegisterQrScanner(),
+    Routes.map: (_) => const MapPage(),
   };
 }
