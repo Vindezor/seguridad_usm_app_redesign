@@ -1,19 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_design/routes/routes.dart';
+import 'package:test_design/ui/register/register_controller.dart';
 
-class RegisterPage extends StatefulWidget {
-
-  const RegisterPage({super.key});
-
+class RegisterPage extends ConsumerWidget {
+  const RegisterPage({Key? key}) : super(key: key);
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
-}
-
-class _RegisterPageState extends State<RegisterPage> {
-  final controller = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(registerController);
+    log("[RegisterPage] reloaded");
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
@@ -68,7 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Expanded(
                           child: TextField(
-                            controller: controller,
+                            controller: controller.textEditingController,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(25)),
@@ -85,7 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             onPressed: () => {
                               Navigator.of(context).pushNamed(Routes.registerQrScanner).then(
                                 (value){
-                                  controller.text = value.toString();
+                                  controller.changeTextValue(value.toString());
                                 }
                               )
                             },
@@ -115,9 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         backgroundColor: const Color(0xFFe9f2f7),
                         elevation: 1,
                       ),
-                      onPressed: () {
-                        Navigator.of(context).pushReplacementNamed('/register_successful');
-                      },
+                      onPressed: controller.registerButtonDisabled() ? null : () => controller.register(context),
                       child: const Text(
                         "Registrarse",
                         style: TextStyle(
@@ -134,12 +129,5 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    controller.dispose();
   }
 }

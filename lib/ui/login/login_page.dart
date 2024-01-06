@@ -1,10 +1,16 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
-class LoginPage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:test_design/ui/login/login_controller.dart';
+
+class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(loginController);
+    log("[LoginPage] reloaded");
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
@@ -51,12 +57,13 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 50, right: 50, top: 40),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                     child: TextField(
+                      controller: controller.documentController,
                       textInputAction: TextInputAction.next,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
@@ -64,12 +71,13 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 50, right: 50, top: 40),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                     child: TextField(
+                      controller: controller.passwordController,
                       textInputAction: TextInputAction.done,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
@@ -83,9 +91,7 @@ class LoginPage extends StatelessWidget {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
                       ),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/home');
-                      },
+                      onPressed: controller.loginButtonDisabled() ? null : () => controller.login(context),
                       child: const Text(
                         "Iniciar sesión",
                         style: TextStyle(

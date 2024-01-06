@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_design/routes/pages.dart';
 import 'package:test_design/routes/routes.dart';
 
 void main() {
-  runApp(const MyApp());
+ runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
