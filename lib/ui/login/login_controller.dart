@@ -20,7 +20,13 @@ class LoginController extends ChangeNotifier{
   final UserService userService = UserService(Dio());
   final documentRegex = RegExp(r'^\d{5,9}$');
   final passwordRegex = RegExp(r'^[A-Za-z\d.,_\-@*#$]{8,15}$');
-  
+  bool hidePassword = true;
+
+  onPressHide(){
+    hidePassword = !hidePassword;
+    notifyListeners();
+  }
+
   void login(context) async {
     globalLoading(context);
     final LoginModel? response = await userService.login(document: documentController.value.text, password: passwordController.value.text);

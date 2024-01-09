@@ -49,9 +49,14 @@ class RegisterSuccessfulPage extends StatelessWidget {
                         "¡Bienvenido/a a nuestra plataforma de seguridad de transporte! Tu usuario se ha creado exitosamente. Por favor, revisa tu correo electrónico institucional (Terna) para encontrar una clave temporal. Tienes 30 minutos para iniciar sesión en la plataforma, de lo contrario, tu cuenta será eliminada del sistema. ¡Gracias por elegirnos y viajar seguro!",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 15,
+                          
                         ),
                         textAlign: TextAlign.justify,
+                      softWrap: true,
+                      textWidthBasis: TextWidthBasis.parent,
+                      
+
                       ),
                     ),
                     // const Padding(

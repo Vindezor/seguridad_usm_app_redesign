@@ -62,7 +62,7 @@ class LoginPage extends ConsumerWidget {
                     child: TextField(
                       controller: controller.documentController,
                       textInputAction: TextInputAction.next,
-                      obscureText: true,
+                      // obscureText: true,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
@@ -76,12 +76,16 @@ class LoginPage extends ConsumerWidget {
                     child: TextField(
                       controller: controller.passwordController,
                       textInputAction: TextInputAction.done,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
+                      obscureText: controller.hidePassword,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
                         labelText: 'Contraseña',
+                        suffixIcon: IconButton(
+                          icon: controller.hidePassword ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
+                          onPressed: controller.onPressHide,
+                        )
                       ),
                     ),
                   ),

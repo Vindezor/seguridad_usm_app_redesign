@@ -42,18 +42,18 @@ class LandingPage extends StatelessWidget {
                       height: 100,
                     ),
                     const Padding(
-                      padding: EdgeInsets.only(left: 70, right: 70, top: 40),
+                      padding: EdgeInsets.only(left: 60, right: 60, top: 40),
                       child: Text(
                         "¡Bienvenido/a a la Aplicación de Seguridad en el Transporte! Conéctate con tranquilidad y protege tu viaje.",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                          fontSize: 15,
                         ),
                         textAlign: TextAlign.justify,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 70, right: 70, top: 40),
+                      padding: const EdgeInsets.only(left: 60, right: 60, top: 40),
                       child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
@@ -71,7 +71,7 @@ class LandingPage extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 70, right: 70, top: 20),
+                      padding: const EdgeInsets.only(left: 60, right: 60, top: 20),
                       child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
