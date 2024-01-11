@@ -61,6 +61,9 @@ class LoginPage extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                     child: TextField(
+                      onChanged: (value) {
+                        controller.changedInput();
+                      },
                       controller: controller.documentController,
                       textInputAction: TextInputAction.next,
                       // obscureText: true,
@@ -77,6 +80,9 @@ class LoginPage extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                     child: TextField(
+                      onChanged: (value) {
+                        controller.changedInput();
+                      },
                       controller: controller.passwordController,
                       textInputAction: TextInputAction.done,
                       obscureText: controller.hidePassword,
