@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:test_design/ui/complete_profile/complete_profile_one_page.dart';
+import 'package:test_design/ui/complete_profile/complete_profile_two_page.dart';
 import 'package:test_design/ui/guide/guide_page.dart';
 import 'package:test_design/ui/history/history_page.dart';
 import 'package:test_design/ui/home/home_page.dart';
@@ -26,5 +28,7 @@ Map<String, Widget Function(BuildContext context)> appRoutes() {
     Routes.guide: (_) => const GuidePage(),
     Routes.registerQrScanner: (_) => const RegisterQrScanner(),
     Routes.map: (_) => const MapPage(),
+    Routes.completeProfileOne: (_) => const CompleteProfileOnePage(),
+    Routes.completeProfileTwo: (_) => const CompleteProfileTwoPage(),
   };
 }

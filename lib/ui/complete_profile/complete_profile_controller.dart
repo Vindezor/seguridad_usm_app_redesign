@@ -11,6 +11,10 @@ class CompleteProfileController extends ChangeNotifier{
   //int value;
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController emergencyEmailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController emergencyPhoneController = TextEditingController();
+
   bool hidePassword = true;
   bool hideConfirmPassword = true;
 
@@ -25,11 +29,16 @@ class CompleteProfileController extends ChangeNotifier{
   }
 
   nextButtonDisabled(){
-    return true;
+    return false;
   }
 
-  nextPage(){
+  nextPage(context){
+    Navigator.of(context).pushNamed("/complete_profile_two");
     log("next");
+  }
+
+  save(){
+    log("save");
   }
 
   @override
@@ -38,6 +47,9 @@ class CompleteProfileController extends ChangeNotifier{
     super.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
+    emergencyEmailController.dispose();
+    phoneController.dispose();
+    emergencyPhoneController.dispose();
     log("[CompleteProfileController] disposed");
   }
 }

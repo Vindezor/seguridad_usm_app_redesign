@@ -12,6 +12,7 @@ class LoginPage extends ConsumerWidget {
     final controller = ref.watch(loginController);
     log("[LoginPage] reloaded");
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Stack(
@@ -64,6 +65,8 @@ class LoginPage extends ConsumerWidget {
                       textInputAction: TextInputAction.next,
                       // obscureText: true,
                       decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
@@ -78,6 +81,8 @@ class LoginPage extends ConsumerWidget {
                       textInputAction: TextInputAction.done,
                       obscureText: controller.hidePassword,
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),

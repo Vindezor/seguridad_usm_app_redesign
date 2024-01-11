@@ -8,6 +8,7 @@ class LandingPage extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Stack(
             alignment: Alignment.center,
             children: [

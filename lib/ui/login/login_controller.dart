@@ -33,7 +33,11 @@ class LoginController extends ChangeNotifier{
     if(response != null){
       Navigator.of(context).pop();
       if(response.status == "SUCCESS"){
-        Navigator.pushReplacementNamed(context, '/home');
+        if(response.data.user.isActive){
+          Navigator.pushReplacementNamed(context, '/home');
+        } else {
+          Navigator.pushReplacementNamed(context, '/complete_profile_one');
+        }
         // showAlertOptions(
         //   context,
         //   msg: "¡Bienvenido/a a nuestra plataforma de seguridad de transporte! Tu usuario se ha creado exitosamente. Por favor, revisa tu correo electrónico institucional (Terna) para encontrar una clave temporal. Tienes 30 minutos para iniciar sesión en la plataforma, de lo contrario, tu cuenta será eliminada del sistema. ¡Gracias por elegirnos y viajar seguro!",

@@ -10,4 +10,6 @@ abstract class Routes{
   static const guide = '/guide';
   static const registerQrScanner = '/register_qr_scanner';
   static const map = '/map';
+  static const completeProfileOne = '/complete_profile_one';
+  static const completeProfileTwo = '/complete_profile_two';
 }

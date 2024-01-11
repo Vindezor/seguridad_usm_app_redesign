@@ -12,6 +12,7 @@ class RegisterPage extends ConsumerWidget {
     final controller = ref.watch(registerController);
     log("[RegisterPage] reloaded");
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Stack(
@@ -67,6 +68,8 @@ class RegisterPage extends ConsumerWidget {
                           child: TextField(
                             controller: controller.textEditingController,
                             decoration: const InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(25)),
                               ),

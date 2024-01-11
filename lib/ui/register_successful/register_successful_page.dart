@@ -8,6 +8,7 @@ class RegisterSuccessfulPage extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: Scaffold(
+        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Stack(
