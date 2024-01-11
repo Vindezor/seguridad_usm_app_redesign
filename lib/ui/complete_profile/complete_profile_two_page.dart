@@ -63,6 +63,9 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                         child: TextField(
+                          onChanged: (value) {
+                            controller.changedInput();
+                          },
                           controller: controller.emergencyEmailController,
                           textInputAction: TextInputAction.next,
                           // obscureText: true,
@@ -79,6 +82,9 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                         child: TextField(
+                          onChanged: (value) {
+                            controller.changedInput();
+                          },
                           controller: controller.phoneController,
                           textInputAction: TextInputAction.next,
                           // obscureText: true,
@@ -95,6 +101,9 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                         child: TextField(
+                          onChanged: (value) {
+                            controller.changedInput();
+                          },
                           controller: controller.emergencyPhoneController,
                           textInputAction: TextInputAction.next,
                           // obscureText: true,
@@ -114,7 +123,7 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
                           ),
-                          onPressed: controller.nextButtonDisabled() ? null : () => controller.save(),
+                          onPressed: controller.saveButtonDisabled() ? null : () => controller.save(context),
                           child: const Text(
                             "Guardar",
                             style: TextStyle(

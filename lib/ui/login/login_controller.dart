@@ -67,10 +67,14 @@ class LoginController extends ChangeNotifier{
   }
 
   bool loginButtonDisabled(){
-    if(documentRegex.hasMatch(documentController.value.text) && passwordRegex.hasMatch(documentController.value.text)){
+    if(documentRegex.hasMatch(documentController.value.text) && passwordRegex.hasMatch(passwordController.value.text)){
       return false;
     }
     return true;
+  }
+
+  changedInput(){
+    notifyListeners();
   }
 
   @override

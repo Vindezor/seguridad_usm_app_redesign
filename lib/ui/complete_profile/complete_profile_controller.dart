@@ -14,6 +14,9 @@ class CompleteProfileController extends ChangeNotifier{
   final TextEditingController emergencyEmailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emergencyPhoneController = TextEditingController();
+  final passwordRegex = RegExp(r'^[A-Za-z\d.,_\-@*#$]{8,15}$');
+  final phoneRegex = RegExp(r'^\d{11}$');
+  final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+((com)|(es))$');
 
   bool hidePassword = true;
   bool hideConfirmPassword = true;
@@ -29,7 +32,21 @@ class CompleteProfileController extends ChangeNotifier{
   }
 
   nextButtonDisabled(){
-    return false;
+    if(passwordRegex.hasMatch(passwordController.value.text) && passwordRegex.hasMatch(confirmPasswordController.value.text) && passwordController.value.text == confirmPasswordController.value.text){
+      return false;
+    }
+    return true;
+  }
+
+  saveButtonDisabled(){
+    if(phoneRegex.hasMatch(phoneController.value.text) && phoneRegex.hasMatch(emergencyPhoneController.value.text) && emailRegex.hasMatch(emergencyEmailController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
+  changedInput(){
+    notifyListeners();
   }
 
   nextPage(context){
@@ -37,7 +54,8 @@ class CompleteProfileController extends ChangeNotifier{
     log("next");
   }
 
-  save(){
+  save(context){
+    Navigator.of(context).pushNamed("/home");
     log("save");
   }
 

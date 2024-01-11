@@ -62,6 +62,9 @@ class CompleteProfileOnePage extends ConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                         child: TextField(
+                          onChanged: (value) {
+                            controller.changedInput();
+                          },
                           controller: controller.passwordController,
                           textInputAction: TextInputAction.done,
                           obscureText: controller.hidePassword,
@@ -82,9 +85,12 @@ class CompleteProfileOnePage extends ConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                         child: TextField(
+                          onChanged: (value) {
+                            controller.changedInput();
+                          },
                           controller: controller.confirmPasswordController,
                           textInputAction: TextInputAction.done,
-                          obscureText: controller.hidePassword,
+                          obscureText: controller.hideConfirmPassword,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
@@ -93,7 +99,7 @@ class CompleteProfileOnePage extends ConsumerWidget {
                             ),
                             labelText: 'Confirmar Contraseña',
                             suffixIcon: IconButton(
-                              icon: controller.hidePassword ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
+                              icon: controller.hideConfirmPassword ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
                               onPressed: controller.onPressHideConfirmPassword,
                             )
                           ),
