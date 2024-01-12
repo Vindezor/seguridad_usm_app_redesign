@@ -10,7 +10,7 @@ class CompleteProfileTwoPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(completeProfileController);
-    log("[CompleteProfileOnePage] reloaded");
+    log("[CompleteProfileTwoPage] reloaded");
     return PopScope(
       canPop: true,
       child: Scaffold(
@@ -105,7 +105,7 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                             controller.changedInput();
                           },
                           controller: controller.emergencyPhoneController,
-                          textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.done,
                           // obscureText: true,
                           decoration: const InputDecoration(
                             filled: true,

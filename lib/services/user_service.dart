@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:test_design/app_config.dart';
 import 'package:test_design/models/generic_model.dart';
 import 'package:test_design/models/login_model.dart';
@@ -75,9 +76,11 @@ class UserService {
   }
 
   Future<UpdateUserModel?> updateUser({String? phone, String? emergency_phone, String? emergency_email, String? password}) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
     try {
       final response = await _dio.post(
-        '${AppConfig.instance.apiHost}login',
+        '${AppConfig.instance.apiHost}updateUser',
         // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
         cancelToken: cancelToken,
         data: {
@@ -88,6 +91,9 @@ class UserService {
         },
         options: Options(
           contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
         ),
         // options: Options(
         //   headers: {
