@@ -16,9 +16,11 @@ void showAlertOptions(
       return PopScope(
         canPop: false,
         child: AlertDialog(
+          backgroundColor: Colors.white,
           title: Text(
             title,
             textAlign: TextAlign.center,
+            style: TextStyle(color: Color(0xFF3874c0)),
           ),
           content: Text(
             msg,
@@ -30,23 +32,52 @@ void showAlertOptions(
           actionsAlignment: MainAxisAlignment.spaceAround,
           actions: (acceptOnPressed != null || cancelOnPressed != null)
           ? [ (cancelOnPressed != null)
-                ? TextButton(
+                ? ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFefdbd2))
+                  ),
                   onPressed: cancelOnPressed,
                   child: const Text(
                     "Cancelar",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Color(0xFFb04d1e),
                     ),
                   ),
                 )
+                
+                // TextButton(
+                //   onPressed: cancelOnPressed,
+                //   child: const Text(
+                //     "Cancelar",
+                //     style: TextStyle(
+                //       fontWeight: FontWeight.bold,
+                //       color: Color(0xFFb04d1e)
+                //     ),
+                //   ),
+                // )
                 : const SizedBox.shrink(),
               (acceptOnPressed != null)
-                ? TextButton(
+                // ? TextButton(
+                //   onPressed: acceptOnPressed,
+                //   child: const Text(
+                //     "Aceptar",
+                //     style: TextStyle(
+                //       fontWeight: FontWeight.bold,
+                //     ),
+                //   ),
+                // )
+                ? ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                  ),
                   onPressed: acceptOnPressed,
                   child: const Text(
                     "Aceptar",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
+                      fontSize: 14,
                     ),
                   ),
                 )

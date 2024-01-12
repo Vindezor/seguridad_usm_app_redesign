@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:stroke_text/stroke_text.dart';
+import 'package:test_design/global/global_dialog.dart';
 import 'package:test_design/routes/routes.dart';
 import 'package:test_design/ui/home/widgets/button_home.dart';
 
@@ -11,6 +13,7 @@ class HomePage extends StatelessWidget {
     FloatingActionButtonLocation fabLocation = FloatingActionButtonLocation.centerDocked;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         decoration: const BoxDecoration(
           // image: DecorationImage(
@@ -44,17 +47,26 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ButtonHome(
-                  icon: Icons.settings,
-                  text: "Ajustes",
-                  onTap: (){
-                    Navigator.of(context).pushNamed(Routes.settings);
-                  },
-                ),
-                ButtonHome(
                   icon: Icons.menu_book,
                   text: "Guía",
                   onTap: (){
                     Navigator.of(context).pushNamed(Routes.guide);
+                  },
+                ),
+                ButtonHome(
+                  icon: Icons.logout,
+                  text: "Cerrar Sesión",
+                  onTap: (){
+                    showAlertOptions(
+                      context,
+                      msg: "¿Esta seguro/a que desea cerrar sesión?",
+                      title: "Importante",
+                      acceptOnPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushReplacementNamed(Routes.login);
+                      },
+                      cancelOnPressed: () => Navigator.of(context).pop(),
+                    );
                   },
                 ),
               ],
@@ -123,23 +135,18 @@ class HomePage extends StatelessWidget {
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.logout), iconSize: 30,)
-        ],
-        title: const Text(
-          "Menú Principal",
-          style: TextStyle(
+        // actions: [
+        //   IconButton(onPressed: () {}, icon: const Icon(Icons.logout), iconSize: 30,)
+        // ],
+        title: const StrokeText(
+          text: "Menú Principal",
+          textStyle: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 26,
-            // shadows: [
-            //   BoxShadow(
-            //     color: Colors.black,
-            //     blurRadius: 2,
-            //     spreadRadius: 5,
-            //     blurStyle: BlurStyle.outer
-            //   )
-            // ]
+            color: Color(0xFF3874c0),
           ),
+          strokeColor: Colors.white,
+          strokeWidth: 3,
         ),
         flexibleSpace: Image.asset(
           "assets/parte-top.png",

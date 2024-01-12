@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:icon_decoration/icon_decoration.dart';
+import 'package:stroke_text/stroke_text.dart';
 import 'package:test_design/ui/history/widgets/history_item.dart';
 
 class HistoryPage extends StatelessWidget {
@@ -49,15 +51,27 @@ class HistoryPage extends StatelessWidget {
       // ),
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.logout), iconSize: 30,)
-        ],
-        title: const Text(
-          "Historial",
-          style: TextStyle(
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: const DecoratedIcon(
+            icon: Icon(Icons.arrow_back, color: Color(0xFF3874c0), size: 30,),
+            decoration: IconDecoration(
+              border: IconBorder(
+                color: Colors.white,
+                width: 3
+              )
+            )
+          ),
+        ),
+        title: const StrokeText(
+          text: "Historial",
+          textStyle: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 26,
+            color: Color(0xFF3874c0),
           ),
+          strokeColor: Colors.white,
+          strokeWidth: 3,
         ),
         flexibleSpace: Image.asset(
           "assets/parte-top.png",

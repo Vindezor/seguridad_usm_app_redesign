@@ -66,7 +66,7 @@ class CompleteProfileOnePage extends ConsumerWidget {
                             controller.changedInput();
                           },
                           controller: controller.passwordController,
-                          textInputAction: TextInputAction.done,
+                          textInputAction: TextInputAction.next,
                           obscureText: controller.hidePassword,
                           decoration: InputDecoration(
                             filled: true,

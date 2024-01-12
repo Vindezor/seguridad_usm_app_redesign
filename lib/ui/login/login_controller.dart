@@ -35,22 +35,26 @@ class LoginController extends ChangeNotifier{
     if(response != null){
       Navigator.of(context).pop();
       if(response.status == "SUCCESS"){
-        storage.write(key: "token", value: response.data.token);
-        if(response.data.user.isActive){
-          await storage.write(key: "document", value: response.data.user.document);
-          await storage.write(key: "email", value: response.data.user.email);
-          await storage.write(key: "expiration_date", value: response.data.user.expirationDate.toString());
-          await storage.write(key: "university_code", value: response.data.user.universityCode);
-          await storage.write(key: "full_name", value: response.data.user.fullName);
-          await storage.write(key: "emergency_email", value: response.data.user.emergencyEmail);
-          await storage.write(key: "emergency_phone", value: response.data.user.emergencyPhone);
-          await storage.write(key: "creation_date", value: response.data.user.creationDate.toString());
-          await storage.write(key: "is_active", value: response.data.user.isActive.toString());
-          await storage.write(key: "emergency_phone", value: response.data.user.emergencyPhone);
-          await storage.write(key: "type_user", value: response.data.user.typeUser.typeUser);
-          Navigator.pushReplacementNamed(context, '/home');
-        } else {
-          Navigator.pushReplacementNamed(context, '/complete_profile_one');
+        if(response.data != null){
+          storage.write(key: "token", value: response.data?.token);
+          if(response.data!.user.isActive){
+            await storage.write(key: "id_user", value: response.data?.user.id.toString());
+            await storage.write(key: "document", value: response.data?.user.document);
+            await storage.write(key: "email", value: response.data?.user.email);
+            await storage.write(key: "expiration_date", value: response.data?.user.expirationDate.toString());
+            await storage.write(key: "university_code", value: response.data?.user.universityCode);
+            await storage.write(key: "full_name", value: response.data?.user.fullName);
+            await storage.write(key: "emergency_email", value: response.data?.user.emergencyEmail);
+            await storage.write(key: "emergency_phone", value: response.data?.user.emergencyPhone);
+            await storage.write(key: "creation_date", value: response.data?.user.creationDate.toString());
+            await storage.write(key: "is_active", value: response.data?.user.isActive.toString());
+            await storage.write(key: "emergency_phone", value: response.data?.user.emergencyPhone);
+            await storage.write(key: "type_user", value: response.data?.user.typeUser.typeUser);
+            Navigator.pushReplacementNamed(context, '/home');
+          } else {
+            await storage.write(key: "id_user", value: response.data?.user.id.toString());
+            Navigator.pushReplacementNamed(context, '/complete_profile_one');
+          }
         }
         // showAlertOptions(
         //   context,

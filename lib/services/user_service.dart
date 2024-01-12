@@ -75,7 +75,7 @@ class UserService {
     }
   }
 
-  Future<UpdateUserModel?> updateUser({String? phone, String? emergency_phone, String? emergency_email, String? password}) async {
+  Future<UpdateUserModel?> updateUser({int? id_user, String? phone, String? emergency_phone, String? emergency_email, String? password}) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
     try {
@@ -84,6 +84,7 @@ class UserService {
         // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
         cancelToken: cancelToken,
         data: {
+          "id_user": id_user,
           "phone": phone,
           "emergency_phone": emergency_phone,
           "emergency_email": emergency_email,

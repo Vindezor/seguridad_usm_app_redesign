@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:test_design/global/global_dialog.dart';
 import 'package:test_design/global/global_loading.dart';
 import 'package:test_design/models/update_user_model.dart';
@@ -25,6 +26,7 @@ class CompleteProfileController extends ChangeNotifier{
   final phoneRegex = RegExp(r'^\d{11}$');
   final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+((com)|(es))$');
 
+  final storage = const FlutterSecureStorage();
   bool hidePassword = true;
   bool hideConfirmPassword = true;
 
@@ -62,19 +64,34 @@ class CompleteProfileController extends ChangeNotifier{
   }
 
   save(context) async {
+    final idUser = await storage.read(key: 'id_user');
     globalLoading(context);
     final UpdateUserModel? response = await userService.updateUser(
+      id_user: int.parse(idUser!),
       emergency_email: emergencyEmailController.value.text,
       emergency_phone: emergencyPhoneController.value.text,
       phone: phoneController.value.text,
       password: passwordController.value.text,
     );
-    Navigator.of(context).pop();
     if(response != null){
       if(response.status == "SUCCESS"){
+        await storage.write(key: "id_user", value: response.data.id.toString());
+        await storage.write(key: "document", value: response.data.document);
+        await storage.write(key: "email", value: response.data.email);
+        await storage.write(key: "expiration_date", value: response.data.expirationDate.toString());
+        await storage.write(key: "university_code", value: response.data.universityCode);
+        await storage.write(key: "full_name", value: response.data.fullName);
+        await storage.write(key: "emergency_email", value: response.data.emergencyEmail);
+        await storage.write(key: "emergency_phone", value: response.data.emergencyPhone);
+        await storage.write(key: "creation_date", value: response.data.creationDate.toString());
+        await storage.write(key: "is_active", value: response.data.isActive.toString());
+        await storage.write(key: "emergency_phone", value: response.data.emergencyPhone);
+        await storage.write(key: "type_user", value: response.data.typeUser.typeUser);
+        Navigator.of(context).pop();
         Navigator.of(context).pop();
         Navigator.pushReplacementNamed(context, '/home');
       } else {
+        Navigator.of(context).pop();
         showAlertOptions(
           context,
           msg: response.msg,
@@ -82,6 +99,7 @@ class CompleteProfileController extends ChangeNotifier{
         );
       }
     } else {
+      Navigator.of(context).pop();
       showAlertOptions(
         context,
         msg: "Ha ocurrido un error con el servicio. Intente mas tarde",

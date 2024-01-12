@@ -58,10 +58,10 @@ class MapPage extends ConsumerWidget {
           onPressed: () => {
             
           },
-          backgroundColor: const Color(0xFFefdbd2),
+          backgroundColor: const Color(0xFFb04d1e),
           child: const Icon(
             Icons.notification_important,
-            color: Color(0xFFb04d1e),
+            color: Color(0xFFefdbd2),
             size: 40,
             weight: 0.5,
           ),
