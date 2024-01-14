@@ -55,6 +55,7 @@ class MapPage extends ConsumerWidget {
           ]
         ),
         child: FloatingActionButton.large(
+          heroTag: 'heroMap',
           onPressed: () => {
             
           },

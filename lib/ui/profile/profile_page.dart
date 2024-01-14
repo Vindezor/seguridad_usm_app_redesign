@@ -1,134 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:stroke_text/stroke_text.dart';
-import 'package:test_design/ui/profile/widgets/edit_profil_item.dart';
+import 'package:test_design/ui/profile/profile_controller.dart';
 import 'package:test_design/ui/profile/widgets/profile_data_card.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    //FloatingActionButtonLocation fabLocation = FloatingActionButtonLocation.centerDocked;
 
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(profileController);
+    WidgetsBinding.instance.addPostFrameCallback((_) => controller.initProfile(context));
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
-      body: Container(
-          decoration: const BoxDecoration(
-              // image: DecorationImage(
-              //   image: AssetImage("assets/background.png"),
-              //   fit: BoxFit.cover
-              // )
-              ),
-          child: ListView(
-            children: [
-              const ProfileDataCard(
-                  title: "Correo", text: "ejemplocorreo13@gmail.com"),
-              const ProfileDataCard(
-                  title: "Correo de Emergencia",
-                  text: "ejemplocorreo2@gmail.com"),
-              const ProfileDataCard(title: "Cedula", text: "C.I. 28.301.100"),
-              Padding(
-                padding: const EdgeInsets.only(left: 80, right: 80, top: 20),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFFe9f2f7)),
-                  ),
-                  onPressed: () {
-                    showModalBottomSheet(
-                        showDragHandle: true,
-                        context: context,
-                        isScrollControlled: true,
-                        
-                        builder: (context) {
-                          // return SizedBox(
-                          //   height: 400,
-                          //   child: Center(
-                          //     child: ElevatedButton(
-                          //       onPressed: () {
-                          //         Navigator.pop(context);
-                          //       },
-                          //       child: const Text("a")
-                          //     ),
-                          //   ),
-                          // );
-                          return SingleChildScrollView(
-
-                              child: Container(
-                                height: MediaQuery.of(context).size.height * 0.7,
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: ListView(
-                                  children: [
-                                    const EditProfileItem(title: 'Correo'),
-                                    const EditProfileItem(
-                                        title: 'Correo de Emergencia'),
-                                    const EditProfileItem(title: 'Cedula'),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 20),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          ElevatedButton(
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all<
-                                                          Color>(
-                                                      const Color(0xFFe9f2f7)),
-                                            ),
-                                            onPressed: () {},
-                                            child: const Text(
-                                              "Guardar",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          ElevatedButton(
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all<
-                                                          Color>(
-                                                      const Color(0xFFefdbd2)),
-                                            ),
-                                            onPressed: () {},
-                                            child: const Text(
-                                              "Cancelar",
-                                              style: TextStyle(
-                                                color: Color(0xFFb04d1e),
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ));
-                        });
-                  },
-                  child: const Text(
-                    "Editar",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )),
+      body: Scrollbar(
+        child: ListView(
+          children: controller.ready ? [
+            ProfileDataCard(
+              title: "Nombre Completo",
+              text: controller.fullName!,
+            ),
+            ProfileDataCard(
+              title: "Cedula",
+              text: controller.document!,
+            ),
+            ProfileDataCard(
+              title: "Correo",
+              text: controller.email!,
+            ),
+            ProfileDataCard(
+              title: "Correo de Emergencia",
+              text: controller.emergencyEmail!,
+            ),
+            ProfileDataCard(
+              title: "Telefono",
+              text: controller.phone!,
+            ),
+            ProfileDataCard(
+              title: "Telefono de Emergencia",
+              text: controller.emergencyPhone!,
+            ),
+            ProfileDataCard(
+              title: "Código de Carnet",
+              text: controller.universityCode!,
+            ),
+            ProfileDataCard(
+              title: "Fecha de Vencimiento",
+              text: controller.getExpirationDate(),
+            ),
+            const SizedBox(
+              height: 20,
+            )
+          ] : const [SizedBox()],
+        ),
+      ),
       // floatingActionButtonLocation: fabLocation,
       // floatingActionButton: Container(
       //   decoration: const BoxDecoration(
@@ -151,18 +79,32 @@ class ProfilePage extends StatelessWidget {
       //     ),
       //   ),
       // ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: 'heroProfile',
+        onPressed: () => controller.goToEditProfile(context),
+        backgroundColor: const Color(0xFF3874c0),
+        child: const Icon(
+          Icons.edit,
+          color: Color(0xFFddeaf4),
+        ),
+      ),
       appBar: AppBar(
         automaticallyImplyLeading: true,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
           icon: const DecoratedIcon(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Color(0xFF3874c0),
-                size: 30,
-              ),
-              decoration: IconDecoration(
-                  border: IconBorder(color: Colors.white, width: 3))),
+            icon: Icon(
+              Icons.arrow_back,
+              color: Color(0xFF3874c0),
+              size: 30,
+            ),
+            decoration: IconDecoration(
+              border: IconBorder(
+                color: Colors.white,
+                width: 3
+              )
+            )
+          ),
         ),
         title: const StrokeText(
           text: "Perfil",

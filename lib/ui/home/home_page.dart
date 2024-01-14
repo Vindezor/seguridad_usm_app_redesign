@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stroke_text/stroke_text.dart';
-import 'package:test_design/global/global_dialog.dart';
 import 'package:test_design/routes/routes.dart';
+import 'package:test_design/ui/home/home_controller.dart';
 import 'package:test_design/ui/home/widgets/button_home.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(homeController);
+
     FloatingActionButtonLocation fabLocation = FloatingActionButtonLocation.centerDocked;
 
     return Scaffold(
@@ -56,18 +58,7 @@ class HomePage extends StatelessWidget {
                 ButtonHome(
                   icon: Icons.logout,
                   text: "Cerrar Sesión",
-                  onTap: (){
-                    showAlertOptions(
-                      context,
-                      msg: "¿Esta seguro/a que desea cerrar sesión?",
-                      title: "Importante",
-                      acceptOnPressed: () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pushReplacementNamed(Routes.login);
-                      },
-                      cancelOnPressed: () => Navigator.of(context).pop(),
-                    );
-                  },
+                  onTap: () => controller.logout(context),
                 ),
               ],
             ),
@@ -86,44 +77,8 @@ class HomePage extends StatelessWidget {
           ]
         ),
         child: FloatingActionButton.large(
-          onPressed: () => {
-            showDialog(
-              context: context,
-              builder: (context) => Dialog(
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
-                        "QR para inciar ruta",
-                        style: TextStyle(
-                          color: Color(0xFF3874c0),
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      QrImageView(
-                        data: "uioi-12312-5dasd-12c4d",
-                        size: 200,
-                        dataModuleStyle: const QrDataModuleStyle(dataModuleShape: QrDataModuleShape.square, color: Color(0xFF3874c0)),
-                        eyeStyle: const QrEyeStyle(eyeShape: QrEyeShape.square, color: Color(0xFF3874c0)),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('/map');
-                        },
-                        child: const Text("data")
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
-          },
+          heroTag: 'heroHome',
+          onPressed: () => controller.showQr(context),
           backgroundColor: const Color(0xFFddeaf4),
           child: const Icon(
             Icons.qr_code_scanner,

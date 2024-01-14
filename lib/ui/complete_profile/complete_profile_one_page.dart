@@ -62,6 +62,8 @@ class CompleteProfileOnePage extends ConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                         child: TextField(
+                          maxLength: 15,
+                          focusNode: controller.passwordFocusNode,
                           onChanged: (value) {
                             controller.changedInput();
                           },
@@ -80,11 +82,14 @@ class CompleteProfileOnePage extends ConsumerWidget {
                               onPressed: controller.onPressHidePassword,
                             )
                           ),
+                          onEditingComplete: () => FocusScope.of(context).requestFocus(controller.confirmPasswordFocusNode),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                         child: TextField(
+                          maxLength: 15,
+                          focusNode: controller.confirmPasswordFocusNode,
                           onChanged: (value) {
                             controller.changedInput();
                           },
@@ -101,8 +106,15 @@ class CompleteProfileOnePage extends ConsumerWidget {
                             suffixIcon: IconButton(
                               icon: controller.hideConfirmPassword ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
                               onPressed: controller.onPressHideConfirmPassword,
-                            )
+                            ),
                           ),
+                          // onEditingComplete: () {
+                          //   if(controller.nextButtonDisabled()){
+                          //     FocusScope.of(context).unfocus();
+                          //   } else{
+                          //     controller.nextPage(context);
+                          //   }
+                          // },
                         ),
                       ),
                       Padding(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:icon_decoration/icon_decoration.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:test_design/ui/guide/widgets/how-to-use.dart';
 import 'package:test_design/ui/guide/widgets/step_one.dart';
@@ -11,64 +12,87 @@ class GuidePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //FloatingActionButtonLocation fabLocation = FloatingActionButtonLocation.centerDocked;
-    return IntroSlider(
-      listCustomTabs: const [
-        HowToUse(),
-        StepOne(),
-        StepTwo(),
-        StepThree(),
-      ],
-      renderDoneBtn: const Icon(
-        Icons.done,
-        size: 32,
+    return Scaffold(
+      body: IntroSlider(
+        listCustomTabs: const [
+          HowToUse(),
+          StepOne(),
+          StepTwo(),
+          StepThree(),
+        ],
+        renderDoneBtn: const Icon(
+          Icons.done,
+          size: 32,
+        ),
+        renderNextBtn: const Icon(
+          Icons.navigate_next,
+          size: 32,
+        ),
+        renderPrevBtn: const Icon(
+          Icons.navigate_before,
+          size: 32,
+        ),
+        isShowPrevBtn: true,
+        isShowSkipBtn: false,
+        backgroundColorAllTabs: Colors.white,
+        // listContentConfig: const [
+        //   ContentConfig(
+        //     title: 'Paso 1',
+        //     styleTitle: TextStyle(
+        //       color: Color(0xFF3874c0),
+        //       fontSize: 32,
+        //       fontWeight: FontWeight.bold
+        //     ),
+        //     description: 'En el menu principal hay un boton abajo que al ser presionado saldrá un codigo QR que el colector del bus va a escanear e iniciará tu ruta',
+        //     styleDescription: TextStyle(
+        //       color: Color(0xFF3874c0),
+        //       fontSize: 20,
+        //     ),
+        //     textAlignDescription: TextAlign.justify,
+        //     pathImage: "assets/tutorial-1.png"
+        //   ),
+        //   ContentConfig(
+        //     title: 'PruebB',
+        //     styleTitle: TextStyle(
+        //       color: Color(0xFF3874c0),
+        //       fontSize: 32,
+        //       fontWeight: FontWeight.bold
+        //     ),
+        //   ),
+        //   ContentConfig(
+        //     title: 'PruebC',
+        //     styleTitle: TextStyle(
+        //       color: Color(0xFF3874c0),
+        //       fontSize: 32,
+        //       fontWeight: FontWeight.bold
+        //     ),
+        //   )
+        // ],
+        onDonePress: () {
+          Navigator.of(context).pop();
+        },
       ),
-      renderNextBtn: const Icon(
-        Icons.navigate_next,
-        size: 32,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: const DecoratedIcon(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Color(0xFF3874c0),
+              size: 30,
+            ),
+            decoration: IconDecoration(
+              border: IconBorder(
+                color: Colors.white,
+                width: 3
+              )
+            )
+          ),
+        ),
       ),
-      renderPrevBtn: const Icon(
-        Icons.navigate_before,
-        size: 32,
-      ),
-      isShowPrevBtn: true,
-      isShowSkipBtn: false,
-      backgroundColorAllTabs: Colors.white,
-      // listContentConfig: const [
-      //   ContentConfig(
-      //     title: 'Paso 1',
-      //     styleTitle: TextStyle(
-      //       color: Color(0xFF3874c0),
-      //       fontSize: 32,
-      //       fontWeight: FontWeight.bold
-      //     ),
-      //     description: 'En el menu principal hay un boton abajo que al ser presionado saldrá un codigo QR que el colector del bus va a escanear e iniciará tu ruta',
-      //     styleDescription: TextStyle(
-      //       color: Color(0xFF3874c0),
-      //       fontSize: 20,
-      //     ),
-      //     textAlignDescription: TextAlign.justify,
-      //     pathImage: "assets/tutorial-1.png"
-      //   ),
-      //   ContentConfig(
-      //     title: 'PruebB',
-      //     styleTitle: TextStyle(
-      //       color: Color(0xFF3874c0),
-      //       fontSize: 32,
-      //       fontWeight: FontWeight.bold
-      //     ),
-      //   ),
-      //   ContentConfig(
-      //     title: 'PruebC',
-      //     styleTitle: TextStyle(
-      //       color: Color(0xFF3874c0),
-      //       fontSize: 32,
-      //       fontWeight: FontWeight.bold
-      //     ),
-      //   )
-      // ],
-      onDonePress: () {
-        Navigator.of(context).pop();
-      },
     );
     // return Scaffold(
     //   body: Container(

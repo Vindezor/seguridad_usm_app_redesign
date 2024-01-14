@@ -22,6 +22,12 @@ class CompleteProfileController extends ChangeNotifier{
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emergencyPhoneController = TextEditingController();
 
+  final FocusNode passwordFocusNode = FocusNode();
+  final FocusNode confirmPasswordFocusNode = FocusNode();
+  final FocusNode emergencyEmailFocusNode = FocusNode();
+  final FocusNode phoneFocusNode = FocusNode();
+  final FocusNode emergencyPhoneFocusNode = FocusNode();
+
   final passwordRegex = RegExp(r'^[A-Za-z\d.,_\-@*#$]{8,15}$');
   final phoneRegex = RegExp(r'^\d{11}$');
   final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+((com)|(es))$');
@@ -75,21 +81,29 @@ class CompleteProfileController extends ChangeNotifier{
     );
     if(response != null){
       if(response.status == "SUCCESS"){
-        await storage.write(key: "id_user", value: response.data.id.toString());
-        await storage.write(key: "document", value: response.data.document);
-        await storage.write(key: "email", value: response.data.email);
-        await storage.write(key: "expiration_date", value: response.data.expirationDate.toString());
-        await storage.write(key: "university_code", value: response.data.universityCode);
-        await storage.write(key: "full_name", value: response.data.fullName);
-        await storage.write(key: "emergency_email", value: response.data.emergencyEmail);
-        await storage.write(key: "emergency_phone", value: response.data.emergencyPhone);
-        await storage.write(key: "creation_date", value: response.data.creationDate.toString());
-        await storage.write(key: "is_active", value: response.data.isActive.toString());
-        await storage.write(key: "emergency_phone", value: response.data.emergencyPhone);
-        await storage.write(key: "type_user", value: response.data.typeUser.typeUser);
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
-        Navigator.pushReplacementNamed(context, '/home');
+        showAlertOptions(
+          context,
+          justified: true,
+          msg: "¡Perfil completado con éxito! Bienvenido/a al sistema. Ahora puedes disfrutar de todas las funciones. ¡Gracias por unirte!",
+          title: "¡Enhorabuena!",
+          closeOnPressed: () async {
+            await storage.write(key: "id_user", value: response.data!.id.toString());
+            await storage.write(key: "document", value: response.data!.document);
+            await storage.write(key: "email", value: response.data!.email);
+            await storage.write(key: "expiration_date", value: response.data!.expirationDate.toString());
+            await storage.write(key: "university_code", value: response.data!.universityCode);
+            await storage.write(key: "full_name", value: response.data!.fullName);
+            await storage.write(key: "emergency_email", value: response.data!.emergencyEmail);
+            await storage.write(key: "emergency_phone", value: response.data!.emergencyPhone);
+            await storage.write(key: "creation_date", value: response.data!.creationDate.toString());
+            await storage.write(key: "is_active", value: response.data!.isActive.toString());
+            await storage.write(key: "phone", value: response.data!.phone);
+            await storage.write(key: "type_user", value: response.data!.typeUser.typeUser);
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+            Navigator.pushReplacementNamed(context, '/home');
+          }
+        );
       } else {
         Navigator.of(context).pop();
         showAlertOptions(

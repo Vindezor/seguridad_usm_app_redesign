@@ -33,7 +33,6 @@ class LoginController extends ChangeNotifier{
     globalLoading(context);
     final LoginModel? response = await userService.login(document: documentController.value.text, password: passwordController.value.text);
     if(response != null){
-      Navigator.of(context).pop();
       if(response.status == "SUCCESS"){
         if(response.data != null){
           storage.write(key: "token", value: response.data?.token);
@@ -48,11 +47,13 @@ class LoginController extends ChangeNotifier{
             await storage.write(key: "emergency_phone", value: response.data?.user.emergencyPhone);
             await storage.write(key: "creation_date", value: response.data?.user.creationDate.toString());
             await storage.write(key: "is_active", value: response.data?.user.isActive.toString());
-            await storage.write(key: "emergency_phone", value: response.data?.user.emergencyPhone);
+            await storage.write(key: "phone", value: response.data?.user.phone);
             await storage.write(key: "type_user", value: response.data?.user.typeUser.typeUser);
+            Navigator.of(context).pop();
             Navigator.pushReplacementNamed(context, '/home');
           } else {
             await storage.write(key: "id_user", value: response.data?.user.id.toString());
+            Navigator.of(context).pop();
             Navigator.pushReplacementNamed(context, '/complete_profile_one');
           }
         }
@@ -67,6 +68,7 @@ class LoginController extends ChangeNotifier{
         //   },
         // );
       } else {
+        Navigator.of(context).pop();
         showAlertOptions(
           context,
           msg: response.msg,

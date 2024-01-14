@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_design/ui/complete_profile/complete_profile_controller.dart';
 
@@ -63,6 +64,8 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                         child: TextField(
+                          maxLength: 80,
+                          focusNode: controller.emergencyEmailFocusNode,
                           onChanged: (value) {
                             controller.changedInput();
                           },
@@ -77,11 +80,15 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                             ),
                             labelText: 'Correo de Emergencia',
                           ),
+                          onEditingComplete: () => FocusScope.of(context).requestFocus(controller.phoneFocusNode),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                         child: TextField(
+                          keyboardType: TextInputType.number,
+                          maxLength: 11,
+                          focusNode: controller.phoneFocusNode,
                           onChanged: (value) {
                             controller.changedInput();
                           },
@@ -96,11 +103,18 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                             ),
                             labelText: 'Telefono',
                           ),
+                          onEditingComplete: () => FocusScope.of(context).requestFocus(controller.emergencyPhoneFocusNode),
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                         child: TextField(
+                          keyboardType: TextInputType.number,
+                          maxLength: 11,
+                          focusNode: controller.emergencyPhoneFocusNode,
                           onChanged: (value) {
                             controller.changedInput();
                           },
@@ -115,6 +129,16 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                             ),
                             labelText: 'Telefono de Emergencia',
                           ),
+                          // onEditingComplete: () {
+                          //   if(controller.saveButtonDisabled()){
+                          //     FocusScope.of(context).unfocus();
+                          //   } else{
+                          //     controller.save(context);
+                          //   }
+                          // },
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                         ),
                       ),
                       Padding(

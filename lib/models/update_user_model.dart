@@ -11,7 +11,7 @@ String updateUserModelToJson(UpdateUserModel data) => json.encode(data.toJson())
 class UpdateUserModel {
     String status;
     String msg;
-    User data;
+    User? data;
 
     UpdateUserModel({
         required this.status,
@@ -22,13 +22,13 @@ class UpdateUserModel {
     factory UpdateUserModel.fromJson(Map<String, dynamic> json) => UpdateUserModel(
         status: json["status"],
         msg: json["msg"],
-        data: User.fromJson(json["data"]),
+        data: json["data"] != null ? User.fromJson(json["data"]) : null,
     );
 
     Map<String, dynamic> toJson() => {
         "status": status,
         "msg": msg,
-        "data": data.toJson(),
+        "data": data != null ? data?.toJson() : null,
     };
 }
 
