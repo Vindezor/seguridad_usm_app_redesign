@@ -62,6 +62,13 @@ class HomePage extends ConsumerWidget {
                 ),
               ],
             ),
+            Row(
+              children: [
+                TextButton(onPressed: controller.connectSocket, child: const Text("Conectar")),
+                TextButton(onPressed: controller.disconnectSocket, child: const Text("Desconectar")),
+                TextButton(onPressed: controller.sendSocket, child: const Text("Mensaje"))
+              ],
+            )
           ],
         ),
       ),

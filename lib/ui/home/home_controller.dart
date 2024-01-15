@@ -1,3 +1,5 @@
+// ignore_for_file: library_prefixes
+
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +10,28 @@ import 'package:test_design/global/global_dialog.dart';
 import 'package:test_design/global/global_loading.dart';
 import 'package:test_design/routes/routes.dart';
 import 'package:test_design/services/travel_service.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class HomeController extends ChangeNotifier{
   
   FlutterSecureStorage storage = const FlutterSecureStorage();
   TravelService travelService = TravelService(Dio());
-
+  IO.Socket socket = IO.io('http://10.0.2.2:3000/test',
+    IO.OptionBuilder()
+      .disableAutoConnect()
+      .setTransports(['websocket'])
+      .build()
+  );
+  
   HomeController(){
     log("[HomeController] init");
+    socket.on('connect', (_) {
+      log('connect');
+    });
+    socket.onError((data) => log("$data"));
+    socket.on('event', (data) => log(data));
+    socket.onDisconnect((_) => log('disconnect'));
+    socket.on('fromServer', (_) => log(_));
   }
 
   logout(context) {
@@ -30,6 +46,20 @@ class HomeController extends ChangeNotifier{
       },
       justified: true
     );
+  }
+
+  connectSocket(){
+    socket.connect();
+    //log("Conectado");
+  }
+
+  disconnectSocket(){
+    socket.disconnect();
+    //socket.clearListeners();
+  }
+
+  sendSocket(){
+    socket.emit('msg', 'Hola Mundo');
   }
 
   showQr(context) async {
@@ -97,6 +127,7 @@ class HomeController extends ChangeNotifier{
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+    socket.dispose();
     log("[HomeController] disposed");
   }
 }
