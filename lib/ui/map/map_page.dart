@@ -15,6 +15,7 @@ class MapPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(mapController);
     log("[MapPage] reloaded");
+    WidgetsBinding.instance.addPostFrameCallback((_) => controller.init());
     return Scaffold(
       //extendBodyBehindAppBar: true,
       // appBar: AppBar(
@@ -57,7 +58,7 @@ class MapPage extends ConsumerWidget {
         child: FloatingActionButton.large(
           heroTag: 'heroMap',
           onPressed: () => {
-            
+            controller.sendCoordinate()
           },
           backgroundColor: const Color(0xFFb04d1e),
           child: const Icon(

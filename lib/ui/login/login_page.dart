@@ -64,6 +64,7 @@ class LoginPage extends ConsumerWidget {
                       onChanged: (value) {
                         controller.changedInput();
                       },
+                      keyboardType: TextInputType.number,
                       controller: controller.documentController,
                       textInputAction: TextInputAction.next,
                       // obscureText: true,
