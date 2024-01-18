@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:test_design/ui/map/map_controller.dart';
 
@@ -15,7 +16,13 @@ class MapPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(mapController);
     log("[MapPage] reloaded");
-    WidgetsBinding.instance.addPostFrameCallback((_) => controller.init());
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      FlutterSecureStorage storage = const FlutterSecureStorage();
+      final idTypeUser = await storage.read(key: 'id_type_user');
+      if(idTypeUser == '2'){
+        controller.initSocket();
+      }
+    });
     return Scaffold(
       //extendBodyBehindAppBar: true,
       // appBar: AppBar(

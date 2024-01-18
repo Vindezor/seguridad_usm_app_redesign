@@ -70,6 +70,7 @@ class HomeController extends ChangeNotifier{
         Navigator.of(context).pop();
         showDialog(
           context: context,
+          barrierDismissible: false,
           builder: (context) => Dialog(
             surfaceTintColor: Colors.white,
             child: Container(
@@ -94,17 +95,34 @@ class HomeController extends ChangeNotifier{
                     dataModuleStyle: const QrDataModuleStyle(dataModuleShape: QrDataModuleShape.square, color: Color(0xFF3874c0)),
                     eyeStyle: const QrEyeStyle(eyeShape: QrEyeShape.square, color: Color(0xFF3874c0)),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/map');
-                    },
-                    child: const Text("data")
-                  )
+                  const Text("5:00")
                 ],
               ),
             ),
           ),
         );
+        final waitResponse = await travelService.waitForScan(response.data!.code);
+        if(waitResponse != null){
+          if(waitResponse.status == "SUCCESS"){
+            storage.write(key: 'id_travel', value: waitResponse.data!.idTravel);
+            Navigator.of(context).pop();
+            Navigator.of(context).pushReplacementNamed('/map');
+          } else {
+            Navigator.of(context).pop();
+            showAlertOptions(
+              context,
+              msg: waitResponse.msg,
+              title: "Importante"
+            );
+          }
+        } else {
+          Navigator.of(context).pop();
+          showAlertOptions(
+            context,
+            msg: "Ha ocurrido un error con el servicio. Intente mas tarde",
+            title: "Importante"
+          );
+        }
       } else {
         Navigator.of(context).pop();
         showAlertOptions(

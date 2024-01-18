@@ -32,10 +32,10 @@ class MapController extends ChangeNotifier{
     requestPermission();
   }
 
-  init() async {
-    var token = await storage.read(key: 'token');
-
-    socket =  IO.io('http://172.16.90.127:3000/travel',
+  initSocket() async {
+    final token = await storage.read(key: 'token');
+    final idTravel = await storage.read(key: 'id_travel');
+    socket =  IO.io('http://172.16.90.127:3000/travel/$idTravel',
       IO.OptionBuilder()
         .disableAutoConnect()
         .setTransports(['websocket'])

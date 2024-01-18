@@ -34,7 +34,7 @@ class _RegisterQrScannerState extends State<RegisterQrScanner> {
             if(barcode.rawValue != null){
               if(regex.hasMatch(barcode.rawValue!) && !isDetect) {
                 isDetect = true;
-                var linkSplited = barcode.rawValue!.split('/');
+                final linkSplited = barcode.rawValue!.split('/');
                 Navigator.of(context).pop(linkSplited[linkSplited.length - 1]);
               }
             }
