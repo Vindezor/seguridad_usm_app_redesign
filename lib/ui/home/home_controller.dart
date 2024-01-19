@@ -62,6 +62,12 @@ class HomeController extends ChangeNotifier{
     socket.emit('msg', 'Hola Mundo');
   }
 
+  homeQrButton(context) async {
+    final idTypeUser = int.parse((await storage.read(key: 'id_type_user'))!);
+    if(idTypeUser == 1) showQr(context);
+    if(idTypeUser == 2) Navigator.pushNamed(context, '/start_route');
+  }
+
   showQr(context) async {
     globalLoading(context);
     final response = await travelService.generateUserCode();

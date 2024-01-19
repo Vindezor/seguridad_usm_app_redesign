@@ -54,14 +54,14 @@ class Data {
 
 class User {
     int id;
-    String document;
-    String password;
-    String email;
-    String universityCode;
-    DateTime expirationDate;
-    String fullName;
+    String? document;
+    String? password;
+    String? email;
+    String? universityCode;
+    DateTime? expirationDate;
+    String? fullName;
     String? emergencyEmail;
-    DateTime creationDate;
+    DateTime? creationDate;
     bool isActive;
     String? emergencyPhone;
     String? phone;
@@ -105,10 +105,10 @@ class User {
         "password": password,
         "email": email,
         "university_code": universityCode,
-        "expiration_date": "${expirationDate.year.toString().padLeft(4, '0')}-${expirationDate.month.toString().padLeft(2, '0')}-${expirationDate.day.toString().padLeft(2, '0')}",
+        "expiration_date": "${expirationDate!.year.toString().padLeft(4, '0')}-${expirationDate!.month.toString().padLeft(2, '0')}-${expirationDate!.day.toString().padLeft(2, '0')}",
         "full_name": fullName,
         "emergency_email": emergencyEmail,
-        "creation_date": creationDate.toIso8601String(),
+        "creation_date": creationDate!.toIso8601String(),
         "is_active": isActive,
         "emergency_phone": emergencyPhone,
         "phone": phone,

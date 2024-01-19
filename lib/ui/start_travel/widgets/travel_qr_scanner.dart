@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:test_design/global/scanner_overlay.dart';
 
-class RegisterQrScanner extends StatefulWidget {
+class TravelQrScanner extends StatefulWidget {
 
-  const RegisterQrScanner({super.key});
+  const TravelQrScanner({super.key});
 
   @override
-  State<RegisterQrScanner> createState() => _RegisterQrScannerState();
+  State<TravelQrScanner> createState() => _TravelQrScannerState();
 }
 
-class _RegisterQrScannerState extends State<RegisterQrScanner> {
-  final regex = RegExp(r'^https:\/\/usm\.terna\.net\/validar\/[a-zA-Z0-9]{7}$');
+class _TravelQrScannerState extends State<TravelQrScanner> {
+  final regex = RegExp(r'^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$');
   bool isDetect = false;
   final controller = MobileScannerController();
 
@@ -34,12 +34,17 @@ class _RegisterQrScannerState extends State<RegisterQrScanner> {
             if(barcode.rawValue != null){
               if(regex.hasMatch(barcode.rawValue!) && !isDetect) {
                 isDetect = true;
-                final linkSplited = barcode.rawValue!.split('/');
-                Navigator.of(context).pop(linkSplited[linkSplited.length - 1]);
+                //Navigator.of(context).pop(barcode.rawValue!);
               }
             }
           }
         },
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Center(
+          child: TextButton(child: const Text("Comenzar Ruta"), onPressed: () => {},)
+        ),
+        
       ),
     );
   }

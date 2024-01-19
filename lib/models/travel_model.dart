@@ -1,0 +1,215 @@
+// To parse this JSON data, do
+//
+//     final travelModel = travelModelFromJson(jsonString);
+
+// ignore_for_file: prefer_null_aware_operators
+
+import 'dart:convert';
+
+TravelModel travelModelFromJson(String str) => TravelModel.fromJson(json.decode(str));
+
+String travelModelToJson(TravelModel data) => json.encode(data.toJson());
+
+class TravelModel {
+    String status;
+    dynamic msg;
+    Data? data;
+
+    TravelModel({
+        required this.status,
+        required this.msg,
+        required this.data,
+    });
+
+    factory TravelModel.fromJson(Map<String, dynamic> json) => TravelModel(
+        status: json["status"],
+        msg: json["msg"],
+        data: json["data"] != null ? Data.fromJson(json["data"]) : null,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "status": status,
+        "msg": msg,
+        "data": data != null ? data!.toJson() : null,
+    };
+}
+
+class Data {
+    int id;
+    String coordinate;
+    DateTime startTime;
+    DateTime? endTime;
+    int idUnit;
+    int idRoute;
+    int idDriver;
+    Unit unit;
+    Route route;
+    Driver driver;
+
+    Data({
+        required this.id,
+        required this.coordinate,
+        required this.startTime,
+        required this.endTime,
+        required this.idUnit,
+        required this.idRoute,
+        required this.idDriver,
+        required this.unit,
+        required this.route,
+        required this.driver,
+    });
+
+    factory Data.fromJson(Map<String, dynamic> json) => Data(
+        id: json["id"],
+        coordinate: json["coordinate"],
+        startTime: DateTime.parse(json["start_time"]),
+        endTime: json["end_time"] != null ? DateTime.parse(json["start_time"]) : null,
+        idUnit: json["id_unit"],
+        idRoute: json["id_route"],
+        idDriver: json["id_driver"],
+        unit: Unit.fromJson(json["unit"]),
+        route: Route.fromJson(json["route"]),
+        driver: Driver.fromJson(json["driver"]),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "coordinate": coordinate,
+        "start_time": startTime.toIso8601String(),
+        "end_time": endTime != null ? endTime!.toIso8601String() : null,
+        "id_unit": idUnit,
+        "id_route": idRoute,
+        "id_driver": idDriver,
+        "unit": unit.toJson(),
+        "route": route.toJson(),
+        "driver": driver.toJson(),
+    };
+}
+
+class Driver {
+    int id;
+    String? document;
+    String? password;
+    String? email;
+    String? universityCode;
+    DateTime? expirationDate;
+    String? fullName;
+    String? emergencyEmail;
+    DateTime? creationDate;
+    bool isActive;
+    String? emergencyPhone;
+    String? phone;
+    int idTypeUser;
+
+    Driver({
+        required this.id,
+        required this.document,
+        required this.password,
+        required this.email,
+        required this.universityCode,
+        required this.expirationDate,
+        required this.fullName,
+        required this.emergencyEmail,
+        required this.creationDate,
+        required this.isActive,
+        required this.emergencyPhone,
+        required this.phone,
+        required this.idTypeUser,
+    });
+
+    factory Driver.fromJson(Map<String, dynamic> json) => Driver(
+        id: json["id"],
+        document: json["document"],
+        password: json["password"],
+        email: json["email"],
+        universityCode: json["university_code"],
+        expirationDate: DateTime.parse(json["expiration_date"]),
+        fullName: json["full_name"],
+        emergencyEmail: json["emergency_email"],
+        creationDate: DateTime.parse(json["creation_date"]),
+        isActive: json["is_active"],
+        emergencyPhone: json["emergency_phone"],
+        phone: json["phone"],
+        idTypeUser: json["id_type_user"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "document": document,
+        "password": password,
+        "email": email,
+        "university_code": universityCode,
+        "expiration_date": "${expirationDate!.year.toString().padLeft(4, '0')}-${expirationDate!.month.toString().padLeft(2, '0')}-${expirationDate!.day.toString().padLeft(2, '0')}",
+        "full_name": fullName,
+        "emergency_email": emergencyEmail,
+        "creation_date": creationDate!.toIso8601String(),
+        "is_active": isActive,
+        "emergency_phone": emergencyPhone,
+        "phone": phone,
+        "id_type_user": idTypeUser,
+    };
+}
+
+class Route {
+    int id;
+    String route;
+    int idDeparture;
+    int idArrival;
+
+    Route({
+        required this.id,
+        required this.route,
+        required this.idDeparture,
+        required this.idArrival,
+    });
+
+    factory Route.fromJson(Map<String, dynamic> json) => Route(
+        id: json["id"],
+        route: json["route"],
+        idDeparture: json["id_departure"],
+        idArrival: json["id_arrival"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "route": route,
+        "id_departure": idDeparture,
+        "id_arrival": idArrival,
+    };
+}
+
+class Unit {
+    int id;
+    String plate;
+    String year;
+    String description;
+    String contactPhone;
+    int idModel;
+
+    Unit({
+        required this.id,
+        required this.plate,
+        required this.year,
+        required this.description,
+        required this.contactPhone,
+        required this.idModel,
+    });
+
+    factory Unit.fromJson(Map<String, dynamic> json) => Unit(
+        id: json["id"],
+        plate: json["plate"],
+        year: json["year"],
+        description: json["description"],
+        contactPhone: json["contact_phone"],
+        idModel: json["id_model"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "plate": plate,
+        "year": year,
+        "description": description,
+        "contact_phone": contactPhone,
+        "id_model": idModel,
+    };
+}
