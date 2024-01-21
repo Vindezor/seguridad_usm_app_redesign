@@ -85,7 +85,7 @@ class RegisterPage extends ConsumerWidget {
                             onPressed: () => {
                               Navigator.of(context).pushNamed(Routes.registerQrScanner).then(
                                 (value){
-                                  controller.changeTextValue(value.toString());
+                                  if(value != null) controller.changeTextValue(value.toString());
                                 }
                               )
                             },

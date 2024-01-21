@@ -12,7 +12,7 @@ String travelModelToJson(TravelModel data) => json.encode(data.toJson());
 
 class TravelModel {
     String status;
-    dynamic msg;
+    String? msg;
     Data? data;
 
     TravelModel({
@@ -123,10 +123,10 @@ class Driver {
         password: json["password"],
         email: json["email"],
         universityCode: json["university_code"],
-        expirationDate: DateTime.parse(json["expiration_date"]),
+        expirationDate: json["expiration_date"] != null ? DateTime.parse(json["expiration_date"]) : null,
         fullName: json["full_name"],
         emergencyEmail: json["emergency_email"],
-        creationDate: DateTime.parse(json["creation_date"]),
+        creationDate: json["creation_date"] != null ? DateTime.parse(json["creation_date"]) : null,
         isActive: json["is_active"],
         emergencyPhone: json["emergency_phone"],
         phone: json["phone"],
@@ -183,7 +183,6 @@ class Unit {
     String plate;
     String year;
     String description;
-    String contactPhone;
     int idModel;
 
     Unit({
@@ -191,7 +190,6 @@ class Unit {
         required this.plate,
         required this.year,
         required this.description,
-        required this.contactPhone,
         required this.idModel,
     });
 
@@ -200,7 +198,6 @@ class Unit {
         plate: json["plate"],
         year: json["year"],
         description: json["description"],
-        contactPhone: json["contact_phone"],
         idModel: json["id_model"],
     );
 
@@ -209,7 +206,6 @@ class Unit {
         "plate": plate,
         "year": year,
         "description": description,
-        "contact_phone": contactPhone,
         "id_model": idModel,
     };
 }

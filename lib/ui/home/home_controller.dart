@@ -48,20 +48,6 @@ class HomeController extends ChangeNotifier{
     );
   }
 
-  connectSocket(){
-    socket.connect();
-    //log("Conectado");
-  }
-
-  disconnectSocket(){
-    socket.disconnect();
-    //socket.clearListeners();
-  }
-
-  sendSocket(){
-    socket.emit('msg', 'Hola Mundo');
-  }
-
   homeQrButton(context) async {
     final idTypeUser = int.parse((await storage.read(key: 'id_type_user'))!);
     if(idTypeUser == 1) showQr(context);
@@ -74,35 +60,39 @@ class HomeController extends ChangeNotifier{
     if(response != null){
       if(response.status == "SUCCESS"){
         Navigator.of(context).pop();
+        log(response.data!.code);
         showDialog(
           context: context,
           barrierDismissible: false,
-          builder: (context) => Dialog(
-            surfaceTintColor: Colors.white,
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    "QR para inciar ruta",
-                    style: TextStyle(
-                      color: Color(0xFF3874c0),
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold
+          builder: (context) => PopScope(
+            canPop: false,
+            child: Dialog(
+              surfaceTintColor: Colors.white,
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      "QR para inciar ruta",
+                      style: TextStyle(
+                        color: Color(0xFF3874c0),
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  QrImageView(
-                    data: response.data!.code,
-                    size: 200,
-                    dataModuleStyle: const QrDataModuleStyle(dataModuleShape: QrDataModuleShape.square, color: Color(0xFF3874c0)),
-                    eyeStyle: const QrEyeStyle(eyeShape: QrEyeShape.square, color: Color(0xFF3874c0)),
-                  ),
-                  const Text("5:00")
-                ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    QrImageView(
+                      data: response.data!.code,
+                      size: 200,
+                      dataModuleStyle: const QrDataModuleStyle(dataModuleShape: QrDataModuleShape.square, color: Color(0xFF3874c0)),
+                      eyeStyle: const QrEyeStyle(eyeShape: QrEyeShape.square, color: Color(0xFF3874c0)),
+                    ),
+                    const Text("5:00")
+                  ],
+                ),
               ),
             ),
           ),
@@ -112,7 +102,7 @@ class HomeController extends ChangeNotifier{
           if(waitResponse.status == "SUCCESS"){
             storage.write(key: 'id_travel', value: waitResponse.data!.idTravel);
             Navigator.of(context).pop();
-            Navigator.of(context).pushReplacementNamed('/map');
+            Navigator.of(context).pushNamed('/map');
           } else {
             Navigator.of(context).pop();
             showAlertOptions(

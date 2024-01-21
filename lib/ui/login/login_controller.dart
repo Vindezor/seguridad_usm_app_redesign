@@ -18,7 +18,7 @@ class LoginController extends ChangeNotifier{
   //int value;
   final TextEditingController documentController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final UserService userService = UserService(Dio());
+  final UserService userService = UserService(Dio(BaseOptions(connectTimeout: const Duration(seconds: 10),)));
   final documentRegex = RegExp(r'^\d{5,9}$');
   final passwordRegex = RegExp(r'^[A-Za-z\d.,_\-@*#$]{8,15}$');
   final storage = const FlutterSecureStorage();
@@ -49,6 +49,7 @@ class LoginController extends ChangeNotifier{
             await storage.write(key: "is_active", value: response.data?.user.isActive.toString());
             await storage.write(key: "phone", value: response.data?.user.phone);
             await storage.write(key: "type_user", value: response.data?.user.typeUser.typeUser);
+            await storage.write(key: "id_type_user", value: response.data?.user.typeUser.id.toString());
             Navigator.of(context).pop();
             Navigator.pushReplacementNamed(context, '/home');
           } else {

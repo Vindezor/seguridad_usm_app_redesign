@@ -12,6 +12,8 @@ import 'package:test_design/ui/register/register_page.dart';
 import 'package:test_design/ui/register/widgets/register_qr_scanner.dart';
 import 'package:test_design/ui/register_successful/register_successful_page.dart';
 import 'package:test_design/ui/settings/settings_page.dart';
+import 'package:test_design/ui/start_travel/start_travel_page.dart';
+import 'package:test_design/ui/start_travel/widgets/travel_qr_scanner.dart';
 
 import 'routes.dart';
 
@@ -30,5 +32,7 @@ Map<String, Widget Function(BuildContext context)> appRoutes() {
     Routes.map: (_) => const MapPage(),
     Routes.completeProfileOne: (_) => const CompleteProfileOnePage(),
     Routes.completeProfileTwo: (_) => const CompleteProfileTwoPage(),
+    Routes.startRoute: (_) => const StartTravelPage(),
+    Routes.travelQrScanner: (_) => const TravelQrScanner(),
   };
 }

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:test_design/app_config.dart';
+import 'package:test_design/models/generic_model.dart';
 import 'package:test_design/models/travel_model.dart';
 import 'package:test_design/models/user_code_mode.dart';
 import 'package:test_design/models/waiting_scan_model.dart';
@@ -49,7 +50,7 @@ class TravelService {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
     try {
-      final response = await _dio.get(
+      final response = await _dio.post(
         '${AppConfig.instance.apiHost}waitForScan',
         // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
         cancelToken: cancelToken,
@@ -80,12 +81,11 @@ class TravelService {
     }
   }
 
-  Future<TravelModel?> createTravel(coordinate, id_unit, id_route) async {
+  Future<TravelModel?> createTravel(String coordinate, int idRoute) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
-    final id_user = await storage.read(key: "id_user");
     try {
-      final response = await _dio.get(
+      final response = await _dio.post(
         '${AppConfig.instance.apiHost}createTravel',
         // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
         cancelToken: cancelToken,
@@ -97,9 +97,7 @@ class TravelService {
         ),
         data: {
           "coordinate": coordinate,
-          "id_unit": id_unit,
-          "id_route": id_route,
-          "id_driver": id_user,
+          "id_route": idRoute,
         }
         // options: Options(
         //   headers: {
@@ -115,6 +113,116 @@ class TravelService {
       return data;
     } catch (e) {
       log('[TravelService -> createTravel] error: $e');
+      return null;
+    }
+  }
+
+  Future<TravelModel?> endTravel() async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    final idTravel = await storage.read(key: "id_travel");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}endTravel',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id_travel": idTravel,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = TravelModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[TravelService -> endTravel] error: $e');
+      return null;
+    }
+  }
+
+  Future<TravelModel?> scanCode(code) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    final idTravel = await storage.read(key: "id_travel");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}scanCode',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id_travel": idTravel,
+          "code": code,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = TravelModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[TravelService -> scanCode] error: $e');
+      return null;
+    }
+  }
+
+  Future<GenericModel?> emergency(coordinate) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    final idTravel = await storage.read(key: "id_travel");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}emergency',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id_travel": idTravel,
+          "coordinate": coordinate,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = GenericModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[TravelService -> emergency] error: $e');
       return null;
     }
   }

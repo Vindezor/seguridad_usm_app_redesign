@@ -12,4 +12,6 @@ abstract class Routes{
   static const map = '/map';
   static const completeProfileOne = '/complete_profile_one';
   static const completeProfileTwo = '/complete_profile_two';
+  static const startRoute = '/start_route';
+  static const travelQrScanner = '/travel_qr_scanner';
 }

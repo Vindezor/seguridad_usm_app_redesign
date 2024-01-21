@@ -14,136 +14,132 @@ class HomePage extends ConsumerWidget {
 
     FloatingActionButtonLocation fabLocation = FloatingActionButtonLocation.centerDocked;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        decoration: const BoxDecoration(
-          // image: DecorationImage(
-          //   image: AssetImage("assets/background.png"),
-          //   fit: BoxFit.cover
-          // )
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ButtonHome(
-                  icon: Icons.person,
-                  text: "Perfil",
-                  onTap: (){
-                    Navigator.of(context).pushNamed(Routes.profile);
-                  },
-                ),
-                ButtonHome(
-                  icon: Icons.date_range,
-                  text: "Historial",
-                  onTap: (){
-                    Navigator.of(context).pushNamed(Routes.history);
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ButtonHome(
-                  icon: Icons.menu_book,
-                  text: "Guía",
-                  onTap: (){
-                    Navigator.of(context).pushNamed(Routes.guide);
-                  },
-                ),
-                ButtonHome(
-                  icon: Icons.logout,
-                  text: "Cerrar Sesión",
-                  onTap: () => controller.logout(context),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                TextButton(onPressed: controller.connectSocket, child: const Text("Conectar")),
-                TextButton(onPressed: controller.disconnectSocket, child: const Text("Desconectar")),
-                TextButton(onPressed: controller.sendSocket, child: const Text("Mensaje"))
-              ],
-            )
-          ],
-        ),
-      ),
-      floatingActionButtonLocation: fabLocation,
-      floatingActionButton: Container(
-        decoration: const BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 30,
-              color: Colors.black,
-              spreadRadius: -5,
-            )
-          ]
-        ),
-        child: FloatingActionButton.large(
-          heroTag: 'heroHome',
-          onPressed: () => controller.homeQrButton(context),
-          backgroundColor: const Color(0xFFddeaf4),
-          child: const Icon(
-            Icons.qr_code_scanner,
-            color: Color(0xFF3874c0),
-            size: 40,
-            weight: 0.5,
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Container(
+          decoration: const BoxDecoration(
+            // image: DecorationImage(
+            //   image: AssetImage("assets/background.png"),
+            //   fit: BoxFit.cover
+            // )
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ButtonHome(
+                    icon: Icons.person,
+                    text: "Perfil",
+                    onTap: (){
+                      Navigator.of(context).pushNamed(Routes.profile);
+                    },
+                  ),
+                  ButtonHome(
+                    icon: Icons.date_range,
+                    text: "Historial",
+                    onTap: (){
+                      Navigator.of(context).pushNamed(Routes.history);
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ButtonHome(
+                    icon: Icons.menu_book,
+                    text: "Guía",
+                    onTap: (){
+                      Navigator.of(context).pushNamed(Routes.guide);
+                    },
+                  ),
+                  ButtonHome(
+                    icon: Icons.logout,
+                    text: "Cerrar Sesión",
+                    onTap: () => controller.logout(context),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
-      ),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        // actions: [
-        //   IconButton(onPressed: () {}, icon: const Icon(Icons.logout), iconSize: 30,)
-        // ],
-        title: const StrokeText(
-          text: "Menú Principal",
-          textStyle: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 26,
-            color: Color(0xFF3874c0),
+        floatingActionButtonLocation: fabLocation,
+        floatingActionButton: Container(
+          decoration: const BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 30,
+                color: Colors.black,
+                spreadRadius: -5,
+              )
+            ]
           ),
-          strokeColor: Colors.white,
-          strokeWidth: 3,
+          child: FloatingActionButton.large(
+            heroTag: 'heroHome',
+            onPressed: () => controller.homeQrButton(context),
+            backgroundColor: const Color(0xFFddeaf4),
+            child: const Icon(
+              Icons.qr_code_scanner,
+              color: Color(0xFF3874c0),
+              size: 40,
+              weight: 0.5,
+            ),
+          ),
         ),
-        flexibleSpace: Image.asset(
-          "assets/parte-top.png",
-          fit: BoxFit.fitWidth,
-          alignment: Alignment.topCenter,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          // actions: [
+          //   IconButton(onPressed: () {}, icon: const Icon(Icons.logout), iconSize: 30,)
+          // ],
+          title: const StrokeText(
+            text: "Menú Principal",
+            textStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 26,
+              color: Color(0xFF3874c0),
+            ),
+            strokeColor: Colors.white,
+            strokeWidth: 3,
+          ),
+          flexibleSpace: Image.asset(
+            "assets/parte-top.png",
+            fit: BoxFit.fitWidth,
+            alignment: Alignment.topCenter,
+          ),
         ),
-      ),
-      bottomNavigationBar: const BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        color: Color(0xFF3874c0),
-        // child: Row(
-        //   children: [
-        //     IconButton(
-        //       tooltip: 'Open navigation menu',
-        //       icon: const Icon(Icons.menu, color: Colors.white,),
-        //       onPressed: () {},
-        //     ),
-        //     IconButton(
-        //       tooltip: 'Open navigation menu',
-        //       icon: const Icon(Icons.menu, color: Colors.white,),
-        //       onPressed: () {},
-        //     ),
-        //     const Spacer(),
-        //     IconButton(
-        //       tooltip: 'Open navigation menu',
-        //       icon: const Icon(Icons.menu, color: Colors.white,),
-        //       onPressed: () {},
-        //     ),
-        //     IconButton(
-        //       tooltip: 'Open navigation menu',
-        //       icon: const Icon(Icons.menu, color: Colors.white,),
-        //       onPressed: () {},
-        //     ),
-        //   ],
-        // ),
+        bottomNavigationBar: const BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          color: Color(0xFF3874c0),
+          // child: Row(
+          //   children: [
+          //     IconButton(
+          //       tooltip: 'Open navigation menu',
+          //       icon: const Icon(Icons.menu, color: Colors.white,),
+          //       onPressed: () {},
+          //     ),
+          //     IconButton(
+          //       tooltip: 'Open navigation menu',
+          //       icon: const Icon(Icons.menu, color: Colors.white,),
+          //       onPressed: () {},
+          //     ),
+          //     const Spacer(),
+          //     IconButton(
+          //       tooltip: 'Open navigation menu',
+          //       icon: const Icon(Icons.menu, color: Colors.white,),
+          //       onPressed: () {},
+          //     ),
+          //     IconButton(
+          //       tooltip: 'Open navigation menu',
+          //       icon: const Icon(Icons.menu, color: Colors.white,),
+          //       onPressed: () {},
+          //     ),
+          //   ],
+          // ),
+        ),
       ),
     );
   }

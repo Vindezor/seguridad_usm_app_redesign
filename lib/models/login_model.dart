@@ -89,7 +89,7 @@ class User {
         password: json["password"],
         email: json["email"],
         universityCode: json["university_code"],
-        expirationDate: DateTime.parse(json["expiration_date"]),
+        expirationDate: json["expiration_date"] != null ? DateTime.parse(json["expiration_date"]) : null,
         fullName: json["full_name"],
         emergencyEmail: json["emergency_email"],
         creationDate: DateTime.parse(json["creation_date"]),

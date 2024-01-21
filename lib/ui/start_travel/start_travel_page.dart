@@ -1,53 +1,117 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:stroke_text/stroke_text.dart';
 import 'package:test_design/ui/start_travel/start_travel_controller.dart';
 
-class StartTravel extends ConsumerWidget {
-  const StartTravel({super.key});
+class StartTravelPage extends ConsumerWidget {
+  const StartTravelPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    log("[StartTravelPage] reloaded");
     final controller = ref.watch(startTravelController);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if(controller.items.isEmpty){
+        log("${controller.items.isEmpty}");
+        await controller.getAllRoute(context);
+      }
+    });
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          // image: DecorationImage(
-          //   image: AssetImage("assets/background.png"),
-          //   fit: BoxFit.cover
-          // )
-        ),
-        child: Column(
-          children: [
-            TextField(
-              controller: controller.departureController,
-              decoration: const InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25)),
-                ),
-                labelText: 'Salida',
-              ),
-            ),
-            TextField(
-              controller: controller.arrivalController,
-              decoration: const InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25)),
-                ),
-                labelText: 'Destino',
-              ),
-            ),
-            TextButton(
-              onPressed: controller.startTravelButtonDisabled() ? null : null,
-              child: const Text("Comezar ingreso")
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Image.asset(
+              "assets/background.png",
+              fit: BoxFit.fitWidth,
+              alignment: Alignment.bottomCenter,
             )
-          ],
-        )
+          ),
+          Container(
+            decoration: const BoxDecoration(
+              // image: DecorationImage(
+              //   image: AssetImage("assets/background.png"),
+              //   fit: BoxFit.cover
+              // )
+            ),
+            child: controller.items.isEmpty ? const SizedBox() : Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: Text(
+                      "Porfavor, elija una ruta para iniciar el ingreso de pasajeros",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
+                  const SizedBox(height: 30,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 40, right: 40),
+                    child: DropdownButtonFormField(
+                      items: controller.items,
+                      onChanged: controller.dropdownCallback,
+                      value: controller.dropdownValue,
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        labelText: 'Ruta',
+                      ),
+                    ),
+                  ),
+                  // TextField(
+                  //   controller: controller.departureController,
+                    // decoration: const InputDecoration(
+                    //   filled: true,
+                    //   fillColor: Colors.white,
+                    //   border: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.all(Radius.circular(25)),
+                    //   ),
+                    //   labelText: 'Salida',
+                    // ),
+                  // ),
+                  // TextField(
+                  //   controller: controller.arrivalController,
+                  //   decoration: const InputDecoration(
+                  //     filled: true,
+                  //     fillColor: Colors.white,
+                  //     border: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.all(Radius.circular(25)),
+                  //     ),
+                  //     labelText: 'Destino',
+                  //   ),
+                  // ),
+                  const SizedBox(height: 60,),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                    ),
+                    onPressed: controller.startTravelButtonDisabled() ? null : () => controller.startTravel(context),
+                    child: const Text(
+                      "Comezar ingreso",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 120,),
+                ],
+              ),
+            )
+          ),
+        ],
       ),
       // floatingActionButtonLocation: fabLocation,
       // floatingActionButton: Container(
@@ -86,7 +150,7 @@ class StartTravel extends ConsumerWidget {
           ),
         ),
         title: const StrokeText(
-          text: "Historial",
+          text: "Iniciar viaje",
           textStyle: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 26,
