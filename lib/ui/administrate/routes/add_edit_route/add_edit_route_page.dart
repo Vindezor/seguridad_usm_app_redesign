@@ -157,7 +157,7 @@ class AddEditRoutePage extends ConsumerWidget {
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
                     ),
-                    onPressed: administrateController.generateRouteButtonDisabled() ? null : () => administrateController.generateRoute(context),
+                    onPressed: administrateController.generateRouteButtonDisabled() ? null : () => administrateController.generateRoute(context, controller.editing, id: controller.id),
                     child: const Text(
                       "Generar Ruta",
                       style: TextStyle(

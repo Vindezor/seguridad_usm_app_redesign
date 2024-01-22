@@ -29,13 +29,12 @@ class RouteMapPage extends ConsumerWidget {
           mapType: MapType.normal,
           initialCameraPosition: controller.initialCameraPosition,
           onMapCreated: (mapController) async {
-            controller.onMapCreated(mapController);
+            final args = ModalRoute.of(context)!.settings.arguments;
+            controller.onMapCreated(mapController, args);
             //await controller.requestPermission();
             //controller.centerCameraMap();
           },
-          markers: controller.marker != null ? {
-              controller.marker!
-          } : {},
+          markers: controller.markers,
           onTap: (pos) => controller.setMarker(pos),
         ),
         appBar: AppBar(
@@ -81,11 +80,14 @@ class RouteMapPage extends ConsumerWidget {
           ),
           child: FloatingActionButton.large(
             heroTag: 'heroRouteMap',
-            onPressed: controller.marker != null ? () => controller.confirm(context) : null,
-            backgroundColor: controller.marker != null ? const Color(0xFFddeaf4) : const Color(0xFFe3e3e4),
+            onPressed: controller.polyline.isNotEmpty ? () {
+              final args = ModalRoute.of(context)!.settings.arguments;
+              controller.confirm(context, args);
+            } : null,
+            backgroundColor: controller.polyline.isNotEmpty ? const Color(0xFFddeaf4) : const Color(0xFFe3e3e4),
             child: Icon(
               Icons.check,
-              color: controller.marker != null ? const Color(0xFF3874c0) : const Color(0xFF9b9b9c),
+              color: controller.polyline.isNotEmpty ? const Color(0xFF3874c0) : const Color(0xFF9b9b9c),
               size: 40,
               weight: 0.5,
             ),

@@ -6,6 +6,8 @@
 
 import 'dart:convert';
 
+import 'package:test_design/models/stops_model.dart';
+
 TravelModel travelModelFromJson(String str) => TravelModel.fromJson(json.decode(str));
 
 String travelModelToJson(TravelModel data) => json.encode(data.toJson());
@@ -41,10 +43,8 @@ class Data {
     DateTime? endTime;
     int idUnit;
     int idRoute;
-    int idDriver;
     Unit unit;
     Route route;
-    Driver driver;
 
     Data({
         required this.id,
@@ -53,10 +53,8 @@ class Data {
         required this.endTime,
         required this.idUnit,
         required this.idRoute,
-        required this.idDriver,
         required this.unit,
         required this.route,
-        required this.driver,
     });
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -66,10 +64,8 @@ class Data {
         endTime: json["end_time"] != null ? DateTime.parse(json["start_time"]) : null,
         idUnit: json["id_unit"],
         idRoute: json["id_route"],
-        idDriver: json["id_driver"],
         unit: Unit.fromJson(json["unit"]),
         route: Route.fromJson(json["route"]),
-        driver: Driver.fromJson(json["driver"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -79,10 +75,8 @@ class Data {
         "end_time": endTime != null ? endTime!.toIso8601String() : null,
         "id_unit": idUnit,
         "id_route": idRoute,
-        "id_driver": idDriver,
         "unit": unit.toJson(),
         "route": route.toJson(),
-        "driver": driver.toJson(),
     };
 }
 
@@ -155,12 +149,16 @@ class Route {
     String route;
     int idDeparture;
     int idArrival;
+    Stop departure;
+    Stop arrival;
 
     Route({
         required this.id,
         required this.route,
         required this.idDeparture,
         required this.idArrival,
+        required this.departure,
+        required this.arrival,
     });
 
     factory Route.fromJson(Map<String, dynamic> json) => Route(
@@ -168,6 +166,8 @@ class Route {
         route: json["route"],
         idDeparture: json["id_departure"],
         idArrival: json["id_arrival"],
+        departure: Stop.fromJson(json["departure"]),
+        arrival: Stop.fromJson(json["arrival"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -175,6 +175,8 @@ class Route {
         "route": route,
         "id_departure": idDeparture,
         "id_arrival": idArrival,
+        "departure": departure,
+        "arrival": arrival
     };
 }
 

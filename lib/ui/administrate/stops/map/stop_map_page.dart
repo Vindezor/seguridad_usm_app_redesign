@@ -25,8 +25,8 @@ class StopMapPage extends ConsumerWidget {
           initialCameraPosition: controller.initialCameraPosition,
           onMapCreated: (mapController) async {
             controller.onMapCreated(mapController);
-            await controller.requestPermission();
-            controller.centerCameraMap();
+            //await controller.requestPermission();
+            //controller.centerCameraMap();
           },
           markers: controller.marker != null ? {
               controller.marker!

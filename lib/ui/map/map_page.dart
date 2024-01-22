@@ -57,12 +57,14 @@ class MapPage extends ConsumerWidget {
         //   ),
         // ),
         body: GoogleMap(
+          polylines: controller.polyline,
+          markers: controller.markers,
           myLocationEnabled: true,
           myLocationButtonEnabled: true,
           compassEnabled: false,
           mapType: MapType.normal,
-          initialCameraPosition: controller.kGooglePlex,
-          onMapCreated: controller.onMapCreated,
+          initialCameraPosition: controller.initialCameraPosition,
+          onMapCreated: (mapController) async => controller.onMapCreated(mapController, context),
         ),
         floatingActionButtonLocation: fabLocation,
         floatingActionButton: Container(

@@ -16,19 +16,19 @@ class StopMapController extends ChangeNotifier{
   Marker? marker;
   StopMapController(){
     mapController = Completer<GoogleMapController>();
-    requestPermission();
+    //requestPermission();
   }
 
-  requestPermission() async {
-    try {
-      log("[MapController] init");
-      await Geolocator.requestPermission();
-      pos = await Geolocator.getCurrentPosition();
-      log('$pos');
-    } catch (e) {
-      log("$e");
-    }
-  }
+  // requestPermission() async {
+  //   try {
+  //     log("[MapController] init");
+  //     await Geolocator.requestPermission();
+  //     pos = await Geolocator.getCurrentPosition();
+  //     log('$pos');
+  //   } catch (e) {
+  //     log("$e");
+  //   }
+  // }
 
   confirm(context){
     Navigator.of(context).pop(marker!.position);

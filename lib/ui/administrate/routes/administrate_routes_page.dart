@@ -31,6 +31,7 @@ class AdministrateRoutesPage extends ConsumerWidget {
               id: route.id,
               departure: route.departure,
               arrival: route.arrival,
+              route: route.route,
             )
           ).toList(),
         ) : const Center(

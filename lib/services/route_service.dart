@@ -45,6 +45,81 @@ class RouteService {
     }
   }
 
+  Future<RoutesModel?> createRoute(route, idDeparture, idArrival) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}createRoute',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "route": route,
+          "id_departure": idDeparture,
+          "id_arrival": idArrival,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = RoutesModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[RouteService -> createRoute] error: $e');
+      return null;
+    }
+  }
+
+  Future<RoutesModel?> updateRoute(route, idDeparture, idArrival, id) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}updateRoute',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "route": route,
+          "id_departure": idDeparture,
+          "id_arrival": idArrival,
+          "id": id,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = RoutesModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[RouteService -> updateRoute] error: $e');
+      return null;
+    }
+  }
+
   Future<RoutesModel?> deleteRoute(id) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");

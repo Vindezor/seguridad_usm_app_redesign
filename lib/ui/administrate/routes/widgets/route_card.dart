@@ -9,10 +9,12 @@ class RouteCard extends ConsumerWidget {
     required this.id,
     required this.departure,
     required this.arrival,
+    required this.route
   });
   final Stop departure;
   final Stop arrival;
   final int id;
+  final String route;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

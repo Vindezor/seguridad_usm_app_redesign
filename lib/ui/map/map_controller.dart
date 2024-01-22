@@ -4,12 +4,14 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flexible_polyline/flexible_polyline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:test_design/global/fit_map.dart';
 import 'package:test_design/global/global_dialog.dart';
 import 'package:test_design/global/global_loading.dart';
 import 'package:test_design/services/travel_service.dart';
@@ -21,20 +23,14 @@ class MapController extends ChangeNotifier{
   Timer? driverTimer;
   int? idTypeUser;
   bool travelEnded = false;
+
+  Set<Polyline> polyline = {};
+  Set<Marker> markers = {};
+
   final TravelService travelService = TravelService(Dio());
   late Completer<GoogleMapController> mapController;
   bool initialized = false;
-  final CameraPosition kGooglePlex = const CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-
-  final CameraPosition _kLake = const CameraPosition(
-    bearing: 192.8334901395799,
-    target: LatLng(37.43296265331129, -122.08832357078792),
-    tilt: 59.440717697143555,
-    zoom: 19.151926040649414
-  );
+  final CameraPosition initialCameraPosition = const CameraPosition(target: LatLng(10.480034, -66.903991), zoom: 12);
 
   MapController(){
     mapController = Completer<GoogleMapController>();
@@ -47,7 +43,7 @@ class MapController extends ChangeNotifier{
     final token = await storage.read(key: 'token');
     final idTravel = await storage.read(key: 'id_travel');
     idTypeUser = int.parse((await storage.read(key: 'id_type_user'))!);
-    socket =  IO.io('http://192.168.0.109:3000/travel/$idTravel',
+    socket =  IO.io('http://172.16.90.127:3000/travel/$idTravel',
       IO.OptionBuilder()
         .disableAutoConnect()
         .setTransports(['websocket'])
@@ -188,14 +184,77 @@ class MapController extends ChangeNotifier{
     log('$pos');
   }
 
-  onMapCreated(controller){
+  onMapCreated(controller, context) async {
     mapController.complete(controller);
+    final idTravel = await storage.read(key: 'id_travel');
+    final response = await travelService.findTravelById(idTravel);
+    if(response != null) {
+      if(response.status == "SUCCESS"){
+        final undecodedPolyline = response.data!.route.route;
+        final points = FlexiblePolyline.decode(undecodedPolyline)
+                .map((e) => LatLng(e.lat, e.lng))
+                .toList();
+        polyline = {};
+        polyline.add(
+          Polyline(
+            polylineId: PolylineId("${response.data!.route.id}"),
+            points: points,
+            color: const Color(0xFF3874c0),
+            width: 5, 
+          )
+        );
+        markers = {};
+        final departureCords = response.data!.route.departure.coordinate.split(",");
+        final arrivalCords = response.data!.route.arrival.coordinate.split(",");
+        final origin = LatLng(double.parse(departureCords[0]), double.parse(departureCords[1]));
+        final destination = LatLng(double.parse(arrivalCords[0]), double.parse(arrivalCords[1]));
+        markers.add(
+          Marker(
+            markerId: const MarkerId("departure"),
+            position: origin,
+            //infoWindow: InfoWindow(title: "Salida")
+          )
+        );
+        markers.add(
+          Marker(
+            markerId: const MarkerId("arrival"),
+            position: destination,
+            //infoWindow: InfoWindow(title: "Destino")
+          )
+        );
+        fitMapRoutes(origin, destination, controller);
+        notifyListeners();
+      } else {
+        showAlertOptions(
+          context,
+          msg: response.msg!,
+          title: "Importante"
+        );
+      }
+    } else {
+      Navigator.of(context).pop();
+      showAlertOptions(
+        context,
+        msg: "Ha ocurrido un error con el servicio. Intente mas tarde",
+        title: "Importante"
+      );
+    }
   }
 
-  Future<void> goToTheLake() async {
-    final GoogleMapController controller = await mapController.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+  fitMapRoutes(LatLng origin, LatLng destination, GoogleMapController controller) async {
+    await controller.animateCamera(
+      fitMap(
+        origin,
+        destination,
+        padding: 50,
+      ),
+    );
   }
+
+  // Future<void> goToTheLake() async {
+  //   final GoogleMapController controller = await mapController.future;
+  //   await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+  // }
 
   @override
   void dispose() {

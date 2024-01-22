@@ -14,6 +14,41 @@ class TravelService {
 
   TravelService(this._dio);
 
+  Future<TravelModel?> findTravelById(id) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}findTravelById',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id": id,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = TravelModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[TravelService -> findTravelById] error: $e');
+      return null;
+    }
+  }
+
   Future<UserCodeModel?> generateUserCode() async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");

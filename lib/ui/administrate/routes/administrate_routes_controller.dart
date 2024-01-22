@@ -67,7 +67,7 @@ class AdministrateRoutesController extends ChangeNotifier{
   deleteRoute(context, id){
     showAlertOptions(
       context,
-      msg: "¿Seguro que desea eliminar esta parada?",
+      msg: "¿Seguro que desea eliminar esta ruta?",
       title: "Importante",
       acceptOnPressed: () async {
         Navigator.of(context).pop();
@@ -194,7 +194,7 @@ class AdministrateRoutesController extends ChangeNotifier{
     }
   }
 
-  generateRoute(context) async {
+  generateRoute(context, editing, {int? id}) async {
     globalLoading(context);
     final origin = stops.where((stop) => stop.id == departureValue).toList().first.coordinate;
     final destination = stops.where((stop) => stop.id == arrivalValue).toList().first.coordinate;
@@ -211,7 +211,16 @@ class AdministrateRoutesController extends ChangeNotifier{
     if(response != null){
       if(response.routes.isNotEmpty){
         Navigator.of(context).pop();
-        Navigator.of(context).pushNamed('/route_map', arguments:{ "response": response.toJson() });
+        Navigator.of(context).pushNamed(
+          '/route_map',
+          arguments:{
+            "response": response.toJson(),
+            "id_departure": departureValue,
+            "id_arrival": arrivalValue,
+            "editing": editing,
+            "id": id
+          }
+        );
       } else {
         Navigator.of(context).pop();
         showAlertOptions(
