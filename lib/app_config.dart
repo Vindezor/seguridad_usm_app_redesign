@@ -3,6 +3,7 @@ class AppConfig {
   final String _apiHost = 'http://192.168.0.109:3000/api/';
   final String _hereApiHost = 'https://router.hereapi.com/v8/routes';
   final String _searchHereApi = '.search.hereapi.com/v1/';
+  final String _hereApiKey = "9luf-iRjOZFtZ_rtwb89xmxjKbiM6MISB9p17JiRSpU";
 
   AppConfig._internal();
 
@@ -13,7 +14,7 @@ class AppConfig {
   String get apiHost => _apiHost;
   String get hereApiHost => _hereApiHost;
   String get searchHereApi => _searchHereApi;
-
+  String get hereApiKey => _hereApiKey;
   // void init({
   //   required String nameApp,
   //   required String apiHost,

@@ -36,13 +36,14 @@ class StartTravelController extends ChangeNotifier{
     }
   }
 
-  Future<void> getAllRoute(context) async {
+  Future<void> getAllRoutes(context) async {
     globalLoading(context);
-    final route_model.RoutesModel? response = await routeService.getAllRoute();
+    final route_model.RoutesModel? response = await routeService.getAllRoutes();
     if(response != null){
       Navigator.of(context).pop();
       if(response.status == "SUCCESS"){
         routes = response.data;
+        items = [];
         routes!.map((route) => items.add(DropdownMenuItem<int>(value: route.id,child: Text("${route.departure.name} - ${route.arrival.name}"),))).toList();
         notifyListeners();
         //Navigator.pushReplacementNamed(context, '/register_successful');

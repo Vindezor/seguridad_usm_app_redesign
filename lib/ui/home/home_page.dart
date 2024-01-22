@@ -13,7 +13,11 @@ class HomePage extends ConsumerWidget {
     final controller = ref.watch(homeController);
 
     FloatingActionButtonLocation fabLocation = FloatingActionButtonLocation.centerDocked;
-
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(controller.idTypeUser == null){
+        controller.initProfile();
+      }
+    });
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -50,13 +54,19 @@ class HomePage extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ButtonHome(
+                  (controller.idTypeUser != null) ? (controller.idTypeUser! < 3) ? ButtonHome(
                     icon: Icons.menu_book,
                     text: "Guía",
                     onTap: (){
                       Navigator.of(context).pushNamed(Routes.guide);
                     },
-                  ),
+                  ) : ButtonHome(
+                    icon: Icons.settings,
+                    text: "Administrar",
+                    onTap: (){
+                      Navigator.of(context).pushNamed(Routes.administrate);
+                    },
+                  ) : const SizedBox.shrink(),
                   ButtonHome(
                     icon: Icons.logout,
                     text: "Cerrar Sesión",

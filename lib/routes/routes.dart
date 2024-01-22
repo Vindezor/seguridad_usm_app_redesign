@@ -14,4 +14,14 @@ abstract class Routes{
   static const completeProfileTwo = '/complete_profile_two';
   static const startRoute = '/start_route';
   static const travelQrScanner = '/travel_qr_scanner';
+  static const administrate = '/administrate';
+  static const administrateUnits = '/administrate_units';
+  static const administrateStops = '/administrate_stops';
+  static const administrateRoutes = '/administrate_routes';
+  static const administrateDrivers = '/administrate_drivers';
+  static const administrateAdmins = '/administrate_admins';
+  static const stopMap = '/stop_map';
+  static const addEditStop = '/add_edit_stop';
+  static const addEditRoute = '/add_edit_route';
+  static const routeMap = '/route_map';
 }

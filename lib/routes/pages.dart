@@ -1,4 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:test_design/ui/administrate/administrate_page.dart';
+import 'package:test_design/ui/administrate/admins/administrate_admins_page.dart';
+import 'package:test_design/ui/administrate/drivers/administrate_drivers_page.dart';
+import 'package:test_design/ui/administrate/routes/add_edit_route/add_edit_route_page.dart';
+import 'package:test_design/ui/administrate/routes/administrate_routes_page.dart';
+import 'package:test_design/ui/administrate/routes/map/route_map_page.dart';
+import 'package:test_design/ui/administrate/stops/add_edit_stop/add_edit_stop_page.dart';
+import 'package:test_design/ui/administrate/stops/administrate_stops_page.dart';
+import 'package:test_design/ui/administrate/stops/map/stop_map_page.dart';
+import 'package:test_design/ui/administrate/units/administrate_units_page.dart';
 import 'package:test_design/ui/complete_profile/complete_profile_one_page.dart';
 import 'package:test_design/ui/complete_profile/complete_profile_two_page.dart';
 import 'package:test_design/ui/guide/guide_page.dart';
@@ -34,5 +44,15 @@ Map<String, Widget Function(BuildContext context)> appRoutes() {
     Routes.completeProfileTwo: (_) => const CompleteProfileTwoPage(),
     Routes.startRoute: (_) => const StartTravelPage(),
     Routes.travelQrScanner: (_) => const TravelQrScanner(),
+    Routes.administrate: (_) => const AdministratePage(),
+    Routes.administrateUnits: (_) => const AdministrateUnitsPage(),
+    Routes.administrateStops: (_) => const AdministrateStopsPage(),
+    Routes.administrateRoutes: (_) => const AdministrateRoutesPage(),
+    Routes.administrateDrivers: (_) => const AdministrateDriversPage(),
+    Routes.administrateAdmins: (_) => const AdministrateAdminsPage(),
+    Routes.stopMap: (_) => const StopMapPage(),
+    Routes.addEditStop: (_) => const AddEditStopPage(),
+    Routes.addEditRoute: (_) => const AddEditRoutePage(),
+    Routes.routeMap: (_) => const RouteMapPage(),
   };
 }

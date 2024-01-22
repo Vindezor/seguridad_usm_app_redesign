@@ -10,28 +10,20 @@ import 'package:test_design/global/global_dialog.dart';
 import 'package:test_design/global/global_loading.dart';
 import 'package:test_design/routes/routes.dart';
 import 'package:test_design/services/travel_service.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class HomeController extends ChangeNotifier{
   
   FlutterSecureStorage storage = const FlutterSecureStorage();
   TravelService travelService = TravelService(Dio());
-  IO.Socket socket = IO.io('http://10.0.2.2:3000/test',
-    IO.OptionBuilder()
-      .disableAutoConnect()
-      .setTransports(['websocket'])
-      .build()
-  );
+  int? idTypeUser;
   
   HomeController(){
     log("[HomeController] init");
-    socket.on('connect', (_) {
-      log('connect');
-    });
-    socket.onError((data) => log("$data"));
-    socket.on('event', (data) => log(data));
-    socket.onDisconnect((_) => log('disconnect'));
-    socket.on('fromServer', (_) => log(_));
+  }
+
+  initProfile() async {
+    idTypeUser = int.parse((await storage.read(key: 'id_type_user'))!);
+    notifyListeners();
   }
 
   logout(context) {
@@ -141,7 +133,6 @@ class HomeController extends ChangeNotifier{
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    socket.dispose();
     log("[HomeController] disposed");
   }
 }

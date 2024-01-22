@@ -16,7 +16,7 @@ class StartTravelPage extends ConsumerWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if(controller.items.isEmpty){
         log("${controller.items.isEmpty}");
-        await controller.getAllRoute(context);
+        await controller.getAllRoutes(context);
       }
     });
     return Scaffold(
@@ -57,6 +57,7 @@ class StartTravelPage extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 40, right: 40),
                     child: DropdownButtonFormField(
+                      isExpanded: true,
                       items: controller.items,
                       onChanged: controller.dropdownCallback,
                       value: controller.dropdownValue,
