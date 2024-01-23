@@ -37,7 +37,7 @@ class RouteMapController extends ChangeNotifier{
     response = HereRouteModel.fromJson(args["response"]);
     editing = args["editing"];
     undecodedPolyline = response!.routes[0].sections[0].polyline;
-    final points = FlexiblePolyline.decode(response!.routes[0].sections[0].polyline)
+    final points = FlexiblePolyline.decode(undecodedPolyline)
             .map((e) => LatLng(e.lat, e.lng))
             .toList();
     polyline = {};

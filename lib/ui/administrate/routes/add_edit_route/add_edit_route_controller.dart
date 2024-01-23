@@ -3,9 +3,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:test_design/global/global_dialog.dart';
-import 'package:test_design/global/global_loading.dart';
-import 'package:test_design/models/routes_model.dart';
 import 'package:test_design/services/route_service.dart';
 
 class AddEditRouteController extends ChangeNotifier{

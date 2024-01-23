@@ -7,6 +7,8 @@ import 'package:test_design/app_config.dart';
 import 'package:test_design/models/generic_model.dart';
 import 'package:test_design/models/login_model.dart';
 import 'package:test_design/models/update_user_model.dart';
+import 'package:test_design/models/user_model.dart';
+import 'package:test_design/models/users_mode.dart';
 
 class UserService {
   final Dio _dio;
@@ -110,6 +112,153 @@ class UserService {
       return data;
     } catch (e) {
       log('[UserService -> updateUser] error: $e');
+      return null;
+    }
+  }
+
+  Future<UsersModel?> getAllDrivers() async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.get(
+        '${AppConfig.instance.apiHost}getAllDrivers',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UsersModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UserService -> getAllDrivers] error: $e');
+      return null;
+    }
+  }
+
+  Future<UsersModel?> deleteDriver(id) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}deleteDriver',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id": id,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UsersModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UserService -> deleteDriver] error: $e');
+      return null;
+    }
+  }
+
+  Future<UserModel?> updateDriver({int? id, String? fullName, String? document, String? phone, String? email, String? password}) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}updateDriver',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id": id,
+          "full_name": fullName,
+          "document": document,
+          "phone": phone,
+          "email": email,
+          "password": password,
+        },
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UserModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UserService -> updateDriver] error: $e');
+      return null;
+    }
+  }
+
+  Future<UserModel?> createDriver({int? id_user, String? fullName, String? document, String? phone, String? email, String? password}) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}createDriver',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id_user": id_user,
+          "full_name": fullName,
+          "document": document,
+          "phone": phone,
+          "email": email,
+          "password": password,
+        },
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UserModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UserService -> createDriver] error: $e');
       return null;
     }
   }
