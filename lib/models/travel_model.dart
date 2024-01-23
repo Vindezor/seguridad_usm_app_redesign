@@ -185,14 +185,14 @@ class Unit {
     String plate;
     String year;
     String description;
-    int idModel;
+    Model model;
 
     Unit({
         required this.id,
         required this.plate,
         required this.year,
         required this.description,
-        required this.idModel,
+        required this.model,
     });
 
     factory Unit.fromJson(Map<String, dynamic> json) => Unit(
@@ -200,7 +200,7 @@ class Unit {
         plate: json["plate"],
         year: json["year"],
         description: json["description"],
-        idModel: json["id_model"],
+        model: Model.fromJson(json["model"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -208,6 +208,50 @@ class Unit {
         "plate": plate,
         "year": year,
         "description": description,
-        "id_model": idModel,
+        "model": model,
     };
+}
+
+class Model {
+  int id;
+  String model;
+  Brand brand;
+
+  Model({
+      required this.id,
+      required this.model,
+      required this.brand,
+  });
+
+  factory Model.fromJson(Map<String, dynamic> json) => Model(
+      id: json["id"],
+      model: json["model"],
+      brand: Brand.fromJson(json["brand"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+      "id": id,
+      "model": model,
+      "brand": brand.toJson(),
+  };
+}
+
+class Brand {
+  int id;
+  String brand;
+
+  Brand({
+      required this.id,
+      required this.brand,
+  });
+
+  factory Brand.fromJson(Map<String, dynamic> json) => Brand(
+      id: json["id"],
+      brand: json["brand"],
+  );
+
+  Map<String, dynamic> toJson() => {
+      "id": id,
+      "brand": brand,
+  };
 }

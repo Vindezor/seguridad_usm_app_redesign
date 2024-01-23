@@ -74,7 +74,7 @@ class AdministrateStopsPage extends ConsumerWidget {
           ),
         ),
         title: const StrokeText(
-          text: "Administrar Paradas",
+          text: "Paradas",
           textStyle: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 26,

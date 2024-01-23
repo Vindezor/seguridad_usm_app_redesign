@@ -53,7 +53,7 @@ class AdministrateDriversController extends ChangeNotifier{
   deleteDriver(context, id){
     showAlertOptions(
       context,
-      msg: "¿Seguro que desea eliminar esta parada?",
+      msg: "¿Seguro que desea eliminar este conductor?",
       title: "Importante",
       acceptOnPressed: () async {
         Navigator.of(context).pop();

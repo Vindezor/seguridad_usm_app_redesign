@@ -17,80 +17,143 @@ class AddEditDriverPage extends ConsumerWidget {
       }
     });
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          color: Colors.transparent
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Image.asset(
-                "assets/background.png",
-                fit: BoxFit.fitWidth,
-                alignment: Alignment.bottomCenter,
-              )
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 50, right: 50, top: 40),
-                  child: Text(
-                    "Datos de la parada",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
-                  child: TextField(
-                    onChanged: (value) {
-                      controller.changeName();
-                    },
-                    keyboardType: TextInputType.name,
-                    controller: controller.fullNameController,
-                    textInputAction: TextInputAction.next,
-                    // obscureText: true,
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                      ),
-                      labelText: 'Nombre Completo',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 90, right: 90, top: 40),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
-                    ),
-                    onPressed: controller.buttonDisabled() ? null : () => controller.save(context),
-                    child: const Text(
-                      "Guardar",
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            color: Colors.transparent
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Image.asset(
+                  "assets/background.png",
+                  fit: BoxFit.fitWidth,
+                  alignment: Alignment.bottomCenter,
+                )
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: Text(
+                      "Datos del conductor",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 18,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: TextField(
+                      onChanged: (value) {
+                        controller.changeInput();
+                      },
+                      keyboardType: TextInputType.name,
+                      controller: controller.fullNameController,
+                      textInputAction: TextInputAction.next,
+                      // obscureText: true,
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        labelText: 'Nombre Completo',
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 40,)
-              ],
-            ),
-          ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: TextField(
+                      onChanged: (value) {
+                        controller.changeInput();
+                      },
+                      keyboardType: TextInputType.number,
+                      controller: controller.documentController,
+                      textInputAction: TextInputAction.next,
+                      // obscureText: true,
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        labelText: 'Document',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: TextField(
+                      onChanged: (value) {
+                        controller.changeInput();
+                      },
+                      keyboardType: TextInputType.phone,
+                      controller: controller.phoneController,
+                      textInputAction: TextInputAction.next,
+                      // obscureText: true,
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        labelText: 'Teléfono',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: TextField(
+                      onChanged: (value) {
+                        controller.changeInput();
+                      },
+                      keyboardType: TextInputType.text,
+                      controller: controller.emailController,
+                      textInputAction: TextInputAction.next,
+                      // obscureText: true,
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        labelText: 'Correo',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 90, right: 90, top: 40),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                      ),
+                      onPressed: controller.buttonDisabled() ? null : () => controller.save(context),
+                      child: const Text(
+                        "Guardar",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ),
+                  //const SizedBox(height: 40,)
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       // floatingActionButton: FloatingActionButton(
@@ -133,9 +196,9 @@ class AddEditDriverPage extends ConsumerWidget {
             )
           ),
         ),
-        title: const StrokeText(
-          text: "Editar Conductor",
-          textStyle: TextStyle(
+        title: StrokeText(
+          text: controller.editing ? "Editar Conductor" : "Añadir Conductor",
+          textStyle: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 26,
             color: Color(0xFF3874c0),

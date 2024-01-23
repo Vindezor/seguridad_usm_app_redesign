@@ -51,7 +51,9 @@ dependencies:
     git:
       url: https://github.com/heremaps/flexible-polyline.git
       path: dart
-      
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.9
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

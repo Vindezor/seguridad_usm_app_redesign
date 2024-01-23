@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_null_aware_operators
+
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -40,7 +42,7 @@ class LoginController extends ChangeNotifier{
             await storage.write(key: "id_user", value: response.data?.user.id.toString());
             await storage.write(key: "document", value: response.data?.user.document);
             await storage.write(key: "email", value: response.data?.user.email);
-            await storage.write(key: "expiration_date", value: response.data?.user.expirationDate.toString());
+            await storage.write(key: "expiration_date", value: response.data?.user.expirationDate != null ? response.data?.user.expirationDate.toString() : null);
             await storage.write(key: "university_code", value: response.data?.user.universityCode);
             await storage.write(key: "full_name", value: response.data?.user.fullName);
             await storage.write(key: "emergency_email", value: response.data?.user.emergencyEmail);

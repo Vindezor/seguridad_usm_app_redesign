@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_design/ui/administrate/administrate_page.dart';
 import 'package:test_design/ui/administrate/admins/administrate_admins_page.dart';
+import 'package:test_design/ui/administrate/drivers/add_edit_driver/add_edit_driver_page.dart';
 import 'package:test_design/ui/administrate/drivers/administrate_drivers_page.dart';
 import 'package:test_design/ui/administrate/routes/add_edit_route/add_edit_route_page.dart';
 import 'package:test_design/ui/administrate/routes/administrate_routes_page.dart';
@@ -53,6 +54,7 @@ Map<String, Widget Function(BuildContext context)> appRoutes() {
     Routes.stopMap: (_) => const StopMapPage(),
     Routes.addEditStop: (_) => const AddEditStopPage(),
     Routes.addEditRoute: (_) => const AddEditRoutePage(),
+    Routes.addEditDriver: (_) => const AddEditDriverPage(),
     Routes.routeMap: (_) => const RouteMapPage(),
   };
 }

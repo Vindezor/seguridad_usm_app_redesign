@@ -164,9 +164,9 @@ class AddEditStopPage extends ConsumerWidget {
             )
           ),
         ),
-        title: const StrokeText(
-          text: "Editar Parada",
-          textStyle: TextStyle(
+        title: StrokeText(
+          text: controller.editing ? "Editar Parada": "Añadir Parada",
+          textStyle: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 26,
             color: Color(0xFF3874c0),

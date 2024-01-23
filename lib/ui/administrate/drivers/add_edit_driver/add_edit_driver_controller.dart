@@ -15,8 +15,8 @@ class AddEditDriverController extends ChangeNotifier{
   final TextEditingController documentController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  // final TextEditingController passwordController = TextEditingController();
+  // final TextEditingController confirmPasswordController = TextEditingController();
   final UserService driverService = UserService(Dio());
 
   bool checked = false;
@@ -39,7 +39,7 @@ class AddEditDriverController extends ChangeNotifier{
     notifyListeners();
   }
 
-  changeName(){
+  changeInput(){
     notifyListeners();
   }
 
@@ -52,7 +52,7 @@ class AddEditDriverController extends ChangeNotifier{
     // if(nameController.value.text != "" && coordinateController.value.text != ""){
     //   return false;
     // }
-    return true;
+    return false;
   }
 
   save(context) async {
@@ -65,7 +65,7 @@ class AddEditDriverController extends ChangeNotifier{
         document: documentController.value.text,
         phone: phoneController.value.text,
         email: emailController.value.text,
-        password: passwordController.value.text,
+        //password: passwordController.value.text,
       );
     } else {
       response = await driverService.createDriver(
@@ -73,7 +73,7 @@ class AddEditDriverController extends ChangeNotifier{
         document: documentController.value.text,
         phone: phoneController.value.text,
         email: emailController.value.text,
-        password: passwordController.value.text,
+        //password: passwordController.value.text,
       );
     }
     if(response != null){
@@ -114,8 +114,8 @@ class AddEditDriverController extends ChangeNotifier{
     documentController.dispose();
     phoneController.dispose();
     emailController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
+    // passwordController.dispose();
+    // confirmPasswordController.dispose();
     log("[AddEditDriverController] disposed");
   }
 }

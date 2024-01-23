@@ -19,38 +19,38 @@ class ProfilePage extends ConsumerWidget {
       body: Scrollbar(
         child: ListView(
           children: controller.ready ? [
-            ProfileDataCard(
+            controller.fullName != null ? ProfileDataCard(
               title: "Nombre Completo",
               text: controller.fullName!,
-            ),
-            ProfileDataCard(
+            ) : const SizedBox.shrink(), 
+            controller.document != null ? ProfileDataCard(
               title: "Cedula",
               text: controller.document!,
-            ),
-            ProfileDataCard(
+            ) : const SizedBox.shrink(),
+            controller.email != null ? ProfileDataCard(
               title: "Correo",
               text: controller.email!,
-            ),
-            ProfileDataCard(
+            ) : const SizedBox.shrink(),
+            controller.emergencyEmail != null ? ProfileDataCard(
               title: "Correo de Emergencia",
               text: controller.emergencyEmail!,
-            ),
-            ProfileDataCard(
+            ) : const SizedBox.shrink(),
+            controller.phone != null ? ProfileDataCard(
               title: "Telefono",
               text: controller.phone!,
-            ),
-            ProfileDataCard(
+            ) : const SizedBox.shrink(),
+            controller.emergencyPhone != null ? ProfileDataCard(
               title: "Telefono de Emergencia",
               text: controller.emergencyPhone!,
-            ),
-            ProfileDataCard(
+            ) : const SizedBox.shrink(),
+            controller.universityCode != null ? ProfileDataCard(
               title: "Código de Carnet",
               text: controller.universityCode!,
-            ),
-            ProfileDataCard(
+            ) : const SizedBox.shrink(),
+            controller.getExpirationDate() != null ? ProfileDataCard(
               title: "Fecha de Vencimiento",
-              text: controller.getExpirationDate(),
-            ),
+              text: controller.getExpirationDate()!,
+            ) : const SizedBox.shrink(),
             const SizedBox(
               height: 20,
             )
@@ -79,7 +79,7 @@ class ProfilePage extends ConsumerWidget {
       //     ),
       //   ),
       // ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: controller.emergencyEmail != null ? FloatingActionButton(
         heroTag: 'heroProfile',
         onPressed: () => controller.goToEditProfile(context),
         backgroundColor: const Color(0xFF3874c0),
@@ -87,7 +87,7 @@ class ProfilePage extends ConsumerWidget {
           Icons.edit,
           color: Color(0xFFddeaf4),
         ),
-      ),
+      ) : null,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         leading: IconButton(

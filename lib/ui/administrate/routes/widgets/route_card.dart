@@ -37,29 +37,34 @@ class RouteCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Salida: ${departure.name}",
-                  style: const TextStyle(
-                    color: Color(0xFF3874c0)
+            SizedBox(
+              width: MediaQuery.of(context).size.width *0.5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Salida: ${departure.name}",
+                    style: const TextStyle(
+                      color: Color(0xFF3874c0)
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                Text(
-                  "Destino: ${arrival.name}",
-                  style: const TextStyle(
-                    color: Color(0xFF3874c0)
+                  Text(
+                    "Destino: ${arrival.name}",
+                    style: const TextStyle(
+                      color: Color(0xFF3874c0)
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                // Text(
-                //   "Longitud: ${coordinate.split(",")[1]}",
-                //   style: const TextStyle(
-                //     color: Color(0xFF3874c0)
-                //   ),
-                // ),
-              ],
+                  // Text(
+                  //   "Longitud: ${coordinate.split(",")[1]}",
+                  //   style: const TextStyle(
+                  //     color: Color(0xFF3874c0)
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

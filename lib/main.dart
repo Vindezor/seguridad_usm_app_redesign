@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Seguridad USM',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.

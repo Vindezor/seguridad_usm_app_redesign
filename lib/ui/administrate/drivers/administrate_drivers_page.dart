@@ -33,7 +33,7 @@ class AdministrateDriversPage extends ConsumerWidget {
           ).toList(),
         ) : const Center(
           child: Text(
-            "No hay paradas registradas",
+            "No hay conductores registrados",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -52,7 +52,7 @@ class AdministrateDriversPage extends ConsumerWidget {
           ]
         ),
         child: FloatingActionButton(
-          onPressed: () => Navigator.of(context).pushNamed('/add_edit_stop').then((value) => controller.getAllDrivers(context)),
+          onPressed: () => Navigator.of(context).pushNamed('/add_edit_driver').then((value) => controller.getAllDrivers(context)),
           backgroundColor: const Color(0xFFddeaf4),
           child: const Icon(Icons.add, color: Color(0xFF3874c0),),
         ),
@@ -72,7 +72,7 @@ class AdministrateDriversPage extends ConsumerWidget {
           ),
         ),
         title: const StrokeText(
-          text: "Administrar Conductores",
+          text: "Conductores",
           textStyle: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 26,

@@ -36,7 +36,7 @@ class AdministrateRoutesPage extends ConsumerWidget {
           ).toList(),
         ) : const Center(
           child: Text(
-            "No hay paradas registradas",
+            "No hay rutas registradas",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -75,7 +75,7 @@ class AdministrateRoutesPage extends ConsumerWidget {
           ),
         ),
         title: const StrokeText(
-          text: "Administrar Rutas",
+          text: "Rutas",
           textStyle: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 26,

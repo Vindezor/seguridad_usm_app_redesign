@@ -31,35 +31,48 @@ class DriverCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Nombre: ${driver.fullName}",
-                  style: const TextStyle(
-                    color: Color(0xFF3874c0)
+            SizedBox(
+              width: MediaQuery.of(context).size.width *0.5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Nombre: ${driver.fullName}",
+                    style: const TextStyle(
+                      color: Color(0xFF3874c0)
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                Text(
-                  "Documento: ${driver.document}",
-                  style: const TextStyle(
-                    color: Color(0xFF3874c0)
+                  Text(
+                    "Documento: ${driver.document}",
+                    style: const TextStyle(
+                      color: Color(0xFF3874c0)
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                Text(
-                  "Teléfono: ${driver.phone}",
-                  style: const TextStyle(
-                    color: Color(0xFF3874c0)
+                  Text(
+                    "Teléfono: ${driver.phone}",
+                    style: const TextStyle(
+                      color: Color(0xFF3874c0)
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-              ],
+                  Text(
+                    "Correo: ${driver.email}",
+                    style: const TextStyle(
+                      color: Color(0xFF3874c0)
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  onPressed: () => Navigator.of(context).pushNamed('/add_edit_drive', arguments: {
+                  onPressed: () => Navigator.of(context).pushNamed('/add_edit_driver', arguments: {
                     "driver": driver.toJson()
                   }).then((result) {
                     controller.getAllDrivers(context);

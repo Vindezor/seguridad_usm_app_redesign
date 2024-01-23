@@ -111,15 +111,19 @@ class ProfileController extends ChangeNotifier{
       emergencyPhone = await storage.read(key: 'emergency_phone');
       document = await storage.read(key: 'document');
       universityCode = await storage.read(key: 'university_code');
-      expirationDate = DateTime.parse((await storage.read(key: 'expiration_date'))!);
+      final exp = await storage.read(key: 'expiration_date');
+      expirationDate = exp != null ? DateTime.parse(exp) : null;
       ready = true;
       if(context.mounted) Navigator.of(context).pop();
       notifyListeners();
     }
   }
 
-  String getExpirationDate(){
-    return '${expirationDate!.day.toString()}/${expirationDate!.month.toString()}/${expirationDate!.year.toString()}';
+  String? getExpirationDate(){
+    if(expirationDate != null){
+      return '${expirationDate!.day.toString()}/${expirationDate!.month.toString()}/${expirationDate!.year.toString()}';
+    }
+    return null;
   }
 
   bool saveButtonDisabled(){
