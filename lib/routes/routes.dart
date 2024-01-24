@@ -24,5 +24,6 @@ abstract class Routes{
   static const addEditStop = '/add_edit_stop';
   static const addEditRoute = '/add_edit_route';
   static const addEditDriver = '/add_edit_driver';
+  static const addEditUnit = '/add_edit_unit';
   static const routeMap = '/route_map';
 }

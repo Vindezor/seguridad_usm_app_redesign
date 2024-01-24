@@ -79,10 +79,8 @@ class UnitCard extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  onPressed: () => Navigator.of(context).pushNamed('/add_edit_stop', arguments: {
-                    // "id": id,
-                    // "name": name,
-                    // "coordinate": coordinate,
+                  onPressed: () => Navigator.of(context).pushNamed('/add_edit_unit', arguments: {
+                    "unit": unit
                   }).then((result) {
                     controller.getAllUnits(context);
                   }),

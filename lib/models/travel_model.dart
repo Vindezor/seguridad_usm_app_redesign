@@ -6,6 +6,7 @@
 
 import 'dart:convert';
 
+import 'package:test_design/models/login_model.dart';
 import 'package:test_design/models/stops_model.dart';
 
 TravelModel travelModelFromJson(String str) => TravelModel.fromJson(json.decode(str));
@@ -186,6 +187,7 @@ class Unit {
     String year;
     String description;
     Model model;
+    User? driver;
 
     Unit({
         required this.id,
@@ -193,6 +195,7 @@ class Unit {
         required this.year,
         required this.description,
         required this.model,
+        required this.driver,
     });
 
     factory Unit.fromJson(Map<String, dynamic> json) => Unit(
@@ -201,6 +204,7 @@ class Unit {
         year: json["year"],
         description: json["description"],
         model: Model.fromJson(json["model"]),
+        driver: json["driver"] != null ? User.fromJson(json["driver"]) : null,
     );
 
     Map<String, dynamic> toJson() => {
@@ -209,6 +213,7 @@ class Unit {
         "year": year,
         "description": description,
         "model": model,
+        "driver": driver
     };
 }
 

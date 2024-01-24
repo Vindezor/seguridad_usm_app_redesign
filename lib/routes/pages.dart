@@ -9,6 +9,7 @@ import 'package:test_design/ui/administrate/routes/map/route_map_page.dart';
 import 'package:test_design/ui/administrate/stops/add_edit_stop/add_edit_stop_page.dart';
 import 'package:test_design/ui/administrate/stops/administrate_stops_page.dart';
 import 'package:test_design/ui/administrate/stops/map/stop_map_page.dart';
+import 'package:test_design/ui/administrate/units/add_edit_unit/add_edit_unit_page.dart';
 import 'package:test_design/ui/administrate/units/administrate_units_page.dart';
 import 'package:test_design/ui/complete_profile/complete_profile_one_page.dart';
 import 'package:test_design/ui/complete_profile/complete_profile_two_page.dart';
@@ -56,5 +57,6 @@ Map<String, Widget Function(BuildContext context)> appRoutes() {
     Routes.addEditRoute: (_) => const AddEditRoutePage(),
     Routes.addEditDriver: (_) => const AddEditDriverPage(),
     Routes.routeMap: (_) => const RouteMapPage(),
+    Routes.addEditUnit: (_) => const AddEditUnitPage(),
   };
 }
