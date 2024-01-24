@@ -20,10 +20,15 @@ abstract class Routes{
   static const administrateRoutes = '/administrate_routes';
   static const administrateDrivers = '/administrate_drivers';
   static const administrateAdmins = '/administrate_admins';
+  static const administrateBrands = '/administrate_brands';
+  static const administrateModels = '/administrate_models';
   static const stopMap = '/stop_map';
   static const addEditStop = '/add_edit_stop';
   static const addEditRoute = '/add_edit_route';
   static const addEditDriver = '/add_edit_driver';
   static const addEditUnit = '/add_edit_unit';
+  static const addEditBrand = '/add_edit_brand';
+  static const addEditModel = '/add_edit_model';
+  static const addEditAdmin = '/add_edit_admin';
   static const routeMap = '/route_map';
 }

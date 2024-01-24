@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:test_design/ui/administrate/administrate_page.dart';
+import 'package:test_design/ui/administrate/admins/add_edit_admin/add_edit_admin_page.dart';
 import 'package:test_design/ui/administrate/admins/administrate_admins_page.dart';
+import 'package:test_design/ui/administrate/brands/add_edit_brand/add_edit_brand_page.dart';
+import 'package:test_design/ui/administrate/brands/administrate_brands_page.dart';
 import 'package:test_design/ui/administrate/drivers/add_edit_driver/add_edit_driver_page.dart';
 import 'package:test_design/ui/administrate/drivers/administrate_drivers_page.dart';
+import 'package:test_design/ui/administrate/models/add_edit_model/add_edit_model_page.dart';
+import 'package:test_design/ui/administrate/models/administrate_models_page.dart';
 import 'package:test_design/ui/administrate/routes/add_edit_route/add_edit_route_page.dart';
 import 'package:test_design/ui/administrate/routes/administrate_routes_page.dart';
 import 'package:test_design/ui/administrate/routes/map/route_map_page.dart';
@@ -52,11 +57,16 @@ Map<String, Widget Function(BuildContext context)> appRoutes() {
     Routes.administrateRoutes: (_) => const AdministrateRoutesPage(),
     Routes.administrateDrivers: (_) => const AdministrateDriversPage(),
     Routes.administrateAdmins: (_) => const AdministrateAdminsPage(),
+    Routes.administrateBrands: (_) => const AdministrateBrandsPage(),
+    Routes.administrateModels: (_) => const AdministrateModelsPage(),
     Routes.stopMap: (_) => const StopMapPage(),
     Routes.addEditStop: (_) => const AddEditStopPage(),
     Routes.addEditRoute: (_) => const AddEditRoutePage(),
     Routes.addEditDriver: (_) => const AddEditDriverPage(),
-    Routes.routeMap: (_) => const RouteMapPage(),
     Routes.addEditUnit: (_) => const AddEditUnitPage(),
+    Routes.addEditBrand: (_) => const AddEditBrandPage(),
+    Routes.addEditModel: (_) => const AddEditModelPage(),
+    Routes.addEditAdmin: (_) => const AddEditAdminPage(),
+    Routes.routeMap: (_) => const RouteMapPage(),
   };
 }

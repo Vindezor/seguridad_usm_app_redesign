@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:stroke_text/stroke_text.dart';
-import 'package:test_design/ui/administrate/admins/administrate_admin_controller.dart';
-import 'package:test_design/ui/administrate/admins/widgets/admin_card.dart';
+import 'package:test_design/ui/administrate/brands/administrate_brands_controller.dart';
+import 'package:test_design/ui/administrate/brands/widgets/brand_card.dart';
 
-class AdministrateAdminsPage extends ConsumerWidget {
-  const AdministrateAdminsPage({super.key});
+class AdministrateBrandsPage extends ConsumerWidget {
+  const AdministrateBrandsPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(administrateAdminsController);
+    final controller = ref.watch(administrateBrandsController);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if(controller.admins == null){
-        controller.getAllAdmins(context);
+      if(controller.brands == null){
+        controller.getAllBrands(context);
       }
     });
     return Scaffold(
@@ -25,15 +25,16 @@ class AdministrateAdminsPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.admins != null ? ListView(
-          children: controller.admins!.map(
-            (admin) => AdminCard(
-              admin: admin
+        child:  controller.brands != null ? ListView(
+          children: controller.brands!.map(
+            (brand) => BrandCard(
+              id: brand.id,
+              brand: brand.brand,
             )
           ).toList(),
         ) : const Center(
           child: Text(
-            "No hay conductores registrados",
+            "No hay paradas registradas",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -52,7 +53,7 @@ class AdministrateAdminsPage extends ConsumerWidget {
           ]
         ),
         child: FloatingActionButton(
-          onPressed: () => Navigator.of(context).pushNamed('/add_edit_admin').then((value) => controller.getAllAdmins(context)),
+          onPressed: () => Navigator.of(context).pushNamed('/add_edit_brand').then((value) => controller.getAllBrands(context)),
           backgroundColor: const Color(0xFFddeaf4),
           child: const Icon(Icons.add, color: Color(0xFF3874c0),),
         ),
@@ -72,7 +73,7 @@ class AdministrateAdminsPage extends ConsumerWidget {
           ),
         ),
         title: const StrokeText(
-          text: "Administradores",
+          text: "Marcas",
           textStyle: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 26,

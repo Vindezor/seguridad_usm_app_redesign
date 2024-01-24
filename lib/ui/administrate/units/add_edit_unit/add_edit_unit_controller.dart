@@ -51,7 +51,7 @@ class AddEditUnitController extends ChangeNotifier{
         selectedModel = unit!.model.id;
         selectedBrand = unit!.model.brand.id;
         await getAllBrands(context);
-        await getAllModelsByIdBrand(context, selectedBrand);
+        await getAllModelsByIdBrand(context, selectedBrand, value: selectedModel);
         editing = true;
       } catch (e){
         log("$e");
@@ -67,7 +67,7 @@ class AddEditUnitController extends ChangeNotifier{
     notifyListeners();
   }
   
-  getAllModelsByIdBrand(context, idBrand) async {
+  getAllModelsByIdBrand(context, idBrand, {int? value}) async {
     globalLoading(context);
     final response = await unitService.getAllModelsByIdBrand(idBrand);
     if(response != null){
@@ -75,6 +75,7 @@ class AddEditUnitController extends ChangeNotifier{
         Navigator.of(context).pop();
         models = response.data;
         modelItems = [];
+        selectedModel = value;
         models!.map((model) => modelItems.add(DropdownMenuItem<int>(value: model.id, child: Text(model.model),))).toList();
         notifyListeners();
       } else {
@@ -213,9 +214,13 @@ class AddEditUnitController extends ChangeNotifier{
   // }
 
   buttonDisabled(){
-    // if(nameController.value.text != "" && coordinateController.value.text != ""){
-    //   return false;
-    // }
+    if(plateController.value.text != ""
+    && yearController.value.text != ""
+    && descriptionController.value.text != ""
+    && selectedModel != null
+    && selectedDriver != null){
+      return false;
+    }
     return true;
   }
 
@@ -227,13 +232,17 @@ class AddEditUnitController extends ChangeNotifier{
         id: unit!.id,
         plate: plateController.value.text,
         year: yearController.value.text,
-        description: descriptionController.value.text
+        description: descriptionController.value.text,
+        idDriver: selectedDriver,
+        idModel: selectedModel,
       );
     } else {
       response = await unitService.createUnit(
         plate: plateController.value.text,
         year: yearController.value.text,
-        description: descriptionController.value.text
+        description: descriptionController.value.text,
+        idDriver: selectedDriver,
+        idModel: selectedModel,
       );
     }
     if(response != null){

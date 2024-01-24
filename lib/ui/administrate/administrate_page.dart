@@ -62,6 +62,25 @@ class AdministratePage extends ConsumerWidget {
                 ),
               ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ButtonHome(
+                  icon: Icons.pin_drop,
+                  text: "Marcas",
+                  onTap: (){
+                    Navigator.of(context).pushNamed(Routes.administrateBrands);
+                  },
+                ),
+                ButtonHome(
+                  icon: Icons.directions_subway,
+                  text: "Modelos",
+                  onTap: (){
+                    Navigator.of(context).pushNamed(Routes.administrateModels);
+                  },
+                ),
+              ],
+            ),
             (homeControllerRef.idTypeUser != null) ? (homeControllerRef.idTypeUser! == 4) ? Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

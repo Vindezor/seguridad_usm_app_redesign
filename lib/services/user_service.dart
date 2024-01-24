@@ -148,6 +148,38 @@ class UserService {
     }
   }
 
+  Future<UsersModel?> getAllAdmins() async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.get(
+        '${AppConfig.instance.apiHost}getAllAdmins',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UsersModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UserService -> getAllAdmins] error: $e');
+      return null;
+    }
+  }
+
   Future<UsersModel?> deleteDriver(id) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
@@ -179,6 +211,41 @@ class UserService {
       return data;
     } catch (e) {
       log('[UserService -> deleteDriver] error: $e');
+      return null;
+    }
+  }
+
+  Future<UsersModel?> deleteAdmin(id) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}deleteAdmin',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id": id,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UsersModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UserService -> deleteAdmin] error: $e');
       return null;
     }
   }
@@ -223,6 +290,46 @@ class UserService {
     }
   }
 
+  Future<UserModel?> updateAdmin({int? id, String? fullName, String? document, String? phone, String? email, String? password}) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}updateAdmin',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id": id,
+          "full_name": fullName,
+          "document": document,
+          "phone": phone,
+          "email": email,
+          "password": password,
+        },
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UserModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UserService -> updateAdmin] error: $e');
+      return null;
+    }
+  }
+
   Future<UserModel?> createDriver({int? id_user, String? fullName, String? document, String? phone, String? email, String? password}) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
@@ -259,6 +366,46 @@ class UserService {
       return data;
     } catch (e) {
       log('[UserService -> createDriver] error: $e');
+      return null;
+    }
+  }
+
+  Future<UserModel?> createAdmin({int? id_user, String? fullName, String? document, String? phone, String? email, String? password}) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}createAdmin',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id_user": id_user,
+          "full_name": fullName,
+          "document": document,
+          "phone": phone,
+          "email": email,
+          "password": password,
+        },
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UserModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UserService -> createAdmin] error: $e');
       return null;
     }
   }

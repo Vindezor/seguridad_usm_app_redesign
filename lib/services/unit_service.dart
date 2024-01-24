@@ -144,7 +144,7 @@ class UnitService {
     }
   }
 
-  Future<UnitsModel?> createUnit({String? plate, String? year, String? description}) async {
+  Future<UnitsModel?> createUnit({String? plate, String? year, String? description, int? idDriver, int? idModel}) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
     try {
@@ -162,6 +162,8 @@ class UnitService {
           "plate": plate,
           "year": year,
           "description": description,
+          "id_driver": idDriver,
+          "id_model": idModel,
         }
         // options: Options(
         //   headers: {
@@ -181,7 +183,79 @@ class UnitService {
     }
   }
 
-  Future<UnitsModel?> updateUnit({int? id, String? plate, String? year, String? description}) async {
+  Future<UnitsModel?> createBrand({String? brand}) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}createBrand',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "brand": brand,
+          
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UnitsModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UnitService -> createBrand] error: $e');
+      return null;
+    }
+  }
+
+  Future<UnitsModel?> createModel({String? model, int? idBrand}) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}createModel',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "model": model,
+          "id_brand": idBrand,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UnitsModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UnitService -> createModel] error: $e');
+      return null;
+    }
+  }
+
+  Future<UnitsModel?> updateUnit({int? id, String? plate, String? year, String? description, int? idDriver, int? idModel}) async {
     const storage = FlutterSecureStorage();
     final token = await storage.read(key: "token");
     try {
@@ -199,7 +273,9 @@ class UnitService {
           "id": id,
           "plate": plate,
           "year": year,
-          "description": description
+          "description": description,
+          "id_driver": idDriver,
+          "id_model": idModel,
         }
         // options: Options(
         //   headers: {
@@ -215,6 +291,79 @@ class UnitService {
       return data;
     } catch (e) {
       log('[UnitService -> updateUnit] error: $e');
+      return null;
+    }
+  }
+
+  Future<UnitsModel?> updateBrand({int? id, String? brand}) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}updateBrand',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id": id,
+          "brand": brand,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UnitsModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UnitService -> updateBrand] error: $e');
+      return null;
+    }
+  }
+
+  Future<UnitsModel?> updateModel({int? id, String? model, int? idBrand}) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}updateModel',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id": id,
+          "model": model,
+          "id_brand": idBrand,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UnitsModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UnitService -> updateModel] error: $e');
       return null;
     }
   }
@@ -250,6 +399,76 @@ class UnitService {
       return data;
     } catch (e) {
       log('[UnitService -> deleteUnit] error: $e');
+      return null;
+    }
+  }
+
+  Future<UnitsModel?> deleteBrand(id) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}deleteBrand',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id": id,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UnitsModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UnitService -> deleteBrand] error: $e');
+      return null;
+    }
+  }
+
+  Future<UnitsModel?> deleteModel(id) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}deleteModel',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id": id,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = UnitsModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[UnitService -> deleteModel] error: $e');
       return null;
     }
   }

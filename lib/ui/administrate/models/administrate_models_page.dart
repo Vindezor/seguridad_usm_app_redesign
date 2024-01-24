@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:stroke_text/stroke_text.dart';
-import 'package:test_design/ui/administrate/admins/administrate_admin_controller.dart';
-import 'package:test_design/ui/administrate/admins/widgets/admin_card.dart';
+import 'package:test_design/ui/administrate/models/administrate_models_controller.dart';
+import 'package:test_design/ui/administrate/models/widgets/model_card.dart';
 
-class AdministrateAdminsPage extends ConsumerWidget {
-  const AdministrateAdminsPage({super.key});
+class AdministrateModelsPage extends ConsumerWidget {
+  const AdministrateModelsPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(administrateAdminsController);
+    final controller = ref.watch(administrateModelsController);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if(controller.admins == null){
-        controller.getAllAdmins(context);
+      if(controller.models == null){
+        controller.getAllModels(context);
       }
     });
     return Scaffold(
@@ -25,15 +25,15 @@ class AdministrateAdminsPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.admins != null ? ListView(
-          children: controller.admins!.map(
-            (admin) => AdminCard(
-              admin: admin
+        child:  controller.models != null ? ListView(
+          children: controller.models!.map(
+            (model) => ModelCard(
+              model: model,
             )
           ).toList(),
         ) : const Center(
           child: Text(
-            "No hay conductores registrados",
+            "No hay paradas registradas",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -52,7 +52,7 @@ class AdministrateAdminsPage extends ConsumerWidget {
           ]
         ),
         child: FloatingActionButton(
-          onPressed: () => Navigator.of(context).pushNamed('/add_edit_admin').then((value) => controller.getAllAdmins(context)),
+          onPressed: () => Navigator.of(context).pushNamed('/add_edit_model').then((value) => controller.getAllModels(context)),
           backgroundColor: const Color(0xFFddeaf4),
           child: const Icon(Icons.add, color: Color(0xFF3874c0),),
         ),
@@ -72,7 +72,7 @@ class AdministrateAdminsPage extends ConsumerWidget {
           ),
         ),
         title: const StrokeText(
-          text: "Administradores",
+          text: "Modelos",
           textStyle: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 26,
