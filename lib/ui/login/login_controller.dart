@@ -56,6 +56,13 @@ class LoginController extends ChangeNotifier{
             Navigator.pushReplacementNamed(context, '/home');
           } else {
             await storage.write(key: "id_user", value: response.data?.user.id.toString());
+            await storage.write(key: "type_user", value: response.data?.user.typeUser.typeUser);
+            await storage.write(key: "id_type_user", value: response.data?.user.typeUser.id.toString());
+            await storage.write(key: "is_active", value: response.data?.user.isActive.toString());
+            await storage.write(key: "creation_date", value: response.data?.user.creationDate.toString());
+            await storage.write(key: "document", value: response.data?.user.document);
+            await storage.write(key: "email", value: response.data?.user.email);
+            await storage.write(key: "full_name", value: response.data?.user.fullName);
             Navigator.of(context).pop();
             Navigator.pushReplacementNamed(context, '/complete_profile_one');
           }

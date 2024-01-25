@@ -3,35 +3,35 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:icon_decoration/icon_decoration.dart';
 import 'package:stroke_text/stroke_text.dart';
-import 'package:test_design/global/global_dialog.dart';
-import 'package:test_design/ui/map/map_controller.dart';
+import 'package:test_design/ui/admin_map/admin_map_controller.dart';
 
-class MapPage extends ConsumerWidget {
+class AdminMapPage extends ConsumerWidget {
 
-  const MapPage({Key? key}) : super(key: key);
+  const AdminMapPage({Key? key}) : super(key: key);
   
   final FloatingActionButtonLocation fabLocation = FloatingActionButtonLocation.centerDocked;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(mapController);
-    log("[MapPage] reloaded");
+    final controller = ref.watch(adminMapController);
+    log("[AdminMapPage] reloaded");
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if(!controller.initialized){
         controller.initSocket();
       }
-      if(controller.travelEnded){
-        showAlertOptions(
-          context,
-          msg: "El conductor ha terminado el viaje",
-          title: "Importante",
-          closeOnPressed: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).pop();
-          },
-        );
-      }
+      // if(controller.travelEnded){
+      //   showAlertOptions(
+      //     context,
+      //     msg: "El conductor ha terminado el viaje",
+      //     title: "Importante",
+      //     closeOnPressed: () {
+      //       Navigator.of(context).pop();
+      //       Navigator.of(context).pop();
+      //     },
+      //   );
+      // }
     });
     return PopScope(
       canPop: false,
@@ -79,39 +79,20 @@ class MapPage extends ConsumerWidget {
             ]
           ),
           child: FloatingActionButton.large(
-            heroTag: 'heroMap',
-            onPressed: () => controller.emergency(context),
-            backgroundColor: const Color(0xFFb04d1e),
+            heroTag: 'heroAdminMap',
+            onPressed: () => {},
+            backgroundColor: const Color(0xFFddeaf4),
             child: const Icon(
-              Icons.notification_important,
-              color: Color(0xFFefdbd2),
+              Icons.info,
+              color: Color(0xFF3874c0),
               size: 40,
               weight: 0.5,
             ),
           ),
         ),
-        bottomNavigationBar: BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          color: const Color(0xFF3874c0),
-          child: controller.idTypeUser != null ? controller.idTypeUser == 2 ? Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              IconButton(
-                onPressed: () => controller.addMorePeople(context),
-                icon: const Icon(Icons.person_add,),
-                iconSize: 35,
-                color: const Color(0xFFddeaf4),
-              ),
-              const SizedBox(width: 120,),
-              IconButton(
-                onPressed: () => controller.endTravel(context),
-                icon: const Icon(Icons.cancel),
-                iconSize: 35,
-                color: const Color(0xFFddeaf4),
-              ),
-            ],
-          ) : const SizedBox() : const SizedBox(),
+        bottomNavigationBar: const BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          color: Color(0xFF3874c0),
           // child: Row(
           //   children: [
           //     IconButton(
@@ -139,21 +120,21 @@ class MapPage extends ConsumerWidget {
           // ),
         ),
         appBar: AppBar(
-          automaticallyImplyLeading: false,
-          // leading: IconButton(
-          //   onPressed: () => Navigator.of(context).pop(),
-          //   icon: const DecoratedIcon(
-          //     icon: Icon(Icons.arrow_back, color: Color(0xFF3874c0), size: 30,),
-          //     decoration: IconDecoration(
-          //       border: IconBorder(
-          //         color: Colors.white,
-          //         width: 3
-          //       )
-          //     )
-          //   ),
-          // ),
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+            onPressed: () => Navigator.of(context).pop(),
+            icon: const DecoratedIcon(
+              icon: Icon(Icons.arrow_back, color: Color(0xFF3874c0), size: 30,),
+              decoration: IconDecoration(
+                border: IconBorder(
+                  color: Colors.white,
+                  width: 3
+                )
+              )
+            ),
+          ),
           title: const StrokeText(
-            text: "En viaje",
+            text: "Monitoreo de viajes",
             textStyle: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 26,

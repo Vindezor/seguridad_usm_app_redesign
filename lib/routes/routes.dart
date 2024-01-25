@@ -31,4 +31,5 @@ abstract class Routes{
   static const addEditModel = '/add_edit_model';
   static const addEditAdmin = '/add_edit_admin';
   static const routeMap = '/route_map';
+  static const adminMap = '/admin_map';
 }

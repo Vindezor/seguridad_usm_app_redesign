@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:test_design/app_config.dart';
 import 'package:test_design/models/generic_model.dart';
 import 'package:test_design/models/travel_model.dart';
+import 'package:test_design/models/travels_model.dart';
 import 'package:test_design/models/user_code_mode.dart';
 import 'package:test_design/models/waiting_scan_model.dart';
 
@@ -258,6 +259,38 @@ class TravelService {
       return data;
     } catch (e) {
       log('[TravelService -> emergency] error: $e');
+      return null;
+    }
+  }
+
+  Future<TravelsModel?> getAllTravelNotEnded() async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.get(
+        '${AppConfig.instance.apiHost}getAllTravelNotEnded',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = TravelsModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[TravelService -> getAllTravelNotEnded] error: $e');
       return null;
     }
   }

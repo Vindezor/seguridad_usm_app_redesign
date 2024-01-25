@@ -40,10 +40,11 @@ class HomeController extends ChangeNotifier{
     );
   }
 
-  homeQrButton(context) async {
+  homeButton(context) async {
     final idTypeUser = int.parse((await storage.read(key: 'id_type_user'))!);
     if(idTypeUser == 1) showQr(context);
     if(idTypeUser == 2) Navigator.pushNamed(context, '/start_route');
+    if(idTypeUser == 3 || idTypeUser == 4) Navigator.pushNamed(context, '/admin_map');
   }
 
   showQr(context) async {

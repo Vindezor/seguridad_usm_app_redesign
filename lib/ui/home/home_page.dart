@@ -90,11 +90,11 @@ class HomePage extends ConsumerWidget {
           ),
           child: FloatingActionButton.large(
             heroTag: 'heroHome',
-            onPressed: () => controller.homeQrButton(context),
+            onPressed: () => controller.homeButton(context),
             backgroundColor: const Color(0xFFddeaf4),
-            child: const Icon(
-              Icons.qr_code_scanner,
-              color: Color(0xFF3874c0),
+            child: Icon(
+              controller.idTypeUser == 3 ? Icons.map : controller.idTypeUser == 2 ? Icons.directions : Icons.qr_code_scanner,
+              color: const Color(0xFF3874c0),
               size: 40,
               weight: 0.5,
             ),

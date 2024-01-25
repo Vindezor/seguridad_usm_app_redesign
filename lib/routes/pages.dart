@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_design/ui/admin_map/admin_map_page.dart';
 import 'package:test_design/ui/administrate/administrate_page.dart';
 import 'package:test_design/ui/administrate/admins/add_edit_admin/add_edit_admin_page.dart';
 import 'package:test_design/ui/administrate/admins/administrate_admins_page.dart';
@@ -68,5 +69,6 @@ Map<String, Widget Function(BuildContext context)> appRoutes() {
     Routes.addEditModel: (_) => const AddEditModelPage(),
     Routes.addEditAdmin: (_) => const AddEditAdminPage(),
     Routes.routeMap: (_) => const RouteMapPage(),
+    Routes.adminMap: (_) => const AdminMapPage(),
   };
 }

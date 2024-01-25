@@ -64,19 +64,24 @@ class CompleteProfileController extends ChangeNotifier{
     notifyListeners();
   }
 
-  nextPage(context){
-    Navigator.of(context).pushNamed("/complete_profile_two");
-    log("next");
+  nextPage(context) async {
+    final idTypeUser = await storage.read(key: 'id_type_user');
+    if(["2", "3"].contains(idTypeUser)){
+      save(context);
+    } else {
+      Navigator.of(context).pushNamed("/complete_profile_two");
+    }
   }
 
   save(context) async {
     final idUser = await storage.read(key: 'id_user');
+    final idTypeUser = await storage.read(key: 'id_type_user');
     globalLoading(context);
     final UpdateUserModel? response = await userService.updateUser(
       id_user: int.parse(idUser!),
-      emergency_email: emergencyEmailController.value.text,
-      emergency_phone: emergencyPhoneController.value.text,
-      phone: phoneController.value.text,
+      emergency_email: ["2", "3"].contains(idTypeUser) ? null : emergencyEmailController.value.text,
+      emergency_phone: ["2", "3"].contains(idTypeUser) ? null : emergencyPhoneController.value.text,
+      phone: ["2", "3"].contains(idTypeUser) ? null : phoneController.value.text,
       password: passwordController.value.text,
     );
     if(response != null){

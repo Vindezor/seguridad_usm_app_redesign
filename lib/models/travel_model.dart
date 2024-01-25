@@ -16,7 +16,7 @@ String travelModelToJson(TravelModel data) => json.encode(data.toJson());
 class TravelModel {
     String status;
     String? msg;
-    Data? data;
+    Travel? data;
 
     TravelModel({
         required this.status,
@@ -27,7 +27,7 @@ class TravelModel {
     factory TravelModel.fromJson(Map<String, dynamic> json) => TravelModel(
         status: json["status"],
         msg: json["msg"],
-        data: json["data"] != null ? Data.fromJson(json["data"]) : null,
+        data: json["data"] != null ? Travel.fromJson(json["data"]) : null,
     );
 
     Map<String, dynamic> toJson() => {
@@ -37,7 +37,7 @@ class TravelModel {
     };
 }
 
-class Data {
+class Travel {
     int id;
     String coordinate;
     DateTime startTime;
@@ -47,7 +47,7 @@ class Data {
     Unit unit;
     Route route;
 
-    Data({
+    Travel({
         required this.id,
         required this.coordinate,
         required this.startTime,
@@ -58,7 +58,7 @@ class Data {
         required this.route,
     });
 
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
+    factory Travel.fromJson(Map<String, dynamic> json) => Travel(
         id: json["id"],
         coordinate: json["coordinate"],
         startTime: DateTime.parse(json["start_time"]),
