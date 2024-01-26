@@ -19,7 +19,7 @@ class AdminMapPage extends ConsumerWidget {
     log("[AdminMapPage] reloaded");
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if(!controller.initialized){
-        controller.initSocket();
+        controller.initMap();
       }
       // if(controller.travelEnded){
       //   showAlertOptions(
@@ -34,7 +34,7 @@ class AdminMapPage extends ConsumerWidget {
       // }
     });
     return PopScope(
-      canPop: false,
+      canPop: true,
       child: Scaffold(
         //extendBodyBehindAppBar: true,
         // appBar: AppBar(
@@ -60,8 +60,6 @@ class AdminMapPage extends ConsumerWidget {
         body: GoogleMap(
           polylines: controller.polyline,
           markers: controller.markers,
-          myLocationEnabled: true,
-          myLocationButtonEnabled: true,
           compassEnabled: false,
           mapType: MapType.normal,
           initialCameraPosition: controller.initialCameraPosition,
@@ -80,7 +78,7 @@ class AdminMapPage extends ConsumerWidget {
           ),
           child: FloatingActionButton.large(
             heroTag: 'heroAdminMap',
-            onPressed: () => {},
+            onPressed: () => controller.showInfo(context),
             backgroundColor: const Color(0xFFddeaf4),
             child: const Icon(
               Icons.info,

@@ -98,7 +98,8 @@ class MapController extends ChangeNotifier{
         acceptOnPressed: () async {
           Navigator.of(context).pop();
           globalLoading(context);
-          final response = await travelService.endTravel();
+          final idTravel = await storage.read(key: 'id_travel');
+          final response = await travelService.endTravel(idTravel);
           if(response != null) {
             Navigator.of(context).pop();
             if(response.status == "SUCCESS"){

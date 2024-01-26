@@ -2,22 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:stroke_text/stroke_text.dart';
-import 'package:test_design/ui/history/history_controller.dart';
-import 'package:test_design/ui/history/widgets/history_item.dart';
+import 'package:test_design/ui/admin_map/travel_passengers/travel_passengers_controller.dart';
+import 'package:test_design/ui/admin_map/widgets/passenger_card.dart';
 
-class HistoryPage extends ConsumerWidget {
-  const HistoryPage({super.key});
+class TravelPassengersPage extends ConsumerWidget {
+  const TravelPassengersPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(historyController);
-    // FloatingActionButtonLocation fabLocation = FloatingActionButtonLocation.centerDocked;
+    final controller = ref.watch(travelPassengersController);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if(controller.travels == null){
-        controller.historyAdmin(context);
+      if(controller.passegers == null){
+        final args =  ModalRoute.of(context)!.settings.arguments;
+        controller.getAllPassengers(context, args);
       }
     });
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         decoration: const BoxDecoration(
           // image: DecorationImage(
@@ -25,17 +26,15 @@ class HistoryPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.travels != null ? Scrollbar(
-          child: ListView(
-            children: controller.travels!.map(
-              (travel) => HistoryItem(
-                travel: travel
-              )
-            ).toList(),
-          ),
+        child:  controller.passegers != null ? ListView(
+          children: controller.passegers!.map(
+            (passenger) => PassengerCard(
+              passenger: passenger
+            )
+          ).toList(),
         ) : const Center(
           child: Text(
-            "No hay viajes registrados",
+            "No hay pasajeros registrados",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -43,26 +42,20 @@ class HistoryPage extends ConsumerWidget {
           ),
         ),
       ),
-      // floatingActionButtonLocation: fabLocation,
       // floatingActionButton: Container(
       //   decoration: const BoxDecoration(
       //     boxShadow: [
       //       BoxShadow(
-      //         blurRadius: 30,
+      //         blurRadius: 10,
       //         color: Colors.black,
       //         spreadRadius: -5,
       //       )
       //     ]
       //   ),
-      //   child: FloatingActionButton.large(
-      //     onPressed: () => {},
+      //   child: FloatingActionButton(
+      //     onPressed: () => Navigator.of(context).pushNamed('/add_edit_stop').then((value) => controller.getAllStops(context)),
       //     backgroundColor: const Color(0xFFddeaf4),
-      //     child: const Icon(
-      //       Icons.qr_code_scanner,
-      //       color: Color(0xFF3874c0),
-      //       size: 40,
-      //       weight: 0.5,
-      //     ),
+      //     child: const Icon(Icons.add, color: Color(0xFF3874c0),),
       //   ),
       // ),
       appBar: AppBar(
@@ -80,7 +73,7 @@ class HistoryPage extends ConsumerWidget {
           ),
         ),
         title: const StrokeText(
-          text: "Historial",
+          text: "Pasajeros",
           textStyle: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 26,

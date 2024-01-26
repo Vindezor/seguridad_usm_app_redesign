@@ -1,13 +1,19 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:dio/dio.dart';
+import 'package:flexible_polyline/flexible_polyline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:test_design/global/fit_map.dart';
+import 'package:test_design/models/travel_model.dart';
 import 'package:test_design/services/travel_service.dart';
+import 'package:test_design/ui/admin_map/travel_info/travel_info.dart';
 
 class AdminMapController extends ChangeNotifier{
   FlutterSecureStorage storage = const FlutterSecureStorage();
@@ -16,15 +22,16 @@ class AdminMapController extends ChangeNotifier{
   Timer? travelTimer;
   // int? idTypeUser;
   // bool travelEnded = false;
-
+  List<Travel>? travels;
+  Travel? selectedTravel;
   Set<Polyline> polyline = {};
   Set<Marker> markers = {};
   BitmapDescriptor? icon;
 
-  final TravelService travelService = TravelService(Dio());
+  final TravelService travelService = TravelService(Dio(BaseOptions(sendTimeout: const Duration(seconds: 9))));
   late Completer<GoogleMapController> mapController;
   bool initialized = false;
-  final CameraPosition initialCameraPosition = const CameraPosition(target: LatLng(10.480034, -66.903991), zoom: 12);
+  final CameraPosition initialCameraPosition = const CameraPosition(target: LatLng(10.480034, -66.903991), zoom: 10);
 
   AdminMapController(){
     mapController = Completer<GoogleMapController>();
@@ -32,26 +39,28 @@ class AdminMapController extends ChangeNotifier{
     // requestPermission();
   }
 
-  initSocket() async {
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+  }
+
+  initMap() async {
     initialized = true;
-    BitmapDescriptor.fromAssetImage(
-      const ImageConfiguration(
-        size: Size(5, 5)
-      ),
-      'assets/bus-icon-a.png'
-    ).then((iconGot) {
-      icon = iconGot;
-      travelTimer = Timer.periodic(
-        const Duration(seconds: 10),
-        (timer) {
-          try {
-            getAllTravelNotEnded();
-          } catch (e) {
-            log("$e");
-          }
+    final Uint8List markerIcon = await getBytesFromAsset('assets/bus-icon-a.png', 150);
+    icon = BitmapDescriptor.fromBytes(markerIcon);
+    getAllTravelNotEnded();
+    travelTimer = Timer.periodic(
+      const Duration(seconds: 10),
+      (timer) {
+        try {
+          getAllTravelNotEnded();
+        } catch (e) {
+          log("$e");
         }
-      );
-    });
+      }
+    );
     // final token = await storage.read(key: 'token');
     // final idTravel = await storage.read(key: 'id_travel');
     // idTypeUser = int.parse((await storage.read(key: 'id_type_user'))!);
@@ -105,18 +114,70 @@ class AdminMapController extends ChangeNotifier{
     final response = await travelService.getAllTravelNotEnded();
     if(response != null){
       if(response.status == "SUCCESS"){
+        travels = response.data;
+        markers.removeWhere((element) => element.markerId.value.startsWith("bus"));
         response.data!.map((travel) async {
           markers.add(
             Marker(
               anchor: const Offset(0,0),
               markerId: MarkerId(
-                travel.id.toString()
+                "bus${travel.id.toString()}"
               ),
               position: LatLng(
                 double.parse(travel.coordinate.split(",")[0]),
                 double.parse(travel.coordinate.split(",")[1]),
               ),
               icon: icon!,
+              onTap: () {
+                selectedTravel = travel;
+                final origin = LatLng(
+                  double.parse(travel.route.departure.coordinate.split(",")[0]),
+                  double.parse(travel.route.departure.coordinate.split(",")[1]),
+                );
+                final destination = LatLng(
+                  double.parse(travel.route.arrival.coordinate.split(",")[0]),
+                  double.parse(travel.route.arrival.coordinate.split(",")[1]),
+                );
+                mapController.future.then((controller) => fitMapRoutes(origin, destination, controller));
+                markers.removeWhere((element) => element.markerId.value.startsWith("stop"));
+                markers.add(
+                  Marker(
+                    //anchor: const Offset(0,0),
+                    markerId: MarkerId(
+                      "stop${travel.route.departure.id}"
+                    ),
+                    position: origin,
+                    onTap: () => {
+                      log("${travel.id}")
+                    }
+                  )
+                );
+                markers.add(
+                  Marker(
+                    //anchor: const Offset(0,0),
+                    markerId: MarkerId(
+                      "stop${travel.route.arrival.id}"
+                    ),
+                    position: destination,
+                    onTap: () => {
+                      log("${travel.id}")
+                    }
+                  )
+                );
+                final points = FlexiblePolyline.decode(travel.route.route)
+                  .map((e) => LatLng(e.lat, e.lng))
+                  .toList();
+                  polyline = {};
+                polyline.add(
+                  Polyline(
+                    polylineId: PolylineId("route${travel.id.toString()}"),
+                    points: points,
+                    color: const Color(0xFF3874c0),
+                    width: 5,
+                  )
+                );
+                notifyListeners();
+              }
             )
           );
         }).toList();
@@ -125,7 +186,15 @@ class AdminMapController extends ChangeNotifier{
     }
   }
 
-  
+  showInfo(context){
+    showModalBottomSheet(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (_)  {
+      return TravelInfo(selectedTravel: selectedTravel!,);
+    });
+  }
 
   // emergency(context){
   //   showAlertOptions(
