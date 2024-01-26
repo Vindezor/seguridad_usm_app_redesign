@@ -31,14 +31,16 @@ class AddEditModelController extends ChangeNotifier{
   AddEditModelController();
 
   check(args, context) async {
-    checked = true;
-    if(args != null){
-      model = args["model"];
-      modelController.text = model!.model;
-      id = model!.id;
-      selectedBrand = model!.brand.id;
+    if(checked == false){
+      checked = true;
+      if(args != null){
+        model = args["model"];
+        modelController.text = model!.model;
+        id = model!.id;
+        selectedBrand = model!.brand.id;
+        editing = true;
+      }
       await getAllBrands(context);
-      editing = true;
     }
     notifyListeners();
   }
