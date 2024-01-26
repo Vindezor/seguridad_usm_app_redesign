@@ -62,7 +62,7 @@ class Travel {
         id: json["id"],
         coordinate: json["coordinate"],
         startTime: DateTime.parse(json["start_time"]),
-        endTime: json["end_time"] != null ? DateTime.parse(json["start_time"]) : null,
+        endTime: json["end_time"] != null ? DateTime.parse(json["end_time"]) : null,
         idUnit: json["id_unit"],
         idRoute: json["id_route"],
         unit: Unit.fromJson(json["unit"]),

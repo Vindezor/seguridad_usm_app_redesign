@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_design/models/travel_model.dart';
+import 'package:test_design/ui/history/history_controller.dart';
 
-class HistoryItem extends StatelessWidget {
+class HistoryItem extends ConsumerWidget {
   const HistoryItem({
     super.key,
     required this.travel,
@@ -10,7 +12,8 @@ class HistoryItem extends StatelessWidget {
   final Travel travel;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(historyController);
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
       child: Container(
@@ -65,10 +68,13 @@ class HistoryItem extends StatelessWidget {
                 // ),
               ],
             ),
-            const Column(
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.qr_code_2, size: 80, color: Color(0xFF3874c0),)
+                IconButton(
+                  onPressed: () => { controller.showInfo(context, travel) },
+                  icon: const Icon(Icons.info, size: 40, color: Color(0xFF3874c0),)
+                ),
               ],
             )
           ],

@@ -17,7 +17,7 @@ class TravelInfo extends ConsumerWidget {
     final controller = ref.watch(travelInfoController);
     return SingleChildScrollView(
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.8,
+        height: MediaQuery.of(context).size.height * 0.72,
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
@@ -169,10 +169,10 @@ class TravelInfo extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
+                  selectedTravel.endTime == null ? const SizedBox(
                     width: 20,
-                  ),
-                  ElevatedButton(
+                  ) : const SizedBox.shrink(),
+                  selectedTravel.endTime == null ? ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFefdbd2)),
                     ),
@@ -185,7 +185,7 @@ class TravelInfo extends ConsumerWidget {
                         fontSize: 16,
                       ),
                     ),
-                  ),
+                  ) : const SizedBox.shrink(),
                 ],
               ),
             )

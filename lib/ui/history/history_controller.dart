@@ -7,6 +7,7 @@ import 'package:test_design/global/global_dialog.dart';
 import 'package:test_design/global/global_loading.dart';
 import 'package:test_design/models/travel_model.dart';
 import 'package:test_design/services/travel_service.dart';
+import 'package:test_design/ui/admin_map/travel_info/travel_info.dart';
 
 class HistoryController extends ChangeNotifier{
 
@@ -47,6 +48,16 @@ class HistoryController extends ChangeNotifier{
         }
       );
     }
+  }
+
+  showInfo(context, travel){
+    showModalBottomSheet(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (_)  {
+      return TravelInfo(selectedTravel: travel,);
+    });
   }
 
   @override

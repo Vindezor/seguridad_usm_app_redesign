@@ -26,7 +26,7 @@ class TravelPassengersPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.passegers != null ? ListView(
+        child:  controller.passegers != null ? controller.passegers!.isNotEmpty ? ListView(
           children: controller.passegers!.map(
             (passenger) => PassengerCard(
               passenger: passenger
@@ -40,7 +40,7 @@ class TravelPassengersPage extends ConsumerWidget {
               fontSize: 18,
             ),
           ),
-        ),
+        ) : const SizedBox.shrink(),
       ),
       // floatingActionButton: Container(
       //   decoration: const BoxDecoration(
