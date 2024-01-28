@@ -14,7 +14,7 @@ class StartTravelPage extends ConsumerWidget {
     log("[StartTravelPage] reloaded");
     final controller = ref.watch(startTravelController);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if(controller.items.isEmpty){
+      if(!controller.initialized){
         log("${controller.items.isEmpty}");
         await controller.getAllRoutes(context);
       }

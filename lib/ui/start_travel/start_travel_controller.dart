@@ -21,6 +21,8 @@ class StartTravelController extends ChangeNotifier{
     log("[StartTravelController] init");
   }
 
+  bool initialized = false;
+
   //int value;
   // final TextEditingController departureController = TextEditingController();
   // final TextEditingController arrivalController = TextEditingController();
@@ -37,6 +39,7 @@ class StartTravelController extends ChangeNotifier{
   }
 
   Future<void> getAllRoutes(context) async {
+    initialized = true;
     globalLoading(context);
     final route_model.RoutesModel? response = await routeService.getAllRoutes();
     if(response != null){
