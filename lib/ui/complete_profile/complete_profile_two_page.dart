@@ -64,7 +64,7 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                         child: TextField(
-                          maxLength: 80,
+                          maxLength: 50,
                           focusNode: controller.emergencyEmailFocusNode,
                           onChanged: (value) {
                             controller.changedInput();
@@ -158,6 +158,7 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                             filled: true,
                             fillColor: Colors.white,
                             border: const OutlineInputBorder(
+                              
                               borderRadius: BorderRadius.all(Radius.circular(25)),
                             ),
                             labelText: 'Telefono de Emergencia',

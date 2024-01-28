@@ -14,6 +14,18 @@ class ProfileController extends ChangeNotifier{
   
   ProfileController(){
     log("[ProfileController] init");
+    emergencyEmailFocusNode.addListener(() {
+      emergencyEmailTouched = true;
+      notifyListeners();
+    });
+    phoneFocusNode.addListener(() {
+      phoneTouched = true;
+      notifyListeners();
+    });
+    emergencyPhoneFocusNode.addListener(() {
+      emergencyPhoneTouched = true;
+      notifyListeners();
+    });
   }
 
   //int value;
@@ -25,6 +37,9 @@ class ProfileController extends ChangeNotifier{
   final FocusNode phoneFocusNode = FocusNode();
   final FocusNode emergencyPhoneFocusNode = FocusNode();
 
+  final phoneRegex = RegExp(r'^\d{11}$');
+  final emailRegex = RegExp(r'''(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])''');
+
   String? email;
   String? emergencyEmail;
   String? phone;
@@ -34,6 +49,10 @@ class ProfileController extends ChangeNotifier{
   DateTime? expirationDate = DateTime(2024);
   String? fullName;
   bool ready = false;
+
+  bool emergencyEmailTouched = false;
+  bool phoneTouched = false;
+  bool emergencyPhoneTouched = false;
 
   FlutterSecureStorage storage = const FlutterSecureStorage();
 
@@ -86,6 +105,27 @@ class ProfileController extends ChangeNotifier{
     //notifyListeners();
   }
 
+  emergencyEmailIsBad(){
+    if(emailRegex.hasMatch(emergencyEmailController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
+  phoneIsBad(){
+    if(phoneRegex.hasMatch(phoneController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
+  emergencyPhoneIsBad(){
+    if(phoneRegex.hasMatch(emergencyPhoneController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
   goToEditProfile(context){
     emergencyEmailController.text = emergencyEmail!;
     phoneController.text = phone!;
@@ -120,6 +160,10 @@ class ProfileController extends ChangeNotifier{
     }
   }
 
+  changeInput(){
+    notifyListeners();
+  }
+
   String? getExpirationDate(){
     if(expirationDate != null){
       return '${expirationDate!.day.toString()}/${expirationDate!.month.toString()}/${expirationDate!.year.toString()}';
@@ -128,10 +172,9 @@ class ProfileController extends ChangeNotifier{
   }
 
   bool saveButtonDisabled(){
-    // if(regex.hasMatch(textEditingController.value.text)){
-    //   return false;
-    // }
-    // return true;
+    if(emailRegex.hasMatch(emergencyEmailController.value.text) && phoneRegex.hasMatch(phoneController.value.text) && phoneRegex.hasMatch(emergencyPhoneController.value.text)){
+      return false;
+    }
     return true;
   }
 

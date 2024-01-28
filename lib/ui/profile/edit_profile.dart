@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_design/ui/profile/profile_controller.dart';
-import 'package:test_design/ui/profile/widgets/edit_profile_item.dart';
 
 class EditProfile extends ConsumerWidget {
   const EditProfile({super.key});
@@ -17,20 +17,95 @@ class EditProfile extends ConsumerWidget {
         ),
         child: ListView(
           children: [
-            EditProfileItem(
-              title: 'Correo de Emergencia',
-              controller: controller.emergencyEmailController,
-              focusNode: controller.emergencyEmailFocusNode,
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+              child: TextField(
+                onChanged: (_) => controller.changeInput(),
+                maxLength: 50,
+                focusNode: controller.emergencyEmailFocusNode,
+                controller: controller.emergencyEmailController,
+                textInputAction: TextInputAction.done,
+                obscureText: false,
+                decoration: InputDecoration(
+                  error: (controller.emergencyEmailIsBad() && controller.emergencyEmailTouched) ? Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Text(
+                      "Campo inválido",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                        fontSize: 12
+                      ),
+                    ),
+                  ) : null,
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                  ),
+                  labelText: "Correo de Emergencia",
+                ),
+              ),
             ),
-            EditProfileItem(
-              title: 'Teléfono',
-              controller: controller.phoneController,
-              focusNode: controller.phoneFocusNode,
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+              child: TextField(
+                onChanged: (_) => controller.changeInput(),
+                maxLength: 11,
+                focusNode: controller.phoneFocusNode,
+                controller: controller.phoneController,
+                textInputAction: TextInputAction.done,
+                obscureText: false,
+                decoration: InputDecoration(
+                  error: (controller.phoneIsBad() && controller.phoneTouched) ? Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Text(
+                      "Campo inválido",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                        fontSize: 12
+                      ),
+                    ),
+                  ) : null,
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                  ),
+                  labelText: "Teléfono",
+                ),
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+              ),
             ),
-            EditProfileItem(
-              title: 'Teléfono de Emergencia',
-              controller: controller.emergencyPhoneController,
-              focusNode: controller.emergencyPhoneFocusNode,
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+              child: TextField(
+                onChanged: (_) => controller.changeInput(),
+                maxLength: 11,
+                focusNode: controller.emergencyPhoneFocusNode,
+                controller: controller.emergencyPhoneController,
+                textInputAction: TextInputAction.done,
+                obscureText: false,
+                decoration: InputDecoration(
+                  error: (controller.emergencyPhoneIsBad() && controller.emergencyPhoneTouched) ? Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Text(
+                      "Campo inválido",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                        fontSize: 12
+                      ),
+                    ),
+                  ) : null,
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                  ),
+                  labelText: "Teléfono de Emergencia",
+                ),
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20),
@@ -58,7 +133,7 @@ class EditProfile extends ConsumerWidget {
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
                     ),
-                    onPressed: () => controller.save(context),
+                    onPressed: controller.saveButtonDisabled() ? null : () => controller.save(context),
                     child: const Text(
                       "Guardar",
                       style: TextStyle(

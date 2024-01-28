@@ -16,7 +16,6 @@ import 'package:test_design/ui/home/widgets/qr_timer.dart';
 class HomeController extends ChangeNotifier{
   
   FlutterSecureStorage storage = const FlutterSecureStorage();
-  TravelService travelService = TravelService(Dio());
   int? idTypeUser;
   Timer? timeTimer;
   Duration? currentDuration;
@@ -52,6 +51,8 @@ class HomeController extends ChangeNotifier{
   }
 
   showQr(context) async {
+    final cancelToken = CancelToken();
+    final travelService = TravelService(Dio(), cancelToken: cancelToken);
     globalLoading(context);
     final response = await travelService.generateUserCode();
     if(response != null){
@@ -93,7 +94,23 @@ class HomeController extends ChangeNotifier{
                       dataModuleStyle: const QrDataModuleStyle(dataModuleShape: QrDataModuleShape.square, color: Color(0xFF3874c0)),
                       eyeStyle: const QrEyeStyle(eyeShape: QrEyeShape.square, color: Color(0xFF3874c0)),
                     ),
-                    const QrTimer()
+                    const QrTimer(),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        cancelToken.cancel();
+                      },
+                      child: const Text(
+                        "Cerrar",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -107,12 +124,16 @@ class HomeController extends ChangeNotifier{
             Navigator.of(context).pop();
             Navigator.of(context).pushNamed('/map');
           } else {
-            Navigator.of(context).pop();
-            showAlertOptions(
-              context,
-              msg: waitResponse.msg,
-              title: "Importante"
-            );
+            if(waitResponse.msg == "The request was manually cancelled by the user."){
+              log("cancelled");
+            } else {
+              Navigator.of(context).pop();
+              showAlertOptions(
+                context,
+                msg: waitResponse.msg,
+                title: "Importante"
+              );
+            }
           }
         } else {
           Navigator.of(context).pop();

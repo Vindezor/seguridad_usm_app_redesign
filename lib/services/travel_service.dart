@@ -113,6 +113,9 @@ class TravelService {
       final data = WaitingScanModel.fromJson(response.data);
       return data;
     } catch (e) {
+      if((e as DioException).message == "The request was manually cancelled by the user."){
+        return WaitingScanModel(status: "ERROR", msg: "The request was manually cancelled by the user.", data: null);
+      }
       log('[TravelService -> waitForScan] error: $e');
       return null;
     }
