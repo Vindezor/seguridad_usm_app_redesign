@@ -79,13 +79,24 @@ class ProfilePage extends ConsumerWidget {
       //     ),
       //   ),
       // ),
-      floatingActionButton: controller.emergencyEmail != null ? FloatingActionButton(
-        heroTag: 'heroProfile',
-        onPressed: () => controller.goToEditProfile(context),
-        backgroundColor: const Color(0xFF3874c0),
-        child: const Icon(
-          Icons.edit,
-          color: Color(0xFFddeaf4),
+      floatingActionButton: controller.emergencyEmail != null ? Container(
+        decoration: const BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 10,
+              color: Colors.black,
+              spreadRadius: -5,
+            )
+          ]
+        ),
+        child: FloatingActionButton(
+          heroTag: 'heroProfile',
+          onPressed: () => controller.goToEditProfile(context),
+          backgroundColor: const Color(0xFFddeaf4),
+          child: const Icon(
+            Icons.edit,
+            color: Color(0xFF3874c0),
+          ),
         ),
       ) : null,
       appBar: AppBar(

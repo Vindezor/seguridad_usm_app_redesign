@@ -25,7 +25,7 @@ class AdministrateRoutesPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.routes != null ? ListView(
+        child:  controller.routes != null && controller.routes!.isNotEmpty ? ListView(
           children: controller.routes!.map(
             (route) => RouteCard(
               id: route.id,

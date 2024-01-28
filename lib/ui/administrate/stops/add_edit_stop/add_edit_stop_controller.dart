@@ -21,7 +21,17 @@ class AddEditStopController extends ChangeNotifier{
 
   int? id;
 
-  AddEditStopController();
+  final RegExp stopRegex = RegExp(r'^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜ]+(?:\s[a-zA-Z0-9áéíóúÁÉÍÓÚüÜ]+)*$');
+
+  final FocusNode stopFocusNode = FocusNode();
+
+  bool stopTouched = false;
+
+  AddEditStopController(){
+    stopFocusNode.addListener(() {
+      stopTouched = true;
+    });
+  }
 
   check(args){
     if(args != null){
@@ -38,13 +48,20 @@ class AddEditStopController extends ChangeNotifier{
     notifyListeners();
   }
 
+  stopIsBad(){
+    if(stopRegex.hasMatch(nameController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
   changeCoordinates(LatLng pos){
     coordinateController.text = '${pos.latitude},${pos.longitude}';
     notifyListeners();
   }
 
   buttonDisabled(){
-    if(nameController.value.text != "" && coordinateController.value.text != ""){
+    if(stopRegex.hasMatch(nameController.value.text) && coordinateController.value.text != ""){
       return false;
     }
     return true;
@@ -94,6 +111,7 @@ class AddEditStopController extends ChangeNotifier{
     super.dispose();
     nameController.dispose();
     coordinateController.dispose();
+    stopFocusNode.dispose();
     log("[AddEditStopController] disposed");
   }
 }

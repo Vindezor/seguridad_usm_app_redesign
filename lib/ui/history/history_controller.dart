@@ -3,22 +3,32 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:test_design/global/global_dialog.dart';
 import 'package:test_design/global/global_loading.dart';
 import 'package:test_design/models/travel_model.dart';
+import 'package:test_design/models/travels_model.dart';
 import 'package:test_design/services/travel_service.dart';
 import 'package:test_design/ui/admin_map/travel_info/travel_info.dart';
 
 class HistoryController extends ChangeNotifier{
-
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
   final TravelService travelService = TravelService(Dio());
   List<Travel>? travels;
 
   HistoryController();
 
-  historyAdmin(context) async {
+  history(context) async {
+    final idTypeUser = int.parse((await storage.read(key: 'id_type_user'))!);
     globalLoading(context);
-    final response = await travelService.historyAdmin();
+    TravelsModel? response;
+    if(idTypeUser == 1){
+      response = await travelService.historyUser();
+    } else if (idTypeUser == 2){
+      response = await travelService.historyDriver();
+    } else {
+      response = await travelService.historyAdmin();
+    }
     if(response != null){
       if(response.status == "SUCCESS"){
         travels = response.data;

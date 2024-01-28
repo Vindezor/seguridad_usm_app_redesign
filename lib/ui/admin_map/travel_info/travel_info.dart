@@ -15,9 +15,14 @@ class TravelInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(travelInfoController);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if(controller.idTypeUser == null){
+        controller.init();
+      }
+    });
     return SingleChildScrollView(
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.72,
+        height: MediaQuery.of(context).size.height * 0.75,
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
@@ -151,44 +156,44 @@ class TravelInfo extends ConsumerWidget {
                   fontSize: 16,
                 ),
               ),
-              Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
-                    ),
-                    onPressed: () => controller.goToAllPassengers(context, selectedTravel.id),
-                    child: const Text(
-                      "Ver pasajeros",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+              controller.idTypeUser != null ? controller.idTypeUser! > 2 ? Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                      ),
+                      onPressed: () => controller.goToAllPassengers(context, selectedTravel.id),
+                      child: const Text(
+                        "Ver pasajeros",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
-                  ),
-                  selectedTravel.endTime == null ? const SizedBox(
-                    width: 20,
-                  ) : const SizedBox.shrink(),
-                  selectedTravel.endTime == null ? ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFefdbd2)),
-                    ),
-                    onPressed: () => controller.endTravel(context, selectedTravel.id),
-                    child: const Text(
-                      "Terminar viaje",
-                      style: TextStyle(
-                        color: Color(0xFFb04d1e),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                    selectedTravel.endTime == null ? const SizedBox(
+                      width: 20,
+                    ) : const SizedBox.shrink(),
+                    selectedTravel.endTime == null ? ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFefdbd2)),
                       ),
-                    ),
-                  ) : const SizedBox.shrink(),
-                ],
-              ),
-            )
+                      onPressed: () => controller.endTravel(context, selectedTravel.id),
+                      child: const Text(
+                        "Terminar viaje",
+                        style: TextStyle(
+                          color: Color(0xFFb04d1e),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ) : const SizedBox.shrink(),
+                  ],
+                ),
+              ) : const SizedBox.shrink() : const SizedBox.shrink()
             ],
           ),
         ),

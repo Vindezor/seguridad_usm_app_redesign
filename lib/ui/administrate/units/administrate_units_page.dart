@@ -25,7 +25,7 @@ class AdministrateUnitsPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.units != null ? ListView(
+        child:  controller.units != null && controller.units!.isNotEmpty ? ListView(
           children: controller.units!.map(
             (unit) => UnitCard(
               unit: unit
@@ -33,7 +33,7 @@ class AdministrateUnitsPage extends ConsumerWidget {
           ).toList(),
         ) : const Center(
           child: Text(
-            "No hay conductores registrados",
+            "No hay unidades registradas",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,

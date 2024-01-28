@@ -25,7 +25,7 @@ class AdministrateModelsPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.models != null ? ListView(
+        child:  controller.models != null && controller.models!.isNotEmpty ? ListView(
           children: controller.models!.map(
             (model) => ModelCard(
               model: model,
@@ -33,7 +33,7 @@ class AdministrateModelsPage extends ConsumerWidget {
           ).toList(),
         ) : const Center(
           child: Text(
-            "No hay paradas registradas",
+            "No hay modelos registrados",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,

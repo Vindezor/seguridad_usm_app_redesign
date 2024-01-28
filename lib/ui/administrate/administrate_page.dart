@@ -14,110 +14,80 @@ class AdministratePage extends ConsumerWidget {
     final homeControllerRef = ref.watch(homeController);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-        decoration: const BoxDecoration(
-          // image: DecorationImage(
-          //   image: AssetImage("assets/background.png"),
-          //   fit: BoxFit.cover
-          // )
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ButtonHome(
-                  icon: Icons.map,
-                  text: "Rutas",
-                  onTap: (){
-                    Navigator.of(context).pushNamed(Routes.administrateRoutes);
-                  },
-                ),
-                ButtonHome(
-                  icon: Icons.person,
-                  text: "Conductores",
-                  onTap: (){
-                    Navigator.of(context).pushNamed(Routes.administrateDrivers);
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ButtonHome(
-                  icon: Icons.pin_drop,
-                  text: "Paradas",
-                  onTap: (){
-                    Navigator.of(context).pushNamed(Routes.administrateStops);
-                  },
-                ),
-                ButtonHome(
-                  icon: Icons.directions_subway,
-                  text: "Unidades",
-                  onTap: (){
-                    Navigator.of(context).pushNamed(Routes.administrateUnits);
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ButtonHome(
-                  icon: Icons.pin_drop,
-                  text: "Marcas",
-                  onTap: (){
-                    Navigator.of(context).pushNamed(Routes.administrateBrands);
-                  },
-                ),
-                ButtonHome(
-                  icon: Icons.directions_subway,
-                  text: "Modelos",
-                  onTap: (){
-                    Navigator.of(context).pushNamed(Routes.administrateModels);
-                  },
-                ),
-              ],
-            ),
-            (homeControllerRef.idTypeUser != null) ? (homeControllerRef.idTypeUser! == 4) ? Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ButtonHome(
-                  icon: Icons.badge,
-                  text: "Administradores",
-                  onTap: (){
-                    Navigator.of(context).pushNamed(Routes.administrateAdmins);
-                  },
-                ),
-              ],
-            ) : const SizedBox.shrink() : const SizedBox.shrink(),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ButtonHome(
+                icon: Icons.map,
+                text: "Rutas",
+                onTap: (){
+                  Navigator.of(context).pushNamed(Routes.administrateRoutes);
+                },
+              ),
+              ButtonHome(
+                icon: Icons.person,
+                text: "Conductores",
+                onTap: (){
+                  Navigator.of(context).pushNamed(Routes.administrateDrivers);
+                },
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ButtonHome(
+                icon: Icons.pin_drop,
+                text: "Paradas",
+                onTap: (){
+                  Navigator.of(context).pushNamed(Routes.administrateStops);
+                },
+              ),
+              ButtonHome(
+                icon: Icons.directions_subway,
+                text: "Unidades",
+                onTap: (){
+                  Navigator.of(context).pushNamed(Routes.administrateUnits);
+                },
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ButtonHome(
+                icon: Icons.pin_drop,
+                text: "Marcas",
+                onTap: (){
+                  Navigator.of(context).pushNamed(Routes.administrateBrands);
+                },
+              ),
+              ButtonHome(
+                icon: Icons.directions_subway,
+                text: "Modelos",
+                onTap: (){
+                  Navigator.of(context).pushNamed(Routes.administrateModels);
+                },
+              ),
+            ],
+          ),
+          (homeControllerRef.idTypeUser != null) ? (homeControllerRef.idTypeUser! == 4) ? Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ButtonHome(
+                icon: Icons.badge,
+                text: "Administradores",
+                onTap: (){
+                  Navigator.of(context).pushNamed(Routes.administrateAdmins);
+                },
+              ),
+            ],
+          ) : const SizedBox.shrink() : const SizedBox.shrink(),
+        ],
       ),
-      // floatingActionButtonLocation: fabLocation,
-      // floatingActionButton: Container(
-      //   decoration: const BoxDecoration(
-      //     boxShadow: [
-      //       BoxShadow(
-      //         blurRadius: 30,
-      //         color: Colors.black,
-      //         spreadRadius: -5,
-      //       )
-      //     ]
-      //   ),
-      //   child: FloatingActionButton.large(
-      //     onPressed: () => {},
-      //     backgroundColor: const Color(0xFFddeaf4),
-      //     child: const Icon(
-      //       Icons.qr_code_scanner,
-      //       color: Color(0xFF3874c0),
-      //       size: 40,
-      //       weight: 0.5,
-      //     ),
-      //   ),
-      // ),
       appBar: AppBar(
         automaticallyImplyLeading: true,
         leading: IconButton(
@@ -148,35 +118,6 @@ class AdministratePage extends ConsumerWidget {
           alignment: Alignment.topCenter,
         ),
       ),
-      // bottomNavigationBar: const BottomAppBar(
-      //   shape: CircularNotchedRectangle(),
-      //   color: Color(0xFF3874c0),
-      //   // child: Row(
-      //   //   children: [
-      //   //     IconButton(
-      //   //       tooltip: 'Open navigation menu',
-      //   //       icon: const Icon(Icons.menu, color: Colors.white,),
-      //   //       onPressed: () {},
-      //   //     ),
-      //   //     IconButton(
-      //   //       tooltip: 'Open navigation menu',
-      //   //       icon: const Icon(Icons.menu, color: Colors.white,),
-      //   //       onPressed: () {},
-      //   //     ),
-      //   //     const Spacer(),
-      //   //     IconButton(
-      //   //       tooltip: 'Open navigation menu',
-      //   //       icon: const Icon(Icons.menu, color: Colors.white,),
-      //   //       onPressed: () {},
-      //   //     ),
-      //   //     IconButton(
-      //   //       tooltip: 'Open navigation menu',
-      //   //       icon: const Icon(Icons.menu, color: Colors.white,),
-      //   //       onPressed: () {},
-      //   //     ),
-      //   //   ],
-      //   // ),
-      // ),
     );
   }
 }

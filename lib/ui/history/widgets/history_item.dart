@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:test_design/global/time_format.dart';
 import 'package:test_design/models/travel_model.dart';
 import 'package:test_design/ui/history/history_controller.dart';
 
@@ -55,7 +56,7 @@ class HistoryItem extends ConsumerWidget {
                   ),
                 ),
                 travel.endTime != null ? Text(
-                  "Duración: ${travel.endTime!.difference(travel.startTime).inMinutes}:${travel.endTime!.difference(travel.startTime).inSeconds}",
+                  "Duración: ${formatDuration(travel.startTime, travel.endTime!)}",
                   style: const  TextStyle(
                     color: Color(0xFF3874c0)
                   ),

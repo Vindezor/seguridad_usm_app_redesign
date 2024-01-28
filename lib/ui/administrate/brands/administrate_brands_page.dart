@@ -25,7 +25,7 @@ class AdministrateBrandsPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.brands != null ? ListView(
+        child:  controller.brands != null && controller.brands!.isNotEmpty ? ListView(
           children: controller.brands!.map(
             (brand) => BrandCard(
               id: brand.id,
@@ -34,7 +34,7 @@ class AdministrateBrandsPage extends ConsumerWidget {
           ).toList(),
         ) : const Center(
           child: Text(
-            "No hay paradas registradas",
+            "No hay marcas registradas",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,

@@ -25,14 +25,14 @@ class ProfileController extends ChangeNotifier{
   final FocusNode phoneFocusNode = FocusNode();
   final FocusNode emergencyPhoneFocusNode = FocusNode();
 
-  String? email = "";
-  String? emergencyEmail = "";
-  String? phone = "";
-  String? emergencyPhone = "";
-  String? document = "";
-  String? universityCode = "";
+  String? email;
+  String? emergencyEmail;
+  String? phone;
+  String? emergencyPhone;
+  String? document;
+  String? universityCode;
   DateTime? expirationDate = DateTime(2024);
-  String? fullName = "";
+  String? fullName;
   bool ready = false;
 
   FlutterSecureStorage storage = const FlutterSecureStorage();
@@ -91,6 +91,7 @@ class ProfileController extends ChangeNotifier{
     phoneController.text = phone!;
     emergencyPhoneController.text = emergencyPhone!;
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       showDragHandle: true,
       context: context,
       isScrollControlled: true,

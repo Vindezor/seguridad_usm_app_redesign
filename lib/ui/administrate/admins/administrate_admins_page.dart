@@ -25,7 +25,7 @@ class AdministrateAdminsPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.admins != null ? ListView(
+        child:  controller.admins != null && controller.admins!.isNotEmpty ? ListView(
           children: controller.admins!.map(
             (admin) => AdminCard(
               admin: admin
@@ -33,7 +33,7 @@ class AdministrateAdminsPage extends ConsumerWidget {
           ).toList(),
         ) : const Center(
           child: Text(
-            "No hay conductores registrados",
+            "No hay administradores registrados",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,

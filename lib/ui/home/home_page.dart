@@ -93,7 +93,7 @@ class HomePage extends ConsumerWidget {
             onPressed: () => controller.homeButton(context),
             backgroundColor: const Color(0xFFddeaf4),
             child: Icon(
-              controller.idTypeUser == 3 ? Icons.map : controller.idTypeUser == 2 ? Icons.directions : Icons.qr_code_scanner,
+              (controller.idTypeUser == 3 || controller.idTypeUser == 4) ? Icons.map : controller.idTypeUser == 2 ? Icons.directions : Icons.qr_code_scanner,
               color: const Color(0xFF3874c0),
               size: 40,
               weight: 0.5,

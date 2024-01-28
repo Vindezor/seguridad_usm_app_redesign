@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:stroke_text/stroke_text.dart';
@@ -38,12 +39,12 @@ class AddEditDriverPage extends ConsumerWidget {
                   alignment: Alignment.bottomCenter,
                 )
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              ListView(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(left: 50, right: 50, top: 40),
+                    padding: EdgeInsets.only(left: 50, right: 50, top: 20),
                     child: Text(
                       "Datos del conductor",
                       style: TextStyle(
@@ -54,8 +55,10 @@ class AddEditDriverPage extends ConsumerWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 20),
                     child: TextField(
+                      maxLength: 50,
+                      focusNode: controller.fullNameFocusNode,
                       onChanged: (value) {
                         controller.changeInput();
                       },
@@ -63,10 +66,23 @@ class AddEditDriverPage extends ConsumerWidget {
                       controller: controller.fullNameController,
                       textInputAction: TextInputAction.next,
                       // obscureText: true,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        error: (controller.fullNameIsBad() && controller.fullNameTouched) ? Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: StrokeText(
+                            text: "Campo inválido",
+                            //textAlign: TextAlign.justify,
+                            textStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 12
+                            ),
+                            strokeColor: Colors.white,
+                            strokeWidth: 3,
+                          ),
+                        ) : null,
                         filled: true,
                         fillColor: Colors.white,
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
                         labelText: 'Nombre Completo',
@@ -74,39 +90,69 @@ class AddEditDriverPage extends ConsumerWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 20),
                     child: TextField(
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      focusNode: controller.documentFocusNode,
                       onChanged: (value) {
                         controller.changeInput();
                       },
                       keyboardType: TextInputType.number,
                       controller: controller.documentController,
                       textInputAction: TextInputAction.next,
-                      // obscureText: true,
-                      decoration: const InputDecoration(
+                      maxLength: 9,
+                      decoration: InputDecoration(
+                        error: (controller.documentIsBad() && controller.documentTouched) ? Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: StrokeText(
+                            text: "Campo inválido",
+                            //textAlign: TextAlign.justify,
+                            textStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 12
+                            ),
+                            strokeColor: Colors.white,
+                            strokeWidth: 3,
+                          ),
+                        ) : null,
                         filled: true,
                         fillColor: Colors.white,
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
-                        labelText: 'Document',
+                        labelText: 'Cédula',
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 20),
                     child: TextField(
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      focusNode: controller.phoneFocusNode,
                       onChanged: (value) {
                         controller.changeInput();
                       },
                       keyboardType: TextInputType.phone,
                       controller: controller.phoneController,
                       textInputAction: TextInputAction.next,
-                      // obscureText: true,
-                      decoration: const InputDecoration(
+                      maxLength: 11,
+                      decoration: InputDecoration(
+                        error: (controller.phoneIsBad() && controller.phoneTouched) ? Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: StrokeText(
+                            text: "Campo inválido",
+                            //textAlign: TextAlign.justify,
+                            textStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 12
+                            ),
+                            strokeColor: Colors.white,
+                            strokeWidth: 3,
+                          ),
+                        ) : null,
                         filled: true,
                         fillColor: Colors.white,
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
                         labelText: 'Teléfono',
@@ -114,19 +160,33 @@ class AddEditDriverPage extends ConsumerWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 20),
                     child: TextField(
+                      focusNode: controller.emailFocusNode,
                       onChanged: (value) {
                         controller.changeInput();
                       },
                       keyboardType: TextInputType.text,
                       controller: controller.emailController,
                       textInputAction: TextInputAction.next,
-                      // obscureText: true,
-                      decoration: const InputDecoration(
+                      maxLength: 50,
+                      decoration: InputDecoration(
+                        error: (controller.emailIsBad() && controller.emailTouched) ? Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: StrokeText(
+                            text: "Campo inválido",
+                            //textAlign: TextAlign.justify,
+                            textStyle: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 12
+                            ),
+                            strokeColor: Colors.white,
+                            strokeWidth: 3,
+                          ),
+                        ) : null,
                         filled: true,
                         fillColor: Colors.white,
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                         ),
                         labelText: 'Correo',
@@ -134,7 +194,7 @@ class AddEditDriverPage extends ConsumerWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 90, right: 90, top: 40),
+                    padding: const EdgeInsets.only(left: 90, right: 90, top: 20),
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
@@ -149,7 +209,7 @@ class AddEditDriverPage extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  //const SizedBox(height: 40,)
+                  const SizedBox(height: 20,)
                 ],
               ),
             ],
@@ -165,7 +225,7 @@ class AddEditDriverPage extends ConsumerWidget {
       //   decoration: const BoxDecoration(
       //     boxShadow: [
       //       BoxShadow(
-      //         blurRadius: 30,
+      //         blurRadius: 20,
       //         color: Colors.black,
       //         spreadRadius: -5,
       //       )
@@ -177,7 +237,7 @@ class AddEditDriverPage extends ConsumerWidget {
       //     child: const Icon(
       //       Icons.qr_code_scanner,
       //       color: Color(0xFF3874c0),
-      //       size: 40,
+      //       size: 20,
       //       weight: 0.5,
       //     ),
       //   ),

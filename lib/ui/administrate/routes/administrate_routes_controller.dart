@@ -175,6 +175,8 @@ class AdministrateRoutesController extends ChangeNotifier{
   goToAddRoute(context) async {
     await getAllStops(context);
     if(stops.isNotEmpty){
+      departureValue = null;
+      arrivalValue = null;
       Navigator.of(context).pushNamed('/add_edit_route').then((value) => getAllRoutes(context));
     }
   }

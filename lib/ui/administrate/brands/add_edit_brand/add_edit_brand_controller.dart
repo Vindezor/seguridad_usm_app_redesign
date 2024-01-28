@@ -19,7 +19,18 @@ class AddEditBrandController extends ChangeNotifier{
 
   int? id;
 
-  AddEditBrandController();
+  final RegExp brandRegex = RegExp(r'^[A-Za-z](?:[A-Za-z\s\-]{0,18}[A-Za-z])?$');
+
+
+  final FocusNode brandFocusNode = FocusNode();
+
+  bool brandTouched = false;
+
+  AddEditBrandController(){
+    brandFocusNode.addListener(() {
+      brandTouched = true;
+    });
+  }
 
   check(args){
     if(args != null){
@@ -41,7 +52,7 @@ class AddEditBrandController extends ChangeNotifier{
   // }
 
   buttonDisabled(){
-    if(brandController.value.text != ""){
+    if(brandRegex.hasMatch(brandController.value.text)){
       return false;
     }
     return true;
@@ -90,6 +101,7 @@ class AddEditBrandController extends ChangeNotifier{
     // TODO: implement dispose
     super.dispose();
     brandController.dispose();
+    brandFocusNode.dispose();
     log("[AddEditBrandController] disposed");
   }
 }

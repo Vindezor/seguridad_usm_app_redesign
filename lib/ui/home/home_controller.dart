@@ -1,5 +1,6 @@
 // ignore_for_file: library_prefixes
 
+import 'dart:async';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +11,16 @@ import 'package:test_design/global/global_dialog.dart';
 import 'package:test_design/global/global_loading.dart';
 import 'package:test_design/routes/routes.dart';
 import 'package:test_design/services/travel_service.dart';
+import 'package:test_design/ui/home/widgets/qr_timer.dart';
 
 class HomeController extends ChangeNotifier{
   
   FlutterSecureStorage storage = const FlutterSecureStorage();
   TravelService travelService = TravelService(Dio());
   int? idTypeUser;
-  
+  Timer? timeTimer;
+  Duration? currentDuration;
+
   HomeController(){
     log("[HomeController] init");
   }
@@ -52,6 +56,11 @@ class HomeController extends ChangeNotifier{
     final response = await travelService.generateUserCode();
     if(response != null){
       if(response.status == "SUCCESS"){
+        currentDuration = const Duration(seconds: 60);
+        timeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+          currentDuration = Duration(seconds: currentDuration!.inSeconds - 1);
+          notifyListeners();
+        });
         Navigator.of(context).pop();
         log(response.data!.code);
         showDialog(
@@ -73,6 +82,7 @@ class HomeController extends ChangeNotifier{
                         fontSize: 26,
                         fontWeight: FontWeight.bold
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(
                       height: 20,
@@ -83,13 +93,13 @@ class HomeController extends ChangeNotifier{
                       dataModuleStyle: const QrDataModuleStyle(dataModuleShape: QrDataModuleShape.square, color: Color(0xFF3874c0)),
                       eyeStyle: const QrEyeStyle(eyeShape: QrEyeShape.square, color: Color(0xFF3874c0)),
                     ),
-                    const Text("5:00")
+                    const QrTimer()
                   ],
                 ),
               ),
             ),
           ),
-        );
+        ).then((value) => timeTimer!.cancel());
         final waitResponse = await travelService.waitForScan(response.data!.code);
         if(waitResponse != null){
           if(waitResponse.status == "SUCCESS"){
@@ -128,6 +138,17 @@ class HomeController extends ChangeNotifier{
         title: "Importante"
       );
     }
+  }
+
+  String formatDuration(Duration duration) {
+  // Obtén los minutos y segundos de la duración
+    int minutes = duration.inMinutes;
+    int seconds = duration.inSeconds % 60;
+
+    // Formatea la cadena
+    String formattedDuration = '$minutes:${seconds.toString().padLeft(2, '0')}';
+
+    return formattedDuration;
   }
 
   @override

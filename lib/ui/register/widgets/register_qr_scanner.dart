@@ -1,54 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:test_design/global/scanner_overlay.dart';
+import 'package:test_design/ui/register/widgets/register_qr_controller.dart';
 
-class RegisterQrScanner extends StatefulWidget {
-
+class RegisterQrScanner extends ConsumerWidget {
   const RegisterQrScanner({super.key});
 
   @override
-  State<RegisterQrScanner> createState() => _RegisterQrScannerState();
-}
-
-class _RegisterQrScannerState extends State<RegisterQrScanner> {
-  final regex = RegExp(r'^https:\/\/usm\.terna\.net\/validar\/[a-zA-Z0-9]{7}$');
-  bool isDetect = false;
-  final controller = MobileScannerController();
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(registerQrController);
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(!controller.isInitialized){
+        controller.init();
+      }
+    });
 
 
     return Scaffold(
       //appBar: AppBar(),
       body: MobileScanner(
-        controller: controller,
+        controller: controller.scannerController,
         overlay: const QRScannerOverlay(overlayColour: Color.fromRGBO(0, 0, 0, 0.5),),
         scanWindow: Rect.fromCenter(center: Offset(width / 2, height / 2), width: 200, height: 200),
         onDetect: (capture) {
-          final List<Barcode> barcodes = capture.barcodes;
-          // final Uint8List? image = capture.image;
-          for (final barcode in barcodes) {
-            if(barcode.rawValue != null){
-              if(regex.hasMatch(barcode.rawValue!) && !isDetect) {
-                isDetect = true;
-                final linkSplited = barcode.rawValue!.split('/');
-                Navigator.of(context).pop(linkSplited[linkSplited.length - 1]);
-              }
-            }
-          }
+          controller.onCapture(capture, context);
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    controller.stop();
-    controller.dispose();
   }
 }

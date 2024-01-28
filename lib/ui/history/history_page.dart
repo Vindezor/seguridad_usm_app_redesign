@@ -14,7 +14,7 @@ class HistoryPage extends ConsumerWidget {
     // FloatingActionButtonLocation fabLocation = FloatingActionButtonLocation.centerDocked;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if(controller.travels == null){
-        controller.historyAdmin(context);
+        controller.history(context);
       }
     });
     return Scaffold(

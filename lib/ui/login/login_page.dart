@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_design/ui/login/login_controller.dart';
-
+import 'package:flutter/services.dart';
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
 
@@ -60,34 +60,65 @@ class LoginPage extends ConsumerWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
-                    child: TextField(
-                      onChanged: (value) {
-                        controller.changedInput();
-                      },
-                      keyboardType: TextInputType.number,
-                      controller: controller.documentController,
-                      textInputAction: TextInputAction.next,
-                      // obscureText: true,
-                      decoration: const InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                    child: GestureDetector(
+                      child: TextField(
+                        focusNode: controller.documentFocusNode,
+                        onChanged: (value) {
+                          controller.changedInput();
+                        },
+                        maxLength: 9,
+                        keyboardType: TextInputType.number,
+                        controller: controller.documentController,
+                        textInputAction: TextInputAction.next,
+                        // obscureText: true,
+                        decoration: InputDecoration(
+                          error: (controller.documentIsBad() && controller.documentTouched) ? Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Text(
+                              "Campo inválido",
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                                fontSize: 12
+                              ),
+                            ),
+                          ) : null,
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(25)),
+                          ),
+                          labelText: 'Cédula',
                         ),
-                        labelText: 'Cédula',
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
                     child: TextField(
+                      focusNode: controller.passwordFocusNode,
                       onChanged: (value) {
                         controller.changedInput();
                       },
                       controller: controller.passwordController,
                       textInputAction: TextInputAction.done,
                       obscureText: controller.hidePassword,
+                      maxLength: 15,
                       decoration: InputDecoration(
+                        error: (controller.passwordIsBad() && controller.passwordTouched) ? Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Text(
+                            controller.passwordTooltip,
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 12
+                            ),
+                          ),
+                        ) : null,
+                        // errorMaxLines: 5,
+                        // errorText: controller.passwordIsBad() ? controller.passwordTooltip : null,
                         filled: true,
                         fillColor: Colors.white,
                         border: const OutlineInputBorder(

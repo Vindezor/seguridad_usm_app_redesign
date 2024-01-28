@@ -11,10 +11,21 @@ import 'package:test_design/services/user_service.dart';
 
 class AddEditAdminController extends ChangeNotifier{
 
+  final FocusNode fullNameFocusNode = FocusNode();
+  final FocusNode documentFocusNode = FocusNode();
+  final FocusNode phoneFocusNode = FocusNode();
+  final FocusNode emailFocusNode = FocusNode();
+
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController documentController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+
+  final fullNameRegex = RegExp(r'^[A-Za-zÁÉÍÓÚáéíóúüÜ]+(?:\s[A-Za-zÁÉÍÓÚáéíóúüÜ]+)+$');
+  final documentRegex = RegExp(r'^\d{5,9}$');
+  final phoneRegex = RegExp(r'^\d{11}$');
+  final emailRegex = RegExp(r'''(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])''');
+  
   // final TextEditingController passwordController = TextEditingController();
   // final TextEditingController confirmPasswordController = TextEditingController();
   final UserService adminService = UserService(Dio());
@@ -24,7 +35,58 @@ class AddEditAdminController extends ChangeNotifier{
 
   User? admin;
 
-  AddEditAdminController();
+  bool fullNameTouched = false;
+  bool documentTouched = false;
+  bool phoneTouched = false;
+  bool emailTouched = false;
+
+  AddEditAdminController(){
+    fullNameFocusNode.addListener(() {
+      fullNameTouched = true;
+      notifyListeners();
+    });
+    documentFocusNode.addListener(() {
+      documentTouched = true;
+      notifyListeners();
+    });
+    phoneFocusNode.addListener(() {
+      phoneTouched = true;
+      notifyListeners();
+    });
+    emailFocusNode.addListener(() {
+      emailTouched = true;
+      notifyListeners();
+    });
+  }
+
+  fullNameIsBad(){
+    if(fullNameRegex.hasMatch(fullNameController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
+  documentIsBad(){
+    if(documentRegex.hasMatch(documentController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
+  phoneIsBad(){
+    if(phoneRegex.hasMatch(phoneController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
+  emailIsBad(){
+    if(emailRegex.hasMatch(emailController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
 
   check(args){
     if(args != null){
@@ -114,6 +176,10 @@ class AddEditAdminController extends ChangeNotifier{
     documentController.dispose();
     phoneController.dispose();
     emailController.dispose();
+    fullNameFocusNode.dispose();
+    documentFocusNode.dispose();
+    phoneFocusNode.dispose();
+    emailFocusNode.dispose();
     // passwordController.dispose();
     // confirmPasswordController.dispose();
     log("[AddEditAdminController] disposed");

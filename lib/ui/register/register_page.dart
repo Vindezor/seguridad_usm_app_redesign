@@ -66,11 +66,25 @@ class RegisterPage extends ConsumerWidget {
                       children: [
                         Expanded(
                           child: TextField(
-                            controller: controller.textEditingController,
-                            decoration: const InputDecoration(
+                            onChanged:(_) => controller.codeChanged(),
+                            focusNode: controller.codeFocusNode,
+                            maxLength: 7,
+                            controller: controller.codeController,
+                            decoration: InputDecoration(
+                              error: (controller.registerButtonDisabled() && controller.codeTouched) ? Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Text(
+                                  "Campo inválido",
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.error,
+                                    fontSize: 12
+                                  ),
+                                ),
+                              ) : null,
                               filled: true,
                               fillColor: Colors.white,
-                              border: OutlineInputBorder(
+                              border: const OutlineInputBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(25)),
                               ),
                               labelText: 'Código de carnet',
@@ -82,12 +96,14 @@ class RegisterPage extends ConsumerWidget {
                           child: FloatingActionButton(
                             //elevation: 3,
                             //highlightElevation: 0,
-                            onPressed: () => {
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pushNamed(Routes.register);
                               Navigator.of(context).pushNamed(Routes.registerQrScanner).then(
                                 (value){
                                   if(value != null) controller.changeTextValue(value.toString());
                                 }
-                              )
+                              );
                             },
                             backgroundColor: const Color(0xFFddeaf4),
                             child: const Icon(Icons.qr_code_scanner, color: Color(0xFF3874c0), size: 40, weight: 0.5,),

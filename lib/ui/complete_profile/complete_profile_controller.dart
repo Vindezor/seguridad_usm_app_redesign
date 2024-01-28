@@ -86,6 +86,7 @@ class CompleteProfileController extends ChangeNotifier{
     );
     if(response != null){
       if(response.status == "SUCCESS"){
+        Navigator.of(context).pop();
         showAlertOptions(
           context,
           justified: true,

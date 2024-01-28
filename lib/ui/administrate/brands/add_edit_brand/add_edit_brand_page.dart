@@ -17,80 +17,95 @@ class AddEditBrandPage extends ConsumerWidget {
       }
     });
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          color: Colors.transparent
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Image.asset(
-                "assets/background.png",
-                fit: BoxFit.fitWidth,
-                alignment: Alignment.bottomCenter,
-              )
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 50, right: 50, top: 40),
-                  child: Text(
-                    "Datos de la marca",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
-                  child: TextField(
-                    onChanged: (value) {
-                      controller.changeBrand();
-                    },
-                    keyboardType: TextInputType.text,
-                    controller: controller.brandController,
-                    textInputAction: TextInputAction.next,
-                    // obscureText: true,
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                      ),
-                      labelText: 'Marca',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 90, right: 90, top: 40),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
-                    ),
-                    onPressed: controller.buttonDisabled() ? null : () => controller.save(context),
-                    child: const Text(
-                      "Guardar",
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            color: Colors.transparent
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Image.asset(
+                  "assets/background.png",
+                  fit: BoxFit.fitWidth,
+                  alignment: Alignment.bottomCenter,
+                )
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: Text(
+                      "Datos de la marca",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 18,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: TextField(
+                      focusNode: controller.brandFocusNode,
+                      maxLength: 20,
+                      onChanged: (value) {
+                        controller.changeBrand();
+                      },
+                      keyboardType: TextInputType.text,
+                      controller: controller.brandController,
+                      textInputAction: TextInputAction.next,
+                      // obscureText: true,
+                      decoration: InputDecoration(
+                        error: (controller.buttonDisabled() && controller.brandTouched) ? Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Text(
+                            "Campo inválido",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 12
+                            ),
+                          ),
+                        ) : null,
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        labelText: 'Marca',
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 40,)
-              ],
-            ),
-          ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 90, right: 90, top: 40),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                      ),
+                      onPressed: controller.buttonDisabled() ? null : () => controller.save(context),
+                      child: const Text(
+                        "Guardar",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       // floatingActionButton: FloatingActionButton(

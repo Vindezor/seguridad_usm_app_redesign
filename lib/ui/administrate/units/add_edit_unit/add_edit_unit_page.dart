@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:stroke_text/stroke_text.dart';
@@ -47,7 +48,7 @@ class AddEditUnitPage extends ConsumerWidget {
                   // crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Padding(
-                      padding: EdgeInsets.only(left: 50, right: 50, top: 40),
+                      padding: EdgeInsets.only(left: 50, right: 50, top: 20),
                       child: Text(
                         "Datos de la unidad",
                         style: TextStyle(
@@ -58,48 +59,96 @@ class AddEditUnitPage extends ConsumerWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                      padding: const EdgeInsets.only(left: 50, right: 50, top: 20),
                       child: TextField(
+                        focusNode: controller.plateFocusNode,
                         onChanged: (value) {
                           controller.changeName();
                         },
                         keyboardType: TextInputType.name,
                         controller: controller.plateController,
                         textInputAction: TextInputAction.next,
-                        // obscureText: true,
-                        decoration: const InputDecoration(
+                        maxLength: 7,
+                        decoration: InputDecoration(
+                          error: (controller.plateIsBad() && controller.plateTouched) ? Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: StrokeText(
+                              text: "Campo inválido",
+                              //textAlign: TextAlign.justify,
+                              textStyle: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                                fontSize: 12
+                              ),
+                              strokeColor: Colors.white,
+                              strokeWidth: 3,
+                            ),
+                          ) : null,
                           filled: true,
                           fillColor: Colors.white,
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(25)),
                           ),
-                          labelText: 'Placa',
+                          label: Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(30)),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.only(left: 5, right: 5),
+                              child: Text("Placa"),
+                            ),
+                          )
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                      padding: const EdgeInsets.only(left: 50, right: 50, top: 20),
                       child: TextField(
+                        focusNode: controller.yearFocusNode,
                         onChanged: (value) {
                           controller.changeName();
                         },
                         keyboardType: TextInputType.number,
                         controller: controller.yearController,
                         textInputAction: TextInputAction.next,
-                        // obscureText: true,
-                        decoration: const InputDecoration(
+                        maxLength: 4,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        decoration: InputDecoration(
+                          error: (controller.yearIsBad() && controller.yearTouched) ? Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: StrokeText(
+                              text: "Campo inválido",
+                              //textAlign: TextAlign.justify,
+                              textStyle: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                                fontSize: 12
+                              ),
+                              strokeColor: Colors.white,
+                              strokeWidth: 3,
+                            ),
+                          ) : null,
                           filled: true,
                           fillColor: Colors.white,
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(25)),
                           ),
-                          labelText: 'Año',
+                          label: Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(30)),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.only(left: 5, right: 5),
+                              child: Text("Año"),
+                            ),
+                          )
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                      padding: const EdgeInsets.only(left: 50, right: 50, top: 20),
                       child: TextField(
+                        focusNode: controller.descriptionFocusNode,
                         maxLines: 2,
                         onChanged: (value) {
                           controller.changeName();
@@ -107,25 +156,61 @@ class AddEditUnitPage extends ConsumerWidget {
                         keyboardType: TextInputType.name,
                         controller: controller.descriptionController,
                         textInputAction: TextInputAction.next,
-                        // obscureText: true,
-                        decoration: const InputDecoration(
+                        maxLength: 80,
+                        decoration: InputDecoration(
+                          error: (controller.descriptionIsBad() && controller.descriptionTouched) ? Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: StrokeText(
+                              text: "Campo inválido",
+                              //textAlign: TextAlign.justify,
+                              textStyle: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                                fontSize: 12
+                              ),
+                              strokeColor: Colors.white,
+                              strokeWidth: 3,
+                            ),
+                          ) : null,
                           filled: true,
                           fillColor: Colors.white,
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(25)),
                           ),
-                          labelText: 'Descripción',
+                          label: Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(30)),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.only(left: 5, right: 5),
+                              child: Text("Descripción"),
+                            ),
+                          )
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                      padding: const EdgeInsets.only(left: 50, right: 50, top: 30),
                       child: DropdownButtonFormField(
+                        focusNode: controller.driverFocusNode,
                         isExpanded: true,
                         items: controller.driverItems,
                         onChanged: controller.driverDropdownCallback,
                         value: controller.selectedDriver,
                         decoration: InputDecoration(
+                          error: (controller.selectedDriver == null && controller.driverTouched) ? Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: StrokeText(
+                              text: "Campo inválido",
+                              //textAlign: TextAlign.justify,
+                              textStyle: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                                fontSize: 12
+                              ),
+                              strokeColor: Colors.white,
+                              strokeWidth: 3,
+                            ),
+                          ) : null,
                           filled: true,
                           fillColor: Colors.white,
                           border: const OutlineInputBorder(
@@ -145,8 +230,9 @@ class AddEditUnitPage extends ConsumerWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                      padding: const EdgeInsets.only(left: 50, right: 50, top: 30),
                       child: DropdownButtonFormField(
+                        focusNode: controller.brandFocusNode,
                         isExpanded: true,
                         items: controller.brandItems,
                         onChanged: (value) async {
@@ -154,6 +240,19 @@ class AddEditUnitPage extends ConsumerWidget {
                         },
                         value: controller.selectedBrand,
                         decoration: InputDecoration(
+                          error: (controller.selectedBrand == null && controller.brandTouched) ? Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: StrokeText(
+                              text: "Campo inválido",
+                              //textAlign: TextAlign.justify,
+                              textStyle: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                                fontSize: 12
+                              ),
+                              strokeColor: Colors.white,
+                              strokeWidth: 3,
+                            ),
+                          ) : null,
                           filled: true,
                           fillColor: Colors.white,
                           border: const OutlineInputBorder(
@@ -173,13 +272,27 @@ class AddEditUnitPage extends ConsumerWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                      padding: const EdgeInsets.only(left: 50, right: 50, top: 30),
                       child: DropdownButtonFormField(
+                        focusNode: controller.modelFocusNode,
                         isExpanded: true,
                         items: controller.modelItems,
                         onChanged: controller.modelDropdownCallback,
                         value: controller.selectedModel,
                         decoration: InputDecoration(
+                          error: (controller.selectedModel == null && controller.modelTouched) ? Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: StrokeText(
+                              text: "Campo inválido",
+                              //textAlign: TextAlign.justify,
+                              textStyle: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                                fontSize: 12
+                              ),
+                              strokeColor: Colors.white,
+                              strokeWidth: 3,
+                            ),
+                          ) : null,
                           filled: true,
                           fillColor: Colors.white,
                           border: const OutlineInputBorder(
@@ -199,7 +312,7 @@ class AddEditUnitPage extends ConsumerWidget {
                       ),
                     ),
                     // Padding(
-                    //   padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    //   padding: const EdgeInsets.only(left: 50, right: 50, top: 20),
                     //   child: TextField(
                     //     canRequestFocus: false,
                     //     onTap: () {
@@ -229,7 +342,7 @@ class AddEditUnitPage extends ConsumerWidget {
                     //   ),
                     // ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 90, right: 90, top: 40),
+                      padding: const EdgeInsets.only(left: 90, right: 90, top: 20),
                       child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
@@ -244,7 +357,7 @@ class AddEditUnitPage extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20,)
+                    const SizedBox(height: 20,)
                   ],
                 ),
               ),
@@ -261,7 +374,7 @@ class AddEditUnitPage extends ConsumerWidget {
       //   decoration: const BoxDecoration(
       //     boxShadow: [
       //       BoxShadow(
-      //         blurRadius: 30,
+      //         blurRadius: 20,
       //         color: Colors.black,
       //         spreadRadius: -5,
       //       )
@@ -273,7 +386,7 @@ class AddEditUnitPage extends ConsumerWidget {
       //     child: const Icon(
       //       Icons.qr_code_scanner,
       //       color: Color(0xFF3874c0),
-      //       size: 40,
+      //       size: 20,
       //       weight: 0.5,
       //     ),
       //   ),

@@ -14,7 +14,24 @@ class AddEditRouteController extends ChangeNotifier{
 
   int? id;
 
-  AddEditRouteController();
+  final FocusNode arrivalFocusNode = FocusNode();
+  final FocusNode departureFocusNode = FocusNode();
+
+  bool arrivalTouched = false;
+  bool departureTouched = false;
+
+
+  AddEditRouteController(){
+    log("[AddEditRouteController] init");
+    arrivalFocusNode.addListener(() {
+      arrivalTouched = true;
+      notifyListeners();
+    });
+    departureFocusNode.addListener(() {
+      departureTouched = true;
+      notifyListeners();
+    });
+  }
 
   check(args){
     if(args != null){
@@ -79,8 +96,8 @@ class AddEditRouteController extends ChangeNotifier{
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    // nameController.dispose();
-    // coordinateController.dispose();
+    departureFocusNode.dispose();
+    arrivalFocusNode.dispose();
     log("[AddEditRouteController] disposed");
   }
 }

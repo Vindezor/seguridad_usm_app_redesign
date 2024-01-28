@@ -19,158 +19,130 @@ class AddEditRoutePage extends ConsumerWidget {
       }
     });
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          color: Colors.transparent
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Image.asset(
-                "assets/background.png",
-                fit: BoxFit.fitWidth,
-                alignment: Alignment.bottomCenter,
-              )
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 50, right: 50, top: 40),
-                  child: Text(
-                    "Datos de la ruta",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
-                  child: DropdownButtonFormField(
-                    isExpanded: true,
-                    items: administrateController.selectDepartureItems,
-                    onChanged: administrateController.departureDropdownCallback,
-                    value: controller.editing ? administrateController.departureValue : null,
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                      ),
-                      labelText: 'Salida',
-                    ),
-                  ),
-                  // child: TextField(
-                  //   onChanged: (value) {
-                  //     controller.changeName();
-                  //   },
-                  //   keyboardType: TextInputType.name,
-                  //   controller: controller.nameController,
-                  //   textInputAction: TextInputAction.next,
-                  //   // obscureText: true,
-                  //   decoration: const InputDecoration(
-                  //     filled: true,
-                  //     fillColor: Colors.white,
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.all(Radius.circular(25)),
-                  //     ),
-                  //     labelText: 'Nombre de la parada',
-                  //   ),
-                  // ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
-                  child: DropdownButtonFormField(
-                    isExpanded: true,
-                    items: administrateController.selectArrivalItems,
-                    onChanged: administrateController.arrivalDropdownCallback,
-                    value: controller.editing ? administrateController.arrivalValue : null,
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                      ),
-                      labelText: 'Destino',
-                    ),
-                  ),
-                  // child: TextField(
-                  //   onChanged: (value) {
-                  //     controller.changeName();
-                  //   },
-                  //   keyboardType: TextInputType.name,
-                  //   controller: controller.nameController,
-                  //   textInputAction: TextInputAction.next,
-                  //   // obscureText: true,
-                  //   decoration: const InputDecoration(
-                  //     filled: true,
-                  //     fillColor: Colors.white,
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.all(Radius.circular(25)),
-                  //     ),
-                  //     labelText: 'Nombre de la parada',
-                  //   ),
-                  // ),
-                ),
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
-                //   child: TextField(
-                //     canRequestFocus: false,
-                //     onTap: () {
-                //       // FocusScope.of(context).unfocus();
-                //       // Navigator.of(context).pushNamed('/stop_map').then((result) {
-                //       //   if(result != null) {
-                //       //     controller.changeCoordinates(result as LatLng);
-                //       //   }
-                //       // });
-                //     },
-                //     readOnly: true,
-                //     onChanged: (value) {
-                //       //controller.changedInput();
-                //     },
-                //     keyboardType: TextInputType.number,
-                //     controller: controller.coordinateController,
-                //     textInputAction: TextInputAction.next,
-                //     // obscureText: true,
-                //     decoration: InputDecoration(
-                //       filled: true,
-                //       fillColor: Colors.white,
-                //       border: const OutlineInputBorder(
-                //         borderRadius: BorderRadius.all(Radius.circular(25)),
-                //       ),
-                //       labelText: controller.coordinateController.value.text != "" ? 'Coordenadas' : "Seleccionar Coordenadas",
-                //     ),
-                //   ),
-                // ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 90, right: 90, top: 40),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
-                    ),
-                    onPressed: administrateController.generateRouteButtonDisabled() ? null : () => administrateController.generateRoute(context, controller.editing, id: controller.id),
-                    child: const Text(
-                      "Generar Ruta",
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            color: Colors.transparent
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Image.asset(
+                  "assets/background.png",
+                  fit: BoxFit.fitWidth,
+                  alignment: Alignment.bottomCenter,
+                )
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: Text(
+                      "Datos de la ruta",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 18,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: DropdownButtonFormField(
+                      focusNode: controller.departureFocusNode,
+                      isExpanded: true,
+                      items: administrateController.selectDepartureItems,
+                      onChanged: administrateController.departureDropdownCallback,
+                      value: controller.editing ? administrateController.departureValue : null,
+                      decoration: InputDecoration(
+                        error: (administrateController.departureValue == null && controller.departureTouched) 
+                        || (administrateController.departureValue != null && administrateController.arrivalValue != null
+                        && administrateController.departureValue == administrateController.arrivalValue) ? Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Text(
+                            (administrateController.departureValue != null && administrateController.arrivalValue != null
+                            && administrateController.departureValue == administrateController.arrivalValue) 
+                            ? "La ruta tiene que tener paradas diferentes" : "Campo inválido",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 12
+                            ),
+                          ),
+                        ) : null,
+                        hintText: "Seleccione un Salida",
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        labelText: 'Salida',
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 40,)
-              ],
-            ),
-          ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: DropdownButtonFormField(
+                      focusNode: controller.arrivalFocusNode,
+                      isExpanded: true,
+                      items: administrateController.selectArrivalItems,
+                      onChanged: administrateController.arrivalDropdownCallback,
+                      value: controller.editing ? administrateController.arrivalValue : null,
+                      decoration: InputDecoration(
+                        error: (administrateController.arrivalValue == null && controller.arrivalTouched)
+                        || (administrateController.departureValue != null && administrateController.arrivalValue != null
+                        && administrateController.departureValue == administrateController.arrivalValue) ? Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Text(
+                            (administrateController.departureValue != null && administrateController.arrivalValue != null
+                            && administrateController.departureValue == administrateController.arrivalValue) 
+                            ? "La ruta tiene que tener paradas diferentes" : "Campo inválido",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 12
+                            ),
+                          ),
+                        ) : null,
+                        hintText: "Seleccione un Destino",
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        labelText: 'Destino',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 90, right: 90, top: 40),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                      ),
+                      onPressed: administrateController.generateRouteButtonDisabled() ? null : () => administrateController.generateRoute(context, controller.editing, id: controller.id),
+                      child: const Text(
+                        "Generar Ruta",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       // floatingActionButton: FloatingActionButton(

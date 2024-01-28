@@ -16,19 +16,17 @@ class StopMapController extends ChangeNotifier{
   Marker? marker;
   StopMapController(){
     mapController = Completer<GoogleMapController>();
-    //requestPermission();
   }
 
-  // requestPermission() async {
-  //   try {
-  //     log("[MapController] init");
-  //     await Geolocator.requestPermission();
-  //     pos = await Geolocator.getCurrentPosition();
-  //     log('$pos');
-  //   } catch (e) {
-  //     log("$e");
-  //   }
-  // }
+  checkInit(args){
+    initialized = true;
+    if(args["stop"] != ""){
+      final coords = args["stop"].split(",");
+      final LatLng pos = LatLng(double.parse(coords[0]), double.parse(coords[1]));
+      marker = Marker(markerId: const MarkerId('Selected'), position: pos);
+      notifyListeners();
+    }
+  }
 
   confirm(context){
     Navigator.of(context).pop(marker!.position);

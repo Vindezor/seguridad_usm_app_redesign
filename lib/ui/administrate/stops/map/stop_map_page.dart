@@ -13,6 +13,12 @@ class StopMapPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(stopMapController);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(!controller.initialized){
+        final args =  ModalRoute.of(context)!.settings.arguments;
+        controller.checkInit(args);
+      }
+    });
     return PopScope(
       canPop: true,
       child: Scaffold(
@@ -23,11 +29,7 @@ class StopMapPage extends ConsumerWidget {
           compassEnabled: false,
           mapType: MapType.normal,
           initialCameraPosition: controller.initialCameraPosition,
-          onMapCreated: (mapController) async {
-            controller.onMapCreated(mapController);
-            //await controller.requestPermission();
-            //controller.centerCameraMap();
-          },
+          onMapCreated: controller.onMapCreated,
           markers: controller.marker != null ? {
               controller.marker!
           } : {},

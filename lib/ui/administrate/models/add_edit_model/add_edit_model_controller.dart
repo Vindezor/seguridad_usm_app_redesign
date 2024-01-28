@@ -28,7 +28,32 @@ class AddEditModelController extends ChangeNotifier{
 
   Model? model;
 
-  AddEditModelController();
+  final FocusNode brandFocusNode = FocusNode();
+  final FocusNode modelFocusNode = FocusNode();
+
+  bool brandTouched = false;
+  bool modelTouched = false;
+
+  final RegExp modelRegex = RegExp(r'^[A-Za-z0-9](?:[A-Za-z0-9\s\-]{0,18}[A-Za-z0-9])?$');
+
+  AddEditModelController(){
+    log("[AddEditRouteController] init");
+    brandFocusNode.addListener(() {
+      brandTouched = true;
+      notifyListeners();
+    });
+    modelFocusNode.addListener(() {
+      modelTouched = true;
+      notifyListeners();
+    });
+  }
+
+  modelIsBad(){
+    if(modelRegex.hasMatch(modelController.text)){
+      return false;
+    }
+    return true;
+  }
 
   check(args, context) async {
     if(checked == false){
@@ -42,7 +67,6 @@ class AddEditModelController extends ChangeNotifier{
       }
       await getAllBrands(context);
     }
-    notifyListeners();
   }
 
   brandDropdownCallback(int? selectedValue) async {
@@ -100,7 +124,7 @@ class AddEditModelController extends ChangeNotifier{
   // }
 
   buttonDisabled(){
-    if(modelController.value.text != ""){
+    if(modelRegex.hasMatch(modelController.value.text) && selectedBrand != null){
       return false;
     }
     return true;
@@ -149,6 +173,8 @@ class AddEditModelController extends ChangeNotifier{
     // TODO: implement dispose
     super.dispose();
     modelController.dispose();
+    brandFocusNode.dispose();
+    modelFocusNode.dispose();
     log("[AddEditModelController] disposed");
   }
 }

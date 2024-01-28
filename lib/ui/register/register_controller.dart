@@ -12,16 +12,22 @@ class RegisterController extends ChangeNotifier{
   
   RegisterController(){
     log("[RegisterController] init");
+    codeFocusNode.addListener(() {
+      codeTouched = true;
+    });
   }
 
+  bool codeTouched = false;
   //int value;
-  final TextEditingController textEditingController = TextEditingController();
+  final FocusNode codeFocusNode = FocusNode();
+
+  final TextEditingController codeController = TextEditingController();
   final UserService userService = UserService(Dio());
   final regex = RegExp(r'^[a-zA-Z0-9]{7}$');
 
   void register(context) async {
     globalLoading(context);
-    final GenericModel? response = await userService.register(university_code: textEditingController.value.text);
+    final GenericModel? response = await userService.register(university_code: codeController.value.text);
     if(response != null){
       Navigator.of(context).pop();
       if(response.status == "SUCCESS"){
@@ -53,16 +59,20 @@ class RegisterController extends ChangeNotifier{
     }
     //notifyListeners();
   }
-
+  
   bool registerButtonDisabled(){
-    if(regex.hasMatch(textEditingController.value.text)){
+    if(regex.hasMatch(codeController.value.text)){
       return false;
     }
     return true;
   }
 
+  void codeChanged(){
+    notifyListeners();
+  }
+
   void changeTextValue(String text){
-    textEditingController.text = text;
+    codeController.text = text;
     notifyListeners();
   }
 
@@ -70,7 +80,7 @@ class RegisterController extends ChangeNotifier{
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    textEditingController.dispose();
+    codeController.dispose();
     log("[RegisterController] disposed");
   }
 }

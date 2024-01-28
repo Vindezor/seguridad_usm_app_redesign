@@ -13,6 +13,13 @@ import 'package:test_design/services/user_service.dart';
 
 class AddEditUnitController extends ChangeNotifier{
 
+  final FocusNode plateFocusNode = FocusNode();
+  final FocusNode yearFocusNode = FocusNode();
+  final FocusNode descriptionFocusNode = FocusNode();
+  final FocusNode driverFocusNode = FocusNode();
+  final FocusNode modelFocusNode = FocusNode();
+  final FocusNode brandFocusNode = FocusNode();
+
   final TextEditingController plateController = TextEditingController();
   final TextEditingController yearController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -21,8 +28,19 @@ class AddEditUnitController extends ChangeNotifier{
   final UnitService unitService = UnitService(Dio());
   final UserService driverService = UserService(Dio());
 
+  final RegExp plateRegex = RegExp(r'^[a-zA-Z0-9]{6,7}$');
+  final RegExp yearRegex = RegExp(r'^[0-9]{4}$');
+  final RegExp descriptionRegex = RegExp(r'^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜ.,]+(?:\s[a-zA-Z0-9áéíóúÁÉÍÓÚüÜ.,]+)*$');
+
   bool checked = false;
   bool editing = false;
+
+  bool plateTouched = false;
+  bool yearTouched = false;
+  bool descriptionTouched = false;
+  bool driverTouched = false;
+  bool modelTouched = false;
+  bool brandTouched = false;
 
   Unit? unit;
   List<User>? drivers;
@@ -36,7 +54,54 @@ class AddEditUnitController extends ChangeNotifier{
   List<DropdownMenuItem<int>> brandItems = [];
   List<DropdownMenuItem<int>> modelItems = [];
 
-  AddEditUnitController();
+  AddEditUnitController(){
+    log("[AddEditUnitController] init");
+    plateFocusNode.addListener(() {
+      plateTouched = true;
+      notifyListeners();
+    });
+    yearFocusNode.addListener(() {
+      yearTouched = true;
+      notifyListeners();
+    });
+    descriptionFocusNode.addListener(() {
+      descriptionTouched = true;
+      notifyListeners();
+    });
+    driverFocusNode.addListener(() {
+      driverTouched = true;
+      notifyListeners();
+    });
+    brandFocusNode.addListener(() {
+      brandTouched = true;
+      notifyListeners();
+    });
+    modelFocusNode.addListener(() {
+      modelTouched = true;
+      notifyListeners();
+    });
+  }
+
+  plateIsBad(){
+    if(plateRegex.hasMatch(plateController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
+  yearIsBad(){
+    if(yearRegex.hasMatch(yearController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
+  descriptionIsBad(){
+    if(descriptionRegex.hasMatch(descriptionController.value.text)){
+      return false;
+    }
+    return true;
+  }
 
   check(args, context) async {
     checked = true;
@@ -214,10 +279,11 @@ class AddEditUnitController extends ChangeNotifier{
   // }
 
   buttonDisabled(){
-    if(plateController.value.text != ""
-    && yearController.value.text != ""
-    && descriptionController.value.text != ""
+    if(plateRegex.hasMatch(plateController.value.text)
+    && yearRegex.hasMatch(yearController.value.text)
+    && descriptionRegex.hasMatch(descriptionController.value.text)
     && selectedModel != null
+    && selectedBrand != null
     && selectedDriver != null){
       return false;
     }
@@ -283,6 +349,12 @@ class AddEditUnitController extends ChangeNotifier{
     plateController.dispose();
     descriptionController.dispose();
     scrollController.dispose();
+    plateFocusNode.dispose();
+    yearFocusNode.dispose();
+    descriptionFocusNode.dispose();
+    driverFocusNode.dispose();
+    modelFocusNode.dispose();
+    brandFocusNode.dispose();
     log("[AddEditUnitController] disposed");
   }
 }

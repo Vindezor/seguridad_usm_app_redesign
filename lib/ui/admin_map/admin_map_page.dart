@@ -21,42 +21,10 @@ class AdminMapPage extends ConsumerWidget {
       if(!controller.initialized){
         controller.initMap();
       }
-      // if(controller.travelEnded){
-      //   showAlertOptions(
-      //     context,
-      //     msg: "El conductor ha terminado el viaje",
-      //     title: "Importante",
-      //     closeOnPressed: () {
-      //       Navigator.of(context).pop();
-      //       Navigator.of(context).pop();
-      //     },
-      //   );
-      // }
     });
     return PopScope(
       canPop: true,
       child: Scaffold(
-        //extendBodyBehindAppBar: true,
-        // appBar: AppBar(
-        //   automaticallyImplyLeading: false,
-        //   backgroundColor: Colors.transparent,
-        //   surfaceTintColor: Colors.transparent,
-        //   title: const Text(
-        //     "En ruta",
-        //     style: TextStyle(
-        //       fontWeight: FontWeight.bold,
-        //       fontSize: 26,
-        //       // shadows: [
-        //       //   BoxShadow(
-        //       //     color: Colors.black,
-        //       //     blurRadius: 2,
-        //       //     spreadRadius: 5,
-        //       //     blurStyle: BlurStyle.outer
-        //       //   )
-        //       // ]
-        //     ),
-        //   ),
-        // ),
         body: GoogleMap(
           polylines: controller.polyline,
           markers: controller.markers,
@@ -78,11 +46,11 @@ class AdminMapPage extends ConsumerWidget {
           ),
           child: FloatingActionButton.large(
             heroTag: 'heroAdminMap',
-            onPressed: () => controller.showInfo(context),
-            backgroundColor: const Color(0xFFddeaf4),
-            child: const Icon(
+            onPressed: controller.selectedTravel != null ? () => controller.showInfo(context) : null,
+            backgroundColor: controller.selectedTravel != null ? const Color(0xFFddeaf4) : const Color(0xFFe3e3e4),
+            child: Icon(
               Icons.info,
-              color: Color(0xFF3874c0),
+              color: controller.selectedTravel != null ? const Color(0xFF3874c0) : const Color(0xFF9b9b9c),
               size: 40,
               weight: 0.5,
             ),
@@ -91,31 +59,6 @@ class AdminMapPage extends ConsumerWidget {
         bottomNavigationBar: const BottomAppBar(
           shape: CircularNotchedRectangle(),
           color: Color(0xFF3874c0),
-          // child: Row(
-          //   children: [
-          //     IconButton(
-          //       tooltip: 'Open navigation menu',
-          //       icon: const Icon(Icons.menu, color: Colors.white,),
-          //       onPressed: () {},
-          //     ),
-          //     IconButton(
-          //       tooltip: 'Open navigation menu',
-          //       icon: const Icon(Icons.menu, color: Colors.white,),
-          //       onPressed: () {},
-          //     ),
-          //     const Spacer(),
-          //     IconButton(
-          //       tooltip: 'Open navigation menu',
-          //       icon: const Icon(Icons.menu, color: Colors.white,),
-          //       onPressed: () {},
-          //     ),
-          //     IconButton(
-          //       tooltip: 'Open navigation menu',
-          //       icon: const Icon(Icons.menu, color: Colors.white,),
-          //       onPressed: () {},
-          //     ),
-          //   ],
-          // ),
         ),
         appBar: AppBar(
           automaticallyImplyLeading: true,

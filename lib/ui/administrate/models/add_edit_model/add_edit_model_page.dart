@@ -17,106 +17,134 @@ class AddEditModelPage extends ConsumerWidget {
       }
     });
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          color: Colors.transparent
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Image.asset(
-                "assets/background.png",
-                fit: BoxFit.fitWidth,
-                alignment: Alignment.bottomCenter,
-              )
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 50, right: 50, top: 40),
-                  child: Text(
-                    "Datos del modelo",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
-                  child: DropdownButtonFormField(
-                    isExpanded: true,
-                    items: controller.brandItems,
-                    onChanged: controller.brandDropdownCallback,
-                    value: controller.selectedBrand,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                      ),
-                      label: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.only(left: 5, right: 5),
-                          child: Text("Marca"),
-                        ),
-                      )
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
-                  child: TextField(
-                    onChanged: (value) {
-                      controller.changeModel();
-                    },
-                    keyboardType: TextInputType.text,
-                    controller: controller.modelController,
-                    textInputAction: TextInputAction.next,
-                    // obscureText: true,
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
-                      ),
-                      labelText: 'Modelo',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 90, right: 90, top: 40),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
-                    ),
-                    onPressed: controller.buttonDisabled() ? null : () => controller.save(context),
-                    child: const Text(
-                      "Guardar",
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            color: Colors.transparent
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Image.asset(
+                  "assets/background.png",
+                  fit: BoxFit.fitWidth,
+                  alignment: Alignment.bottomCenter,
+                )
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: Text(
+                      "Datos del modelo",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 18,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: DropdownButtonFormField(
+                      focusNode: controller.brandFocusNode,
+                      isExpanded: true,
+                      items: controller.brandItems,
+                      onChanged: controller.brandDropdownCallback,
+                      value: controller.editing ? controller.selectedBrand : null,
+                      decoration: InputDecoration(
+                        error: (controller.selectedBrand == null && controller.brandTouched) ? Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Text(
+                            "Campo inválido",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 12
+                            ),
+                          ),
+                        ) : null,
+                        hintText: "Seleccione un Marca",
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        label: Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.only(left: 5, right: 5),
+                            child: Text("Marca"),
+                          ),
+                        )
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 40,)
-              ],
-            ),
-          ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, right: 50, top: 40),
+                    child: TextField(
+                      maxLength: 20,
+                      focusNode: controller.modelFocusNode,
+                      onChanged: (value) {
+                        controller.changeModel();
+                      },
+                      keyboardType: TextInputType.text,
+                      controller: controller.modelController,
+                      textInputAction: TextInputAction.next,
+                      // obscureText: true,
+                      decoration: InputDecoration(
+                        error: (controller.modelIsBad() && controller.modelTouched) ? Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Text(
+                            "Campo inválido",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 12
+                            ),
+                          ),
+                        ) : null,
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25)),
+                        ),
+                        labelText: 'Modelo',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 90, right: 90, top: 40),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                      ),
+                      onPressed: controller.buttonDisabled() ? null : () => controller.save(context),
+                      child: const Text(
+                        "Guardar",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       // floatingActionButton: FloatingActionButton(

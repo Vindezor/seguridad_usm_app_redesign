@@ -15,9 +15,19 @@ class LoginController extends ChangeNotifier{
   
   LoginController(){
     log("[LoginController] init");
+    documentFocusNode.addListener(() {
+      documentTouched = true;
+    });
+    passwordFocusNode.addListener(() {
+      passwordTouched = true;
+    });
   }
 
   //int value;
+  bool documentTouched = false;
+  bool passwordTouched = false;
+  final FocusNode documentFocusNode = FocusNode();
+  final FocusNode passwordFocusNode = FocusNode();
   final TextEditingController documentController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final UserService userService = UserService(Dio(BaseOptions(connectTimeout: const Duration(seconds: 10),)));
@@ -25,7 +35,7 @@ class LoginController extends ChangeNotifier{
   final passwordRegex = RegExp(r'^[A-Za-z\d.,_\-@*#$]{8,15}$');
   final storage = const FlutterSecureStorage();
   bool hidePassword = true;
-
+  String passwordTooltip = "La contraseña debe tener entre 8 y 15 caracteres y puede incluir letras mayúsculas, minúsculas, números y los siguientes caracteres especiales: . , _ - @ * # \$";
   onPressHide(){
     hidePassword = !hidePassword;
     notifyListeners();
@@ -96,6 +106,20 @@ class LoginController extends ChangeNotifier{
     //notifyListeners();
   }
 
+  bool passwordIsBad(){
+    if(passwordRegex.hasMatch(passwordController.value.text)){
+      return false;
+    }
+    return true;
+  }
+  
+  bool documentIsBad(){
+    if(documentRegex.hasMatch(documentController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
   bool loginButtonDisabled(){
     if(documentRegex.hasMatch(documentController.value.text) && passwordRegex.hasMatch(passwordController.value.text)){
       return false;
@@ -113,6 +137,8 @@ class LoginController extends ChangeNotifier{
     super.dispose();
     documentController.dispose();
     passwordController.dispose();
+    documentFocusNode.dispose();
+    passwordFocusNode.dispose();
     log("[LoginController] disposed");
   }
 }

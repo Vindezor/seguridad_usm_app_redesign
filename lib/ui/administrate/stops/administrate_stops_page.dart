@@ -19,13 +19,7 @@ class AdministrateStopsPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        decoration: const BoxDecoration(
-          // image: DecorationImage(
-          //   image: AssetImage("assets/background.png"),
-          //   fit: BoxFit.cover
-          // )
-        ),
-        child:  controller.stops != null ? ListView(
+        child:  controller.stops != null && controller.stops!.isNotEmpty ? ListView(
           children: controller.stops!.map(
             (stop) => StopCard(
               id: stop.id,
@@ -89,35 +83,6 @@ class AdministrateStopsPage extends ConsumerWidget {
           alignment: Alignment.topCenter,
         ),
       ),
-      // bottomNavigationBar: const BottomAppBar(
-      //   shape: CircularNotchedRectangle(),
-      //   color: Color(0xFF3874c0),
-      //   // child: Row(
-      //   //   children: [
-      //   //     IconButton(
-      //   //       tooltip: 'Open navigation menu',
-      //   //       icon: const Icon(Icons.menu, color: Colors.white,),
-      //   //       onPressed: () {},
-      //   //     ),
-      //   //     IconButton(
-      //   //       tooltip: 'Open navigation menu',
-      //   //       icon: const Icon(Icons.menu, color: Colors.white,),
-      //   //       onPressed: () {},
-      //   //     ),
-      //   //     const Spacer(),
-      //   //     IconButton(
-      //   //       tooltip: 'Open navigation menu',
-      //   //       icon: const Icon(Icons.menu, color: Colors.white,),
-      //   //       onPressed: () {},
-      //   //     ),
-      //   //     IconButton(
-      //   //       tooltip: 'Open navigation menu',
-      //   //       icon: const Icon(Icons.menu, color: Colors.white,),
-      //   //       onPressed: () {},
-      //   //     ),
-      //   //   ],
-      //   // ),
-      // ),
     );
   }
 }
