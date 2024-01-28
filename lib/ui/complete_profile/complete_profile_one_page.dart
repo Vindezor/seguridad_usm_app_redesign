@@ -71,6 +71,17 @@ class CompleteProfileOnePage extends ConsumerWidget {
                           textInputAction: TextInputAction.next,
                           obscureText: controller.hidePassword,
                           decoration: InputDecoration(
+                            error: (controller.passwordIsBad() && controller.passwordTouched) ? Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Text(
+                                controller.passwordTooltip,
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error,
+                                  fontSize: 12
+                                ),
+                              ),
+                            ) : null,
                             filled: true,
                             fillColor: Colors.white,
                             border: const OutlineInputBorder(
@@ -97,6 +108,17 @@ class CompleteProfileOnePage extends ConsumerWidget {
                           textInputAction: TextInputAction.done,
                           obscureText: controller.hideConfirmPassword,
                           decoration: InputDecoration(
+                            error: (controller.confirmPasswordIsBad() && controller.confirmPasswordTouched) ? Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Text(
+                                "Contraseñas deben coincidir",
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error,
+                                  fontSize: 12
+                                ),
+                              ),
+                            ) : null,
                             filled: true,
                             fillColor: Colors.white,
                             border: const OutlineInputBorder(

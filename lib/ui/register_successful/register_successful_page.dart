@@ -47,7 +47,7 @@ class RegisterSuccessfulPage extends StatelessWidget {
                     const Padding(
                       padding: EdgeInsets.only(left: 50, right: 50, top: 40),
                       child: Text(
-                        "¡Bienvenido/a a nuestra plataforma de seguridad de transporte! Tu usuario se ha creado exitosamente. Por favor, revisa tu correo electrónico institucional (Terna) para encontrar una clave temporal. Tienes 30 minutos para iniciar sesión en la plataforma, de lo contrario, tu cuenta será eliminada del sistema. ¡Gracias por elegirnos y viajar seguro!",
+                        "¡Enhorabuena! Tu usuario se ha creado exitosamente. Por favor, revisa tu correo electrónico institucional (Terna) para encontrar una contraseña temporal con la que podras ingresar al sistema. ¡Gracias por elegirnos y viajar seguro!",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,

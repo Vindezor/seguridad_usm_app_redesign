@@ -25,7 +25,7 @@ class AdministrateAdminsPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.admins != null && controller.admins!.isNotEmpty ? ListView(
+        child:  controller.admins != null ? controller.admins!.isNotEmpty ? ListView(
           children: controller.admins!.map(
             (admin) => AdminCard(
               admin: admin
@@ -39,7 +39,7 @@ class AdministrateAdminsPage extends ConsumerWidget {
               fontSize: 18,
             ),
           ),
-        ),
+        ) : const SizedBox.shrink(),
       ),
       floatingActionButton: Container(
         decoration: const BoxDecoration(

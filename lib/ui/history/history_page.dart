@@ -25,7 +25,7 @@ class HistoryPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.travels != null ? Scrollbar(
+        child:  controller.travels != null ? controller.travels!.isNotEmpty ? Scrollbar(
           child: ListView(
             children: controller.travels!.map(
               (travel) => HistoryItem(
@@ -41,7 +41,7 @@ class HistoryPage extends ConsumerWidget {
               fontSize: 18,
             ),
           ),
-        ),
+        ) : const SizedBox.shrink(),
       ),
       // floatingActionButtonLocation: fabLocation,
       // floatingActionButton: Container(

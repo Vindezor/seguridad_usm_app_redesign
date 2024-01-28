@@ -1,6 +1,6 @@
 class AppConfig {
   final String _nameApp = 'Seguridad USM';
-  final String _apiHost = 'http://seguridad-usm-api-production.up.railway.app:80/api/';
+  final String _apiHost = 'https://seguridad-usm-api-production.up.railway.app/api/';
   final String _hereApiHost = 'https://router.hereapi.com/v8/routes';
   final String _searchHereApi = '.search.hereapi.com/v1/';
   final String _hereApiKey = "9luf-iRjOZFtZ_rtwb89xmxjKbiM6MISB9p17JiRSpU";

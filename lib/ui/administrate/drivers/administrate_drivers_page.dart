@@ -25,7 +25,7 @@ class AdministrateDriversPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.drivers != null && controller.drivers!.isNotEmpty ? ListView(
+        child:  controller.drivers != null ? controller.drivers!.isNotEmpty ? ListView(
           children: controller.drivers!.map(
             (driver) => DriverCard(
               driver: driver
@@ -39,7 +39,7 @@ class AdministrateDriversPage extends ConsumerWidget {
               fontSize: 18,
             ),
           ),
-        ),
+        ) : const SizedBox.shrink(),
       ),
       floatingActionButton: Container(
         decoration: const BoxDecoration(

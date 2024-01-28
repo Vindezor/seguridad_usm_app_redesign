@@ -25,7 +25,7 @@ class AdministrateUnitsPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.units != null && controller.units!.isNotEmpty ? ListView(
+        child:  controller.units != null ? controller.units!.isNotEmpty ? ListView(
           children: controller.units!.map(
             (unit) => UnitCard(
               unit: unit
@@ -39,7 +39,7 @@ class AdministrateUnitsPage extends ConsumerWidget {
               fontSize: 18,
             ),
           ),
-        ),
+        ) : const SizedBox.shrink(),
       ),
       floatingActionButton: Container(
         decoration: const BoxDecoration(

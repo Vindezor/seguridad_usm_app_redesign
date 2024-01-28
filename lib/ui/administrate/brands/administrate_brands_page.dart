@@ -25,7 +25,7 @@ class AdministrateBrandsPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.brands != null && controller.brands!.isNotEmpty ? ListView(
+        child:  controller.brands != null ? controller.brands!.isNotEmpty ? ListView(
           children: controller.brands!.map(
             (brand) => BrandCard(
               id: brand.id,
@@ -40,7 +40,7 @@ class AdministrateBrandsPage extends ConsumerWidget {
               fontSize: 18,
             ),
           ),
-        ),
+        ) : const SizedBox.shrink(),
       ),
       floatingActionButton: Container(
         decoration: const BoxDecoration(

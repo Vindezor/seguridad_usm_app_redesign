@@ -12,6 +12,26 @@ class CompleteProfileController extends ChangeNotifier{
   
   CompleteProfileController(){
     log("[CompleteProfileController] init");
+    passwordFocusNode.addListener(() {
+      passwordTouched = true;
+      notifyListeners();
+    });
+    confirmPasswordFocusNode.addListener(() {
+      confirmPasswordTouched = true;
+      notifyListeners();
+    });
+    emergencyEmailFocusNode.addListener(() {
+      emergencyEmailTouched = true;
+      notifyListeners();
+    });
+    phoneFocusNode.addListener(() {
+      phoneTouched = true;
+      notifyListeners();
+    });
+    emergencyPhoneFocusNode.addListener(() {
+      emergencyPhoneTouched = true;
+      notifyListeners();
+    });
   }
 
   final UserService userService = UserService(Dio());
@@ -30,7 +50,15 @@ class CompleteProfileController extends ChangeNotifier{
 
   final passwordRegex = RegExp(r'^[A-Za-z\d.,_\-@*#$]{8,15}$');
   final phoneRegex = RegExp(r'^\d{11}$');
-  final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+((com)|(es))$');
+  final emailRegex = RegExp(r'''(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])''');
+
+  String passwordTooltip = "La contraseña debe tener entre 8 y 15 caracteres y puede incluir letras mayúsculas, minúsculas, números y los siguientes caracteres especiales: . , _ - @ * # \$";
+
+  bool passwordTouched = false;
+  bool confirmPasswordTouched = false;
+  bool emergencyEmailTouched = false;
+  bool phoneTouched = false;
+  bool emergencyPhoneTouched = false;
 
   final storage = const FlutterSecureStorage();
   bool hidePassword = true;
@@ -62,6 +90,41 @@ class CompleteProfileController extends ChangeNotifier{
 
   changedInput(){
     notifyListeners();
+  }
+
+  passwordIsBad(){
+    if(passwordRegex.hasMatch(passwordController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
+  confirmPasswordIsBad(){
+    if(passwordController.value.text == confirmPasswordController.value.text){
+      return false;
+    }
+    return true;
+  }
+
+  emergencyEmailIsBad(){
+    if(emailRegex.hasMatch(emergencyEmailController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
+  phoneIsBad(){
+    if(phoneRegex.hasMatch(phoneController.value.text)){
+      return false;
+    }
+    return true;
+  }
+
+  emergencyPhoneIsBad(){
+    if(phoneRegex.hasMatch(emergencyPhoneController.value.text)){
+      return false;
+    }
+    return true;
   }
 
   nextPage(context) async {

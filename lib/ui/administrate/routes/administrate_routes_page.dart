@@ -25,7 +25,7 @@ class AdministrateRoutesPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.routes != null && controller.routes!.isNotEmpty ? ListView(
+        child:  controller.routes != null ? controller.routes!.isNotEmpty ? ListView(
           children: controller.routes!.map(
             (route) => RouteCard(
               id: route.id,
@@ -42,7 +42,7 @@ class AdministrateRoutesPage extends ConsumerWidget {
               fontSize: 18,
             ),
           ),
-        ),
+        ) : const SizedBox.shrink(),
       ),
       floatingActionButton: Container(
         decoration: const BoxDecoration(

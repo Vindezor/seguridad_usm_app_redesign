@@ -72,10 +72,21 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                           controller: controller.emergencyEmailController,
                           textInputAction: TextInputAction.next,
                           // obscureText: true,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
+                            error: (controller.emergencyEmailIsBad() && controller.emergencyEmailTouched) ? Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Text(
+                                "Campo inválido",
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error,
+                                  fontSize: 12
+                                ),
+                              ),
+                            ) : null,
                             filled: true,
                             fillColor: Colors.white,
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(25)),
                             ),
                             labelText: 'Correo de Emergencia',
@@ -95,10 +106,21 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                           controller: controller.phoneController,
                           textInputAction: TextInputAction.next,
                           // obscureText: true,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
+                            error: (controller.phoneIsBad() && controller.phoneTouched) ? Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Text(
+                                "Campo inválido",
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error,
+                                  fontSize: 12
+                                ),
+                              ),
+                            ) : null,
                             filled: true,
                             fillColor: Colors.white,
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(25)),
                             ),
                             labelText: 'Telefono',
@@ -121,10 +143,21 @@ class CompleteProfileTwoPage extends ConsumerWidget {
                           controller: controller.emergencyPhoneController,
                           textInputAction: TextInputAction.done,
                           // obscureText: true,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
+                            error: (controller.emergencyPhoneIsBad() && controller.emergencyPhoneTouched) ? Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Text(
+                                "Campo inválido",
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.error,
+                                  fontSize: 12
+                                ),
+                              ),
+                            ) : null,
                             filled: true,
                             fillColor: Colors.white,
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(25)),
                             ),
                             labelText: 'Telefono de Emergencia',

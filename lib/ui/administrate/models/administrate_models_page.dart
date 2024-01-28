@@ -25,7 +25,7 @@ class AdministrateModelsPage extends ConsumerWidget {
           //   fit: BoxFit.cover
           // )
         ),
-        child:  controller.models != null && controller.models!.isNotEmpty ? ListView(
+        child:  controller.models != null ? controller.models!.isNotEmpty ? ListView(
           children: controller.models!.map(
             (model) => ModelCard(
               model: model,
@@ -39,7 +39,7 @@ class AdministrateModelsPage extends ConsumerWidget {
               fontSize: 18,
             ),
           ),
-        ),
+        ) : const SizedBox.shrink(),
       ),
       floatingActionButton: Container(
         decoration: const BoxDecoration(

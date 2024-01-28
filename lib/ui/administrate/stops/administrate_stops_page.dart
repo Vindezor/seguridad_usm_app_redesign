@@ -19,7 +19,7 @@ class AdministrateStopsPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        child:  controller.stops != null && controller.stops!.isNotEmpty ? ListView(
+        child:  controller.stops != null ? controller.stops!.isNotEmpty ? ListView(
           children: controller.stops!.map(
             (stop) => StopCard(
               id: stop.id,
@@ -35,7 +35,7 @@ class AdministrateStopsPage extends ConsumerWidget {
               fontSize: 18,
             ),
           ),
-        ),
+        ) : const SizedBox.shrink(),
       ),
       floatingActionButton: Container(
         decoration: const BoxDecoration(

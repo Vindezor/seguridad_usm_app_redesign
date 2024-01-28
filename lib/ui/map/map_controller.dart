@@ -43,7 +43,7 @@ class MapController extends ChangeNotifier{
     final token = await storage.read(key: 'token');
     final idTravel = await storage.read(key: 'id_travel');
     idTypeUser = int.parse((await storage.read(key: 'id_type_user'))!);
-    socket =  IO.io('http://seguridad-usm-api-production.up.railway.app:80/travel/$idTravel',
+    socket =  IO.io('https://seguridad-usm-api-production.up.railway.app/travel/$idTravel',
       IO.OptionBuilder()
         .disableAutoConnect()
         .setTransports(['websocket'])
