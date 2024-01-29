@@ -13,11 +13,11 @@ class RegisterQrController extends ChangeNotifier{
   final regex = RegExp(r'^https:\/\/usm\.terna\.net\/validar\/[a-zA-Z0-9]{7}$');
   bool isDetect = false;
   bool isInitialized = false;
-  final scannerController = MobileScannerController(autoStart: false);
+  final scannerController = MobileScannerController();
 
   init(){
     isInitialized = true;
-    scannerController.start();
+    //scannerController.start();
   }
 
   onCapture(capture, context){

@@ -36,7 +36,7 @@ class StepTwo extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Image.asset("assets/tutorial-1.png", height: 200),
+                Image.asset("assets/tutorial-2.png", height: 200),
                 const SizedBox(
                   height: 50,
                 ),
