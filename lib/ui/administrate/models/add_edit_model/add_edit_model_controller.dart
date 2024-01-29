@@ -136,7 +136,7 @@ class AddEditModelController extends ChangeNotifier{
     if(editing) {
       response = await modelService.updateModel(id: id, model: modelController.value.text, idBrand: selectedBrand);
     } else {
-      response = await modelService.createModel(model: modelController.value.text);
+      response = await modelService.createModel(model: modelController.value.text, idBrand: selectedBrand);
     }
     if(response != null){
       if(response.status == "SUCCESS"){
