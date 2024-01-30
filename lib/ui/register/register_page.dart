@@ -92,7 +92,7 @@ class RegisterPage extends ConsumerWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.only(left: 20, bottom: 25),
                           child: FloatingActionButton(
                             //elevation: 3,
                             //highlightElevation: 0,
