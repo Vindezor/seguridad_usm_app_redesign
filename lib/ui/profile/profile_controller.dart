@@ -153,7 +153,7 @@ class ProfileController extends ChangeNotifier{
       document = await storage.read(key: 'document');
       universityCode = await storage.read(key: 'university_code');
       final exp = await storage.read(key: 'expiration_date');
-      expirationDate = exp != null ? DateTime.parse(exp) : null;
+      expirationDate = exp != null ? DateTime.parse(exp).toLocal() : null;
       ready = true;
       if(context.mounted) Navigator.of(context).pop();
       notifyListeners();

@@ -61,6 +61,13 @@ class HistoryController extends ChangeNotifier{
   }
 
   showInfo(context, travel){
+    // Travel infoTravel = travel;
+    // log("${infoTravel.startTime}");
+    // infoTravel.startTime = infoTravel.startTime.toLocal();
+    //  log("${infoTravel.startTime}");
+    // if(infoTravel.endTime != null){
+    //   infoTravel.endTime = infoTravel.endTime!.toLocal();
+    // }
     showModalBottomSheet(
       context: context,
       showDragHandle: true,
