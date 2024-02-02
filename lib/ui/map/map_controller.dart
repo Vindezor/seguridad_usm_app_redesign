@@ -59,23 +59,15 @@ class MapController extends ChangeNotifier{
     socket!.on('event', (data) => log(data));
     socket!.onDisconnect((_) => log('disconnect'));
     socket!.on('fromServer', (_) => log(_));
-    if(idTypeUser == 1){
-      socket!.on('endTravel', (_) {
+    socket!.on('endTravel', (data) {
+      if(data == "endAdmin"){
         log("endTravel");
         socket!.disconnect();
         travelEnded = true;
         notifyListeners();
-        // showAlertOptions(
-        //   context!,
-        //   msg: "El conductor ha terminado el viaje",
-        //   title: "Importante",
-        //   closeOnPressed: () {
-        //     Navigator.of(context!).pop();
-        //     Navigator.of(context!).pop();
-        //   },
-        // );
-      });
-    } else if (idTypeUser == 2){
+      }
+    });
+    if (idTypeUser == 2){
       driverTimer = Timer.periodic(const Duration(seconds: 10), (timer) async {
         try {
           final currentPosition = await Geolocator.getCurrentPosition(timeLimit: const Duration(seconds: 8));

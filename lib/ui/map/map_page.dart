@@ -24,7 +24,7 @@ class MapPage extends ConsumerWidget {
       if(controller.travelEnded){
         showAlertOptions(
           context,
-          msg: "El conductor ha terminado el viaje",
+          msg: "El viaje ha terminado",
           title: "Importante",
           closeOnPressed: () {
             Navigator.of(context).pop();
