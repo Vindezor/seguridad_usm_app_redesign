@@ -21,13 +21,40 @@ class RegisterQrScanner extends ConsumerWidget {
 
     return Scaffold(
       //appBar: AppBar(),
-      body: MobileScanner(
-        controller: controller.scannerController,
-        overlay: const QRScannerOverlay(overlayColour: Color.fromRGBO(0, 0, 0, 0.5),),
-        scanWindow: Rect.fromCenter(center: Offset(width / 2, height / 2), width: 200, height: 200),
-        onDetect: (capture) {
-          controller.onCapture(capture, context);
-        },
+      body: Stack(
+        children: [
+          MobileScanner(
+            controller: controller.scannerController,
+            overlay: const QRScannerOverlay(overlayColour: Color.fromRGBO(0, 0, 0, 0.5),),
+            scanWindow: Rect.fromCenter(center: Offset(width / 2, height / 2), width: 200, height: 200),
+            onDetect: (capture) {
+              controller.onCapture(capture, context);
+            },
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Center(
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                    ),
+                    onPressed: () => controller.torch(),
+                    child: ValueListenableBuilder(
+                      valueListenable: controller.scannerController.torchState,
+                      builder: (context, value, child) {
+                        return value == TorchState.off ? const Icon(Icons.flash_on) : const Icon(Icons.flash_off);
+                      }
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -20,6 +20,11 @@ class RegisterQrController extends ChangeNotifier{
     //scannerController.start();
   }
 
+  torch() async {
+    await scannerController.toggleTorch();
+    notifyListeners();
+  }
+
   onCapture(capture, context){
     final List<Barcode> barcodes = capture.barcodes;
     // final Uint8List? image = capture.image;
