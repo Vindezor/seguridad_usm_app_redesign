@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-
+import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:flexible_polyline/flexible_polyline.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +66,7 @@ class AdminMapController extends ChangeNotifier{
   if (response != null && !removing && response.status == "SUCCESS") {
     travels = response.data;
     removeBusMarkers();
-    
+    removeRouteMarkersIfNotBus();
     for (var travel in response.data!) {
       addBusMarker(travel);
     }
@@ -77,6 +77,22 @@ class AdminMapController extends ChangeNotifier{
 
 void removeBusMarkers() {
   markers.removeWhere((element) => element.markerId.value.startsWith("bus"));
+}
+
+void removeRouteMarkersIfNotBus(){
+  if(polyline.isNotEmpty){
+    final travelId = int.parse(polyline.first.polylineId.value.split("route")[1]);
+    log("$travelId");
+    if(travels != null){
+      final findTravel = travels!.firstWhereOrNull((travel) => travel.id == travelId);
+      if(findTravel == null){
+        polyline = {};
+        removeStopMarkers();
+        selectedTravel = null;
+        notifyListeners();
+      }
+    }
+  }
 }
 
 void addBusMarker(Travel travel) {
