@@ -178,21 +178,7 @@ class TravelInfo extends ConsumerWidget {
                     const SizedBox(
                       width: 20,
                     ),
-                    selectedTravel.endTime == null ? ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFefdbd2)),
-                      ),
-                      onPressed: () => controller.endTravel(context, selectedTravel.id),
-                      child: const Text(
-                        "Terminar viaje",
-                        style: TextStyle(
-                          color: Color(0xFFb04d1e),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ) : const SizedBox.shrink(),
-                    selectedTravel.endTime != null ? ElevatedButton(
+                    ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
                       ),
@@ -204,7 +190,34 @@ class TravelInfo extends ConsumerWidget {
                           fontSize: 16,
                         ),
                       ),
-                    ) : const SizedBox.shrink(),
+                    ),
+                    // selectedTravel.endTime == null ? ElevatedButton(
+                    //   style: ButtonStyle(
+                    //     backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFefdbd2)),
+                    //   ),
+                    //   onPressed: () => controller.endTravel(context, selectedTravel.id),
+                    //   child: const Text(
+                    //     "Terminar viaje",
+                    //     style: TextStyle(
+                    //       color: Color(0xFFb04d1e),
+                    //       fontWeight: FontWeight.bold,
+                    //       fontSize: 16,
+                    //     ),
+                    //   ),
+                    // ) : const SizedBox.shrink(),
+                    // selectedTravel.endTime != null ? ElevatedButton(
+                    //   style: ButtonStyle(
+                    //     backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                    //   ),
+                    //   onPressed: () => controller.goToAllAlerts(context, selectedTravel.id),
+                    //   child: const Text(
+                    //     "Ver alertas",
+                    //     style: TextStyle(
+                    //       fontWeight: FontWeight.bold,
+                    //       fontSize: 16,
+                    //     ),
+                    //   ),
+                    // ) : const SizedBox.shrink(),
                   ],
                 ),
               ) : const SizedBox.shrink() : const SizedBox.shrink(),
@@ -215,12 +228,13 @@ class TravelInfo extends ConsumerWidget {
                   children: [
                     ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFefdbd2)),
                       ),
-                      onPressed: () => controller.goToAllAlerts(context, selectedTravel.id),
+                      onPressed: () => controller.endTravel(context, selectedTravel.id),
                       child: const Text(
-                        "Ver alertas",
+                        "Terminar viaje",
                         style: TextStyle(
+                          color: Color(0xFFb04d1e),
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
