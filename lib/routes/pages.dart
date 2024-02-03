@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_design/ui/admin_map/admin_map_page.dart';
+import 'package:test_design/ui/admin_map/travel_alerts/travel_alerts_page.dart';
 import 'package:test_design/ui/admin_map/travel_passengers/travel_passengers_page.dart';
 import 'package:test_design/ui/administrate/administrate_page.dart';
 import 'package:test_design/ui/administrate/admins/add_edit_admin/add_edit_admin_page.dart';
@@ -72,5 +73,6 @@ Map<String, Widget Function(BuildContext context)> appRoutes() {
     Routes.routeMap: (_) => const RouteMapPage(),
     Routes.adminMap: (_) => const AdminMapPage(),
     Routes.travelPassengers: (_) => const TravelPassengersPage(),
+    Routes.travelAlerts: (_) => const TravelAlertsPage(),
   };
 }

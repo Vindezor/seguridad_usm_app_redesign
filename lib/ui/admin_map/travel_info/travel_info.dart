@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:test_design/global/time_format.dart';
 import 'package:test_design/models/travel_model.dart';
 import 'package:test_design/ui/admin_map/travel_info/travel_info_controller.dart';
 
@@ -46,7 +47,7 @@ class TravelInfo extends ConsumerWidget {
                 ),
               ),
               Text(
-                "Hora de inicio: ${selectedTravel.startTime.hour}:${selectedTravel.startTime.minute}",
+                "Hora de inicio: ${formatHour(selectedTravel.startTime)}",
                 style: const TextStyle(
                   color: Color(0xFF3874c0),
                   fontSize: 16,
@@ -174,9 +175,9 @@ class TravelInfo extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    selectedTravel.endTime == null ? const SizedBox(
+                    const SizedBox(
                       width: 20,
-                    ) : const SizedBox.shrink(),
+                    ),
                     selectedTravel.endTime == null ? ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFefdbd2)),
@@ -191,9 +192,43 @@ class TravelInfo extends ConsumerWidget {
                         ),
                       ),
                     ) : const SizedBox.shrink(),
+                    selectedTravel.endTime != null ? ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                      ),
+                      onPressed: () => controller.goToAllAlerts(context, selectedTravel.id),
+                      child: const Text(
+                        "Ver alertas",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ) : const SizedBox.shrink(),
                   ],
                 ),
-              ) : const SizedBox.shrink() : const SizedBox.shrink()
+              ) : const SizedBox.shrink() : const SizedBox.shrink(),
+              selectedTravel.endTime == null ? controller.idTypeUser != null ? controller.idTypeUser! > 2 ? Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFe9f2f7)),
+                      ),
+                      onPressed: () => controller.goToAllAlerts(context, selectedTravel.id),
+                      child: const Text(
+                        "Ver alertas",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ) : const SizedBox.shrink() : const SizedBox.shrink() : const SizedBox.shrink(),
             ],
           ),
         ),

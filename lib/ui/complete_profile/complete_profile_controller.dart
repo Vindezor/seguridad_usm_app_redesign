@@ -169,7 +169,7 @@ class CompleteProfileController extends ChangeNotifier{
             await storage.write(key: "phone", value: response.data!.phone);
             await storage.write(key: "type_user", value: response.data!.typeUser.typeUser);
             Navigator.of(context).pop();
-            Navigator.of(context).pop();
+            if(["1"].contains(idTypeUser)) Navigator.of(context).pop();
             Navigator.of(context).pushReplacementNamed('/home');
             if(["1", "2"].contains(idTypeUser)) Navigator.of(context).pushNamed('/guide');
           }

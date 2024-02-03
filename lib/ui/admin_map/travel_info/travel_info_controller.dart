@@ -68,6 +68,12 @@ class TravelInfoController extends ChangeNotifier{
     });
   }
 
+  goToAllAlerts(context, idTravel){
+    Navigator.of(context).pushNamed('/travel_alerts', arguments: {
+      "id_travel": idTravel,
+    });
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose

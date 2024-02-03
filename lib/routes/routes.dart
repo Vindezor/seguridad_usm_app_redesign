@@ -33,4 +33,5 @@ abstract class Routes{
   static const routeMap = '/route_map';
   static const adminMap = '/admin_map';
   static const travelPassengers = '/travel_passengers';
+  static const travelAlerts = '/travel_alerts';
 }

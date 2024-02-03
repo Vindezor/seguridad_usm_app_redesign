@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:test_design/app_config.dart';
+import 'package:test_design/models/alerts_model.dart';
 import 'package:test_design/models/generic_model.dart';
 import 'package:test_design/models/travel_model.dart';
 import 'package:test_design/models/travels_model.dart';
@@ -329,6 +330,41 @@ class TravelService {
       return data;
     } catch (e) {
       log('[TravelService -> getAllPassengersByIdTravel] error: $e');
+      return null;
+    }
+  }
+
+  Future<AlertsModel?> getAllAlertsByIdTravel(idTravel) async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+    try {
+      final response = await _dio.post(
+        '${AppConfig.instance.apiHost}getAllAlertsByIdTravel',
+        // 'http://172.16.90.115:8091/api/getAllConnectedParamedics',
+        cancelToken: cancelToken,
+        options: Options(
+          contentType: "application/json",
+          headers: {
+            "Authorization": token,
+          }
+        ),
+        data: {
+          "id_travel": idTravel,
+        }
+        // options: Options(
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'platform': 'EXT',
+        //     'BISCOMM_KEY': 'abcd123456',
+        //     'token': token
+        //   }
+        // )
+      );
+
+      final data = AlertsModel.fromJson(response.data);
+      return data;
+    } catch (e) {
+      log('[TravelService -> getAllAlertsByIdTravel] error: $e');
       return null;
     }
   }
